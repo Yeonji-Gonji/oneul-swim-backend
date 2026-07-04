@@ -1,0 +1,160 @@
+{
+  "_meta": {
+    "service": "오늘수영 (oneul-swim)",
+    "source": "하남도시공사 hanamsport.or.kr 각 시설 /program/ 정형 HTML 표",
+    "crawledAt": "2026-06-01",
+    "note": "요금/시간표는 분기·시즌 변동 → 재크롤링 시 pools[].updatedAt 갱신. address/lat/lng 는 공공데이터 API·네이버로 보강 예정(현재 null).",
+    "dayCodeRef": "JS Date.getDay() — 0=일 1=월 2=화 3=수 4=목 5=금 6=토"
+  },
+  "freeSwimPriceTiers": {
+    "full": { "성인": 3300, "청소년": 2750, "경로": 2640, "어린이": 2200, "장애유공자": 1650 },
+    "half": { "성인": 1650, "청소년": 1380, "경로": 1320, "어린이": 1100, "장애유공자": 830 }
+  },
+  "pools": [
+    {
+      "id": "hanam-misa",
+      "name": "하남종합운동장 국민체육센터",
+      "region": "미사",
+      "operator": "하남도시공사",
+      "phone": "031-790-2000",
+      "address": "경기도 하남시 아리수로 600 (하남종합운동장, 망월동)",
+      "lat": 37.5670245,
+      "lng": 127.1953314,
+      "laneInfo": "25m / 50m 풀 보유",
+      "notice": "관외(하남시 외) 거주자 이용료 200% 할증 / 일요일은 둘째·넷째 주만 운영 / 영법 불가능자 이용 불가",
+      "websiteUrl": "https://hanamsport.or.kr/wwwroot/ms/program/",
+      "sourceUrl": "https://hanamsport.or.kr/wwwroot/ms/program/",
+      "updatedAt": "2026-06-01",
+      "freeSwim": {
+        "sessions": [
+          { "daysLabel": "평일", "dayCodes": [1,2,3,4,5], "start": "06:00", "end": "07:50", "pool": "50m", "capacity": 35, "tier": "full" },
+          { "daysLabel": "평일", "dayCodes": [1,2,3,4,5], "start": "12:00", "end": "12:50", "pool": "50m", "capacity": 140, "tier": "half" },
+          { "daysLabel": "평일", "dayCodes": [1,2,3,4,5], "start": "13:00", "end": "13:50", "pool": "25m", "capacity": 120, "tier": "half" },
+          { "daysLabel": "평일", "dayCodes": [1,2,3,4,5], "start": "14:00", "end": "14:50", "pool": "50m", "capacity": 280, "tier": "half" },
+          { "daysLabel": "평일", "dayCodes": [1,2,3,4,5], "start": "19:00", "end": "19:50", "pool": "50m", "capacity": 35, "tier": "half" },
+          { "daysLabel": "평일", "dayCodes": [1,2,3,4,5], "start": "20:00", "end": "20:50", "pool": "50m", "capacity": 35, "tier": "half" },
+          { "daysLabel": "평일", "dayCodes": [1,2,3,4,5], "start": "21:00", "end": "21:50", "pool": "50m", "capacity": 35, "tier": "half" },
+          { "daysLabel": "토", "dayCodes": [6], "start": "07:00", "end": "08:50", "pool": "25m,50m", "tier": "full" },
+          { "daysLabel": "토", "dayCodes": [6], "start": "10:00", "end": "11:50", "pool": "25m,50m", "tier": "full" },
+          { "daysLabel": "토", "dayCodes": [6], "start": "13:00", "end": "14:50", "pool": "25m,50m", "tier": "full" },
+          { "daysLabel": "토", "dayCodes": [6], "start": "16:00", "end": "17:50", "pool": "25m,50m", "tier": "full" },
+          { "daysLabel": "일", "dayCodes": [0], "weeksOfMonth": [2,4], "start": "09:00", "end": "10:50", "pool": "25m,50m", "tier": "full" },
+          { "daysLabel": "일", "dayCodes": [0], "weeksOfMonth": [2,4], "start": "11:00", "end": "12:50", "pool": "25m,50m", "tier": "full" },
+          { "daysLabel": "일", "dayCodes": [0], "weeksOfMonth": [2,4], "start": "14:00", "end": "15:50", "pool": "25m,50m", "tier": "full" },
+          { "daysLabel": "일", "dayCodes": [0], "weeksOfMonth": [2,4], "start": "16:00", "end": "17:50", "pool": "25m,50m", "tier": "full" }
+        ],
+        "monthlyPass": {
+          "성인": 19800, "청소년": 16560, "어린이": 13200,
+          "note": "월·수·금 기준. 화·목 시간대는 성인 13,200 / 청소년 11,040 / 유아·어린이 8,800"
+        }
+      },
+      "lessons": [
+        { "name": "성인수영(오전)", "daysLabel": "월~금", "time": "06:00~12:50, 15:00~15:50", "capacity": "25m 17명 / 50m 35명", "fee": 73700 },
+        { "name": "성인수영(야간)", "daysLabel": "월·수·금", "time": "19:00~21:50", "fee": 55000 },
+        { "name": "성인수영(야간)", "daysLabel": "화·목", "time": "19:00~21:50", "fee": 46200 },
+        { "name": "유아수영", "daysLabel": "월·수·금 / 화·목", "time": "15:00~15:50", "capacity": "각 10명", "fee": 33000, "note": "화·목반 22,000" },
+        { "name": "초등생수영", "daysLabel": "월·수·금 / 화·목", "time": "16:00~18:50", "fee": 33000, "note": "화·목반 22,000" },
+        { "name": "장애인수영", "daysLabel": "월·수·금 / 화·목", "time": "19:00~19:50", "capacity": "7명", "fee": 33000, "note": "대상·요일별 33,000~55,000" },
+        { "name": "아쿠아로빅", "daysLabel": "월·수 / 화·목 / 금·토", "time": "08:00~15:50", "capacity": "각 90명", "fee": 46200 }
+      ]
+    },
+    {
+      "id": "hanam-pungsan",
+      "name": "풍산멀티스포츠센터",
+      "region": "풍산",
+      "operator": "하남도시공사",
+      "phone": "031-730-4800",
+      "address": "경기도 하남시 덕풍북로 160 (풍산지구, 덕풍동)",
+      "lat": 37.5540858,
+      "lng": 127.2064151,
+      "notice": "관외 거주자 이용료 200% 할증 / 사진 촬영 금지 / 둘째·넷째·다섯째 주 일요일 휴관",
+      "websiteUrl": "https://hanamsport.or.kr/wwwroot/ps/program/",
+      "sourceUrl": "https://hanamsport.or.kr/wwwroot/ps/program/",
+      "updatedAt": "2026-06-01",
+      "freeSwim": {
+        "sessions": [
+          { "daysLabel": "월~목", "dayCodes": [1,2,3,4], "start": "19:00", "end": "19:50", "capacity": 60, "tier": "half" },
+          { "daysLabel": "금", "dayCodes": [5], "start": "08:00", "end": "08:50", "capacity": 60, "tier": "half" },
+          { "daysLabel": "금", "dayCodes": [5], "start": "19:00", "end": "19:50", "capacity": 60, "tier": "half" },
+          { "daysLabel": "토", "dayCodes": [6], "start": "09:00", "end": "10:50", "tier": "full" },
+          { "daysLabel": "토", "dayCodes": [6], "start": "16:00", "end": "17:50", "tier": "full" },
+          { "daysLabel": "일", "dayCodes": [0], "weeksOfMonth": [1,3], "start": "09:00", "end": "10:50", "tier": "full" },
+          { "daysLabel": "일", "dayCodes": [0], "weeksOfMonth": [1,3], "start": "11:00", "end": "12:50", "tier": "full" },
+          { "daysLabel": "일", "dayCodes": [0], "weeksOfMonth": [1,3], "start": "14:00", "end": "15:50", "tier": "full" },
+          { "daysLabel": "일", "dayCodes": [0], "weeksOfMonth": [1,3], "start": "16:00", "end": "17:50", "tier": "full" }
+        ]
+      },
+      "lessons": [
+        { "name": "성인수영", "daysLabel": "월·수·금 / 화·목", "time": "06:00~10:50, 20:00~21:50", "capacity": "레인별 15명", "fee": 55000, "note": "화·목반 46,200" },
+        { "name": "초등생수영", "daysLabel": "월·수·금 / 화·목", "time": "16:00~19:50", "capacity": "레인별 15명", "fee": 33000, "note": "화·목반 22,000" },
+        { "name": "장애인수영(선수반)", "daysLabel": "화·목", "time": "", "capacity": "1레인 5명", "fee": 22000, "note": "초등 22,000 / 중·고등 46,200" }
+      ]
+    },
+    {
+      "id": "hanam-deokpung",
+      "name": "덕풍스포츠문화센터",
+      "region": "덕풍",
+      "operator": "하남도시공사",
+      "phone": "031-730-4850",
+      "address": "경기도 하남시 역말로 71 (덕풍동)",
+      "lat": 37.5379759,
+      "lng": 127.2028929,
+      "laneInfo": "25m × 1.4m × 5레인",
+      "notice": "관외 거주자 이용료 200% 할증 / 36개월 미만 유아 이용 불가 / 둘째·넷째·다섯째 주 일요일 휴관 / 운영 평일 06:00~22:00, 주말 09:00~18:00 / 브레이크타임 평일 11:00~12:00·주말 13:00~14:00",
+      "websiteUrl": "https://hanamsport.or.kr/wwwroot/ds/program/",
+      "sourceUrl": "https://hanamsport.or.kr/wwwroot/ds/program/",
+      "updatedAt": "2026-06-01",
+      "freeSwim": {
+        "sessions": [
+          { "daysLabel": "평일", "dayCodes": [1,2,3,4,5], "start": "08:00", "end": "08:50", "capacity": 45, "tier": "half" },
+          { "daysLabel": "평일", "dayCodes": [1,2,3,4,5], "start": "21:00", "end": "21:50", "capacity": 45, "tier": "half" },
+          { "daysLabel": "토", "dayCodes": [6], "start": "16:00", "end": "17:50", "capacity": 75, "tier": "full" },
+          { "daysLabel": "일", "dayCodes": [0], "weeksOfMonth": [2,4], "start": "09:00", "end": "10:50", "capacity": 75, "tier": "full" },
+          { "daysLabel": "일", "dayCodes": [0], "weeksOfMonth": [2,4], "start": "11:00", "end": "12:50", "capacity": 75, "tier": "full" },
+          { "daysLabel": "일", "dayCodes": [0], "weeksOfMonth": [2,4], "start": "14:00", "end": "15:50", "capacity": 75, "tier": "full" },
+          { "daysLabel": "일", "dayCodes": [0], "weeksOfMonth": [2,4], "start": "16:00", "end": "17:50", "capacity": 75, "tier": "full" }
+        ],
+        "monthlyPass": {
+          "성인": 19800, "청소년": 16560, "어린이": 13200,
+          "note": "월·수·금 08:00 기준. 화·목 21:00 시간대는 성인 13,200 / 청소년 11,040 / 어린이 8,800"
+        }
+      },
+      "lessons": [
+        { "name": "성인수영강습(가)", "daysLabel": "월·수·금", "time": "06:00~07:50", "capacity": "75명", "fee": 55000 },
+        { "name": "성인수영강습(나)", "daysLabel": "화·목", "time": "19:00~20:50", "capacity": "60~75명", "fee": 46200 },
+        { "name": "아쿠아로빅", "daysLabel": "월·수 / 화·목 / 금·토", "time": "09:00~15:50", "capacity": "60명", "fee": 46200 },
+        { "name": "초등생수영강습(가)", "daysLabel": "월·수·금", "time": "16:00~18:50", "capacity": "75명", "fee": 33000 },
+        { "name": "초등생수영강습(나)", "daysLabel": "화·목", "time": "16:00~18:50", "capacity": "75명", "fee": 22000 }
+      ]
+    },
+    {
+      "id": "hanam-gamil",
+      "name": "감일복합커뮤니티센터",
+      "region": "감일",
+      "operator": "하남도시공사",
+      "phone": "031-690-9000",
+      "address": "경기도 하남시 감일순환로 171 (감이동)",
+      "lat": 37.5085381,
+      "lng": 127.1596047,
+      "notice": "관외 거주자 이용료 200% 할증 / 강습 등록 후 진도 차이 시 환불 가능 / 첫째·셋째·다섯째 주 일요일 휴관 / 평일 자유수영 운영 없음(주말만)",
+      "websiteUrl": "https://hanamsport.or.kr/wwwroot/gi/program/",
+      "sourceUrl": "https://hanamsport.or.kr/wwwroot/gi/program/",
+      "updatedAt": "2026-06-01",
+      "freeSwim": {
+        "sessions": [
+          { "daysLabel": "토", "dayCodes": [6], "start": "09:00", "end": "10:50", "capacity": 60, "tier": "full" },
+          { "daysLabel": "토", "dayCodes": [6], "start": "16:00", "end": "17:50", "capacity": 60, "tier": "full" },
+          { "daysLabel": "일", "dayCodes": [0], "weeksOfMonth": [2,4], "start": "09:00", "end": "10:50", "capacity": 60, "tier": "full" },
+          { "daysLabel": "일", "dayCodes": [0], "weeksOfMonth": [2,4], "start": "11:00", "end": "12:50", "capacity": 60, "tier": "full" },
+          { "daysLabel": "일", "dayCodes": [0], "weeksOfMonth": [2,4], "start": "14:00", "end": "15:50", "capacity": 60, "tier": "full" },
+          { "daysLabel": "일", "dayCodes": [0], "weeksOfMonth": [2,4], "start": "16:00", "end": "17:50", "capacity": 60, "tier": "full" }
+        ]
+      },
+      "lessons": [
+        { "name": "성인수영", "daysLabel": "월·수·금 / 화·목", "time": "06:00~10:50, 19:00~21:50", "capacity": "레인별 12명", "fee": 55000, "note": "화·목반 46,200" },
+        { "name": "초등생수영", "daysLabel": "월·수·금 / 화·목", "time": "16:00~19:50", "capacity": "레인별 15명", "fee": 33000, "note": "화·목반 22,000" },
+        { "name": "장애인수영", "daysLabel": "월·수·금 / 화·목", "time": "", "capacity": "7명", "fee": 33000, "note": "대상·요일별 33,000~55,000" }
+      ]
+    }
+  ]
+}

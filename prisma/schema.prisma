@@ -30,3 +30,12 @@ enum ReportStatus {
   APPLIED // 정보에 반영됨
   REJECTED // 반영 불가
 }
+
+/// Web Push 구독 (아침 요약). 브라우저가 발급한 endpoint가 곧 식별자
+model PushSubscription {
+  id        String   @id @default(cuid())
+  endpoint  String   @unique
+  p256dh    String
+  auth      String
+  createdAt DateTime @default(now())
+}
