@@ -31,6 +31,10 @@ services:
   db:
     image: postgres:16-alpine
     restart: unless-stopped
+    # 서버 안(localhost)에서만 접근 가능 — GUI 툴은 SSH 터널로 접속.
+    # 외부 인터넷에는 열리지 않는다 (0.0.0.0 아님)
+    ports:
+      - '127.0.0.1:5432:5432'
     environment:
       POSTGRES_USER: oneul
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
