@@ -1,8 +1,9 @@
 {
-  "name": "oneul-swim-api",
+  "name": "oneul-swim-backend",
   "version": "0.1.0",
   "private": true,
   "description": "오늘수영 백엔드 API — 제보 수집(v1)",
+  "packageManager": "pnpm@11.8.0",
   "scripts": {
     "dev": "tsx watch src/main.ts",
     "build": "tsc -p tsconfig.build.json",
