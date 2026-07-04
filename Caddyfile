@@ -1,0 +1,4 @@
+# API_DOMAIN 예: api.oneulswim.duckdns.org — HTTPS 인증서는 Caddy가 자동 발급
+{$API_DOMAIN} {
+	reverse_proxy api:3000
+}

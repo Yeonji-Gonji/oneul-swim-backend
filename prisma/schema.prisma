@@ -1,0 +1,32 @@
+// 오늘수영 v1 스키마 — 제보(Report)만. 수영장 데이터는 2단계에서 이관 예정.
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Report {
+  id        String       @id @default(cuid())
+  /// 프론트 pools.json의 시설 id (예: hanam-misa). 2단계에서 Pool 테이블 FK로 승격
+  poolId    String
+  /// 제보 사유: 프론트 REASONS와 동일한 한국어 라벨을 그대로 저장
+  reason    String
+  content   String       @default("")
+  /// 익명 기기 식별자 (localStorage UUID) — "내 제보 내역" 조회용
+  deviceId  String
+  status    ReportStatus @default(PENDING)
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
+  @@index([deviceId, createdAt])
+  @@index([status])
+}
+
+enum ReportStatus {
+  PENDING // 확인 대기
+  APPLIED // 정보에 반영됨
+  REJECTED // 반영 불가
+}

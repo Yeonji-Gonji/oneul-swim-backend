@@ -1,0 +1,6 @@
+# pnpm 10: postinstall 실행 허용 (Prisma 엔진 다운로드, esbuild 바이너리)
+allowBuilds:
+  '@prisma/client': true
+  '@prisma/engines': true
+  esbuild: true
+  prisma: true
