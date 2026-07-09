@@ -18,6 +18,8 @@ services:
       - api
 
   api:
+    # 서버는 GHCR 이미지를 pull 해서 뜬다(CD). 로컬은 build 로 직접 빌드.
+    image: ghcr.io/yeonji-gonji/oneul-swim-backend:latest
     build: .
     restart: unless-stopped
     environment:

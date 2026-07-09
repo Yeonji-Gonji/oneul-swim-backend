@@ -33,6 +33,7 @@ export class ReportsService {
         content: true,
         status: true,
         createdAt: true,
+        updatedAt: true,
       },
     });
   }

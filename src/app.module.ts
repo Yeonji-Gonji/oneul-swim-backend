@@ -2,7 +2,10 @@ import { Module } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
 import { ScheduleModule } from '@nestjs/schedule';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { AdminModule } from './admin/admin.module';
+import { FreshnessModule } from './freshness/freshness.module';
 import { HealthController } from './health/health.controller';
+import { PoolsModule } from './pools/pools.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { PushModule } from './push/push.module';
 import { ReportsModule } from './reports/reports.module';
@@ -15,6 +18,9 @@ import { ReportsModule } from './reports/reports.module';
     PrismaModule,
     ReportsModule,
     PushModule,
+    PoolsModule,
+    AdminModule,
+    FreshnessModule,
   ],
   controllers: [HealthController],
   providers: [{ provide: APP_GUARD, useClass: ThrottlerGuard }],

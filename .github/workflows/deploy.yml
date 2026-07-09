@@ -1,0 +1,63 @@
+# CD — main 푸시 시 GHCR 이미지 빌드·푸시 후 서버에 SSH 배포.
+#
+# 필요한 GitHub Secrets (Settings → Secrets and variables → Actions):
+#   SSH_HOST   배포 서버 IP/호스트 (예: 161.33.15.188)
+#   SSH_USER   SSH 사용자 (예: ubuntu)
+#   SSH_KEY    서버 접속용 개인키 전체(-----BEGIN ... END----- 포함)
+#   * GHCR 로그인은 자동 제공되는 GITHUB_TOKEN 을 쓰므로 별도 등록 불필요.
+#
+# 서버 사전 준비: 배포 디렉토리(~/oneul-swim-backend)에 docker-compose.yml, Caddyfile, .env 존재.
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  # GHCR 레지스트리 경로는 소문자여야 한다
+  IMAGE: ghcr.io/yeonji-gonji/oneul-swim-backend
+
+jobs:
+  build-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: GHCR 로그인
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 빌드 & 푸시
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: |
+            ${{ env.IMAGE }}:latest
+            ${{ env.IMAGE }}:${{ github.sha }}
+
+  deploy:
+    needs: build-push
+    runs-on: ubuntu-latest
+    steps:
+      - name: 서버 SSH 배포
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            set -e
+            cd ~/oneul-swim-backend
+            docker compose pull api
+            # 마이그레이션 먼저 — 실패 시(set -e) 배포 중단, 구 버전 유지
+            docker compose run --rm api pnpm prisma migrate deploy
+            docker compose up -d --no-build api caddy
+            docker image prune -f

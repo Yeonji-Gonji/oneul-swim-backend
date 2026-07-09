@@ -1,4 +1,4 @@
-// 오늘수영 v1 스키마 — 제보(Report)만. 수영장 데이터는 2단계에서 이관 예정.
+// 오늘수영 스키마 — 제보(Report) + 수영장 데이터(Pool/FeeTier) + 신선도 감시.
 generator client {
   provider = "prisma-client-js"
 }
@@ -38,4 +38,82 @@ model PushSubscription {
   p256dh    String
   auth      String
   createdAt DateTime @default(now())
+}
+
+/// Web Push 구독 (강습 접수 소식). 아침 요약과는 별개 토픽 — 구독을 따로 관리한다
+model LessonSubscription {
+  id        String   @id @default(cuid())
+  endpoint  String   @unique
+  p256dh    String
+  auth      String
+  createdAt DateTime @default(now())
+}
+
+/// 수영장 시설. 프론트 data/pools.json 의 pool 한 건과 동일한 필드 집합.
+/// GET /pools 는 이 테이블 + FeeTier 를 프론트 계약 shape 로 재조립해 돌려준다.
+model Pool {
+  id         String @id
+  name       String
+  region     String
+  operator   String
+  phone      String
+  address    String
+  lat        Float
+  lng        Float
+  laneInfo   String
+  notice     String
+  websiteUrl String
+  sourceUrl  String
+  /// 원본(하남도시공사) 표기 그대로의 문자열 날짜(예: "2026-06-01"). 날조 방지 위해 문자열 유지
+  updatedAt  String
+  /// 자유수영 세션 배열 등 원본 JSON 을 그대로 보관
+  freeSwim   Json
+  /// 강습 정보 원본 JSON
+  lessons    Json
+
+  /// 운영 추적용(원본 updatedAt 과 별개). 레코드 생성/갱신 시각
+  createdAt   DateTime @default(now())
+  dbUpdatedAt DateTime @updatedAt
+}
+
+/// 자유수영 요금표(freeSwimPriceTiers)를 행 단위로 저장. GET /pools 에서 full/half 로 재조립.
+model FeeTier {
+  id     String @id @default(cuid())
+  /// "full"(전액) | "half"(반액)
+  tier   String
+  /// 대상 라벨(예: "성인", "청소년")
+  target String
+  price  Int
+
+  @@unique([tier, target])
+}
+
+/// 신선도 감시용 마지막 스냅샷. 원본 페이지 URL 당 1건.
+model CrawlSnapshot {
+  id          String   @id @default(cuid())
+  url         String   @unique
+  contentHash String
+  content     String
+  fetchedAt   DateTime @updatedAt
+}
+
+/// 원본 변경 감지 기록. 자동 반영은 하지 않고 사람 검토를 남긴다.
+model FreshnessAlert {
+  id         String   @id @default(cuid())
+  url        String
+  oldHash    String
+  newHash    String
+  detectedAt DateTime @default(now())
+  resolved   Boolean  @default(false)
+
+  @@index([resolved, detectedAt])
+}
+
+/// 신선도 알림을 받을 관리자 기기(단일 행). Web Push 구독 정보.
+model AdminPushTarget {
+  id        String   @id @default("singleton")
+  endpoint  String
+  p256dh    String
+  auth      String
+  updatedAt DateTime @updatedAt
 }

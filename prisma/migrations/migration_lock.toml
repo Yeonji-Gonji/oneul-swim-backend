@@ -1,0 +1,2 @@
+# Prisma Migrate 잠금 파일 — 이 디렉토리는 postgresql 마이그레이션임을 표시한다.
+provider = "postgresql"
