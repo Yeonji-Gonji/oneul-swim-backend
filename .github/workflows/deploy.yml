@@ -66,7 +66,9 @@ jobs:
             set -e
             cd ~/app
             docker compose pull api
-            # 마이그레이션 먼저 — 실패 시(set -e) 배포 중단, 구 버전 유지
-            docker compose run --rm api pnpm prisma migrate deploy
+            # 마이그레이션 먼저 — 실패 시(set -e) 배포 중단, 구 버전 유지.
+            # pnpm 대신 npx: 런타임 pnpm(corepack)은 실행 전 deps 재검사/install 을 시도해
+            # ERR_PNPM_IGNORED_BUILDS 로 실패한다. npx 는 이미지의 로컬 prisma 를 바로 실행한다.
+            docker compose run --rm api npx prisma migrate deploy
             docker compose up -d --no-build api caddy
             docker image prune -f
