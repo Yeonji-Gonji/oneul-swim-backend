@@ -6,7 +6,7 @@
 #   SSH_KEY    서버 접속용 개인키 전체(-----BEGIN ... END----- 포함)
 #   * GHCR 로그인은 자동 제공되는 GITHUB_TOKEN 을 쓰므로 별도 등록 불필요.
 #
-# 서버 사전 준비: 배포 디렉토리(~/oneul-swim-backend)에 docker-compose.yml, Caddyfile, .env 존재.
+# 서버 사전 준비: 배포 디렉토리(~/app)에 docker-compose.yml, Caddyfile, .env 존재.
 name: Deploy
 
 on:
@@ -55,7 +55,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             set -e
-            cd ~/oneul-swim-backend
+            cd ~/app
             docker compose pull api
             # 마이그레이션 먼저 — 실패 시(set -e) 배포 중단, 구 버전 유지
             docker compose run --rm api pnpm prisma migrate deploy
