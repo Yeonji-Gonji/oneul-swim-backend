@@ -27,6 +27,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # 배포 서버가 ARM(Oracle A1, aarch64)이라 arm64 로 빌드해야 한다.
+      # amd64 러너에서 QEMU 로 arm64 를 크로스 빌드한다.
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Buildx
+        uses: docker/setup-buildx-action@v3
+
       - name: GHCR 로그인
         uses: docker/login-action@v3
         with:
@@ -38,6 +46,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
+          platforms: linux/arm64
           push: true
           tags: |
             ${{ env.IMAGE }}:latest
