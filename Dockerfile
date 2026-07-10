@@ -14,6 +14,9 @@ RUN pnpm build
 FROM node:22-alpine
 WORKDIR /app
 ENV NODE_ENV=production
+# 런타임에도 pnpm 필요: CD 의 `pnpm prisma migrate deploy`, 수동 `pnpm seed` 가
+# 컨테이너 안에서 실행되므로 최종 이미지에서도 corepack 을 켜 pnpm 을 PATH 에 둔다.
+RUN corepack enable
 # 마이그레이션(migrate deploy)·시드(tsx seed)에 devDependencies 도 필요해 전체 복사
 COPY --from=build /app/node_modules ./node_modules
 COPY --from=build /app/dist ./dist

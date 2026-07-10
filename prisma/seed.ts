@@ -54,7 +54,7 @@ async function main() {
       address: pool.address,
       lat: pool.lat,
       lng: pool.lng,
-      laneInfo: pool.laneInfo,
+      laneInfo: pool.laneInfo ?? '',
       notice: pool.notice,
       websiteUrl: pool.websiteUrl,
       sourceUrl: pool.sourceUrl,
