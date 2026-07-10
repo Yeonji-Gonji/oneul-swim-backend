@@ -9,11 +9,15 @@ export interface FeeTiers {
   half: Record<string, number>;
 }
 
-/** pools.json 의 pool 한 건 (계약 필드). freeSwim/lessons 는 원본 JSON 그대로 */
+/** pools.json 의 pool 한 건 (계약 필드). freeSwim/lessons/fees 는 원본 JSON 그대로 */
 export interface PoolRecord {
   id: string;
   name: string;
-  region: string;
+  /** 광역(시도)/기초(시군구) — 전국 필터 기준 */
+  sido?: string | null;
+  sigungu?: string | null;
+  /** 표시용 세부 지역 라벨. 필수 아님 */
+  region?: string | null;
   operator: string;
   phone: string;
   address: string;
@@ -26,18 +30,19 @@ export interface PoolRecord {
   updatedAt: string;
   freeSwim: unknown;
   lessons: unknown;
+  /** 시설별 요금표. 데이터 없으면 null */
+  fees?: FeeTiers | null;
+  /** "listing" | "full" */
+  dataStatus?: string;
 }
 
 /** 파일/응답 최상위 shape */
 export interface PoolsPayload {
   _meta?: Record<string, unknown>;
+  /**
+   * @deprecated 전국 확장으로 요금은 pool.fees 로 이동. 프론트 무중단 이행을 위해
+   * 당분간 top-level 에도 대표 요금표를 함께 실어 준다(Phase 3 이후 제거 예정).
+   */
   freeSwimPriceTiers: FeeTiers;
   pools: PoolRecord[];
-}
-
-/** DB FeeTier 행 (계약과 무관한 부분 집합) */
-export interface FeeTierRow {
-  tier: string;
-  target: string;
-  price: number;
 }

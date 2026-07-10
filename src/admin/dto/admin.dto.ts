@@ -58,6 +58,30 @@ export class UpdatePoolDto {
   @IsString()
   @MaxLength(32)
   updatedAt?: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(32)
+  sido?: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(32)
+  sigungu?: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(64)
+  region?: string;
+
+  @IsOptional()
+  @IsIn(['listing', 'full'])
+  dataStatus?: string;
+
+  /** 시설별 요금표 { full:{...}, half:{...} } */
+  @IsOptional()
+  @IsObject()
+  fees?: Record<string, unknown>;
 }
 
 /** 요금표 { full:{...}, half:{...} } */

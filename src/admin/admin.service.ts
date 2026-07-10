@@ -1,6 +1,5 @@
 import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import { flattenFeeTiers } from '../pools/pools.assembler';
 import { PoolsService } from '../pools/pools.service';
 import { PrismaService } from '../prisma/prisma.service';
 import {
@@ -54,31 +53,37 @@ export class AdminService {
     if (dto.phone !== undefined) data.phone = dto.phone;
     if (dto.laneInfo !== undefined) data.laneInfo = dto.laneInfo;
     if (dto.updatedAt !== undefined) data.updatedAt = dto.updatedAt;
+    if (dto.sido !== undefined) data.sido = dto.sido;
+    if (dto.sigungu !== undefined) data.sigungu = dto.sigungu;
+    if (dto.region !== undefined) data.region = dto.region;
+    if (dto.dataStatus !== undefined) data.dataStatus = dto.dataStatus;
     if (dto.freeSwim !== undefined) {
       data.freeSwim = dto.freeSwim as Prisma.InputJsonValue;
     }
     if (dto.lessons !== undefined) {
       data.lessons = dto.lessons as Prisma.InputJsonValue;
     }
+    if (dto.fees !== undefined) {
+      data.fees = dto.fees as Prisma.InputJsonValue;
+    }
     const updated = await this.prisma.pool.update({ where: { id }, data });
     this.pools.invalidateCache();
     return updated;
   }
 
-  /** 요금표 전체 교체(FeeTier upsert) */
+  /**
+   * 요금표 일괄 교체 — 전국 확장 이행기 호환.
+   * 요금은 이제 시설별(Pool.fees)이라, 이 엔드포인트는 자유수영 완비(dataStatus='full')
+   * 시설 전체에 동일 요금표를 적용한다(기존 "전역 요금표 편집" UX 유지).
+   * 개별 시설 요금은 PATCH /admin/pools/:id 의 fees 로 수정한다.
+   */
   async replaceFees(dto: ReplaceFeesDto) {
-    const rows = flattenFeeTiers(dto.tiers);
-    await this.prisma.$transaction(
-      rows.map((row) =>
-        this.prisma.feeTier.upsert({
-          where: { tier_target: { tier: row.tier, target: row.target } },
-          create: row,
-          update: { price: row.price },
-        }),
-      ),
-    );
+    const res = await this.prisma.pool.updateMany({
+      where: { dataStatus: 'full' },
+      data: { fees: dto.tiers as unknown as Prisma.InputJsonValue },
+    });
     this.pools.invalidateCache();
-    return { ok: true, count: rows.length };
+    return { ok: true, count: res.count };
   }
 
   /** 신선도 알림 목록(resolved 필터) */

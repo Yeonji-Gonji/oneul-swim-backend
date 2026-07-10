@@ -1,4 +1,4 @@
-// 오늘수영 스키마 — 제보(Report) + 수영장 데이터(Pool/FeeTier) + 신선도 감시.
+// 오늘수영 스키마 — 제보(Report) + 수영장 데이터(Pool, 요금은 Pool.fees JSON) + 신선도 감시.
 generator client {
   provider = "prisma-client-js"
 }
@@ -50,11 +50,18 @@ model LessonSubscription {
 }
 
 /// 수영장 시설. 프론트 data/pools.json 의 pool 한 건과 동일한 필드 집합.
-/// GET /pools 는 이 테이블 + FeeTier 를 프론트 계약 shape 로 재조립해 돌려준다.
+/// GET /pools 는 이 테이블을 프론트 계약 shape 로 돌려준다.
+/// 전국 확장(2_nationwide): 요금(fees)·자유수영(freeSwim)·강습(lessons)은 시설마다
+/// 있을 수도 없을 수도 있어 nullable. dataStatus 로 "기본정보만(listing)" vs "완비(full)" 구분.
 model Pool {
   id         String @id
   name       String
-  region     String
+  /// 광역(시도) — 전국 필터/검색 기준. 벌크 임포트 시 주소에서 파싱
+  sido       String?
+  /// 기초(시군구)
+  sigungu    String?
+  /// 표시용 세부 지역 라벨(예: "미사"). 필수 아님
+  region     String?
   operator   String
   phone      String
   address    String
@@ -64,28 +71,22 @@ model Pool {
   notice     String
   websiteUrl String
   sourceUrl  String
-  /// 원본(하남도시공사) 표기 그대로의 문자열 날짜(예: "2026-06-01"). 날조 방지 위해 문자열 유지
+  /// 원본 표기 그대로의 문자열 날짜(예: "2026-06-01"). 날조 방지 위해 문자열 유지
   updatedAt  String
-  /// 자유수영 세션 배열 등 원본 JSON 을 그대로 보관
-  freeSwim   Json
-  /// 강습 정보 원본 JSON
-  lessons    Json
+  /// 자유수영 세션 배열 등 원본 JSON. 리스팅 전용 시설은 null
+  freeSwim   Json?
+  /// 강습 정보 원본 JSON. 리스팅 전용 시설은 null
+  lessons    Json?
+  /// 요금표 { full:{대상:금액}, half:{...} }. 시설별. 데이터 없으면 null
+  fees       Json?
+  /// "listing"(기본정보만) | "full"(자유수영·요금까지). 벌크 임포트 기본값 listing
+  dataStatus String @default("listing")
 
   /// 운영 추적용(원본 updatedAt 과 별개). 레코드 생성/갱신 시각
   createdAt   DateTime @default(now())
   dbUpdatedAt DateTime @updatedAt
-}
 
-/// 자유수영 요금표(freeSwimPriceTiers)를 행 단위로 저장. GET /pools 에서 full/half 로 재조립.
-model FeeTier {
-  id     String @id @default(cuid())
-  /// "full"(전액) | "half"(반액)
-  tier   String
-  /// 대상 라벨(예: "성인", "청소년")
-  target String
-  price  Int
-
-  @@unique([tier, target])
+  @@index([sido, sigungu])
 }
 
 /// 신선도 감시용 마지막 스냅샷. 원본 페이지 URL 당 1건.

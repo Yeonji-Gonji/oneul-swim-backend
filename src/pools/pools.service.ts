@@ -26,14 +26,12 @@ export class PoolsService {
 
   private async load(): Promise<PoolsPayload> {
     try {
-      const [poolRows, feeRows] = await Promise.all([
-        this.prisma.pool.findMany({ orderBy: { id: 'asc' } }),
-        this.prisma.feeTier.findMany(),
-      ]);
+      const poolRows = await this.prisma.pool.findMany({
+        orderBy: { id: 'asc' },
+      });
       if (poolRows.length > 0) {
         return assemblePoolsPayload(
           poolRows as unknown as Record<string, unknown>[],
-          feeRows,
           'db',
         );
       }

@@ -1,20 +1,15 @@
 import {
   assemblePoolsPayload,
-  buildFeeTiers,
-  flattenFeeTiers,
+  deriveCompatFeeTiers,
   projectPool,
 } from '../src/pools/pools.assembler';
-import { FeeTierRow } from '../src/pools/pools.types';
-
-const feeRows: FeeTierRow[] = [
-  { tier: 'full', target: '성인', price: 3300 },
-  { tier: 'full', target: '청소년', price: 2750 },
-  { tier: 'half', target: '성인', price: 1650 },
-];
+import { PoolRecord } from '../src/pools/pools.types';
 
 const dbPoolRow = {
   id: 'hanam-misa',
   name: '하남종합운동장 국민체육센터',
+  sido: '경기도',
+  sigungu: '하남시',
   region: '미사',
   operator: '하남도시공사',
   phone: '031-790-2000',
@@ -28,39 +23,21 @@ const dbPoolRow = {
   updatedAt: '2026-06-01',
   freeSwim: { sessions: [] },
   lessons: { programs: [] },
+  fees: { full: { 성인: 3300, 청소년: 2750 }, half: { 성인: 1650 } },
+  dataStatus: 'full',
   // 운영 전용 컬럼 — 응답에서 제외되어야 한다
   createdAt: new Date('2026-06-01'),
   dbUpdatedAt: new Date('2026-06-02'),
 };
 
-describe('buildFeeTiers', () => {
-  it('행들을 full/half 요금표로 재조립한다', () => {
-    expect(buildFeeTiers(feeRows)).toEqual({
-      full: { 성인: 3300, 청소년: 2750 },
-      half: { 성인: 1650 },
-    });
-  });
-
-  it('알 수 없는 tier 는 무시한다', () => {
-    const tiers = buildFeeTiers([
-      ...feeRows,
-      { tier: 'quarter', target: '성인', price: 100 },
-    ]);
-    expect(tiers).not.toHaveProperty(['quarter' as keyof typeof tiers]);
-    expect(Object.keys(tiers)).toEqual(['full', 'half']);
-  });
-
-  it('빈 배열이면 빈 full/half 를 만든다', () => {
-    expect(buildFeeTiers([])).toEqual({ full: {}, half: {} });
-  });
-});
-
 describe('projectPool', () => {
-  it('계약 필드 15개만 남기고 운영 컬럼은 제거한다', () => {
+  it('계약 필드만 남기고 운영 컬럼(createdAt/dbUpdatedAt)은 제거한다', () => {
     const projected = projectPool(dbPoolRow);
     expect(Object.keys(projected).sort()).toEqual(
       [
         'address',
+        'dataStatus',
+        'fees',
         'freeSwim',
         'id',
         'laneInfo',
@@ -72,6 +49,8 @@ describe('projectPool', () => {
         'operator',
         'phone',
         'region',
+        'sido',
+        'sigungu',
         'sourceUrl',
         'updatedAt',
         'websiteUrl',
@@ -80,35 +59,43 @@ describe('projectPool', () => {
     expect(projected).not.toHaveProperty('createdAt');
     expect(projected).not.toHaveProperty('dbUpdatedAt');
     expect(projected.updatedAt).toBe('2026-06-01'); // 문자열 날짜 그대로
+    expect(projected.fees?.full.성인).toBe(3300);
+  });
+});
+
+describe('deriveCompatFeeTiers', () => {
+  it('요금이 있는 첫 pool 의 fees 를 대표 요금표로 뽑는다', () => {
+    const pools = [projectPool(dbPoolRow)];
+    expect(deriveCompatFeeTiers(pools)).toEqual({
+      full: { 성인: 3300, 청소년: 2750 },
+      half: { 성인: 1650 },
+    });
+  });
+
+  it('요금 있는 pool 이 없으면 빈 요금표를 만든다', () => {
+    const listing = [
+      { ...projectPool(dbPoolRow), fees: null } as PoolRecord,
+    ];
+    expect(deriveCompatFeeTiers(listing)).toEqual({ full: {}, half: {} });
   });
 });
 
 describe('assemblePoolsPayload', () => {
   it('프론트 계약 shape 로 조립하고 _meta.source 를 표기한다', () => {
-    const payload = assemblePoolsPayload([dbPoolRow], feeRows, 'db');
+    const payload = assemblePoolsPayload([dbPoolRow], 'db');
     expect(payload._meta).toEqual({ source: 'db' });
+    // 무중단 이행용 top-level 호환 요금표
     expect(payload.freeSwimPriceTiers.full.성인).toBe(3300);
     expect(payload.pools).toHaveLength(1);
     expect(payload.pools[0].id).toBe('hanam-misa');
+    expect(payload.pools[0].fees?.half.성인).toBe(1650);
     expect(payload.pools[0]).not.toHaveProperty('dbUpdatedAt');
   });
 
-  it('source 파라미터가 그대로 _meta 에 실린다', () => {
-    const payload = assemblePoolsPayload([], [], 'file');
+  it('빈 목록이면 빈 요금표와 빈 pools 를 돌려준다', () => {
+    const payload = assemblePoolsPayload([], 'file');
     expect(payload._meta).toEqual({ source: 'file' });
+    expect(payload.freeSwimPriceTiers).toEqual({ full: {}, half: {} });
     expect(payload.pools).toEqual([]);
-  });
-});
-
-describe('flattenFeeTiers', () => {
-  it('요금표를 DB 행 배열로 평탄화한다(왕복 일관성)', () => {
-    const tiers = { full: { 성인: 3300 }, half: { 성인: 1650 } };
-    const rows = flattenFeeTiers(tiers);
-    expect(rows).toEqual([
-      { tier: 'full', target: '성인', price: 3300 },
-      { tier: 'half', target: '성인', price: 1650 },
-    ]);
-    // flatten → build 왕복 시 원본과 동일
-    expect(buildFeeTiers(rows)).toEqual(tiers);
   });
 });
