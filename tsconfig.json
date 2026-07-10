@@ -2,9 +2,7 @@
   "compilerOptions": {
     "module": "commonjs",
     "target": "ES2023",
-    "moduleResolution": "node",
     "outDir": "./dist",
-    "baseUrl": "./",
     "strict": true,
     "strictPropertyInitialization": false,
     "experimentalDecorators": true,
