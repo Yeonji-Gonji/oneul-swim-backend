@@ -1,4 +1,10 @@
-import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  Logger,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { PoolsService } from '../pools/pools.service';
 import { PrismaService } from '../prisma/prisma.service';
@@ -11,6 +17,7 @@ import {
   AnnounceDto,
   ApproveDraftDto,
   DraftStatusValue,
+  KakaoLoginDto,
   RegisterPushTargetDto,
   ReplaceFeesDto,
   ReportStatusValue,
@@ -71,6 +78,70 @@ export class AdminService {
     const updated = await this.prisma.pool.update({ where: { id }, data });
     this.pools.invalidateCache();
     return updated;
+  }
+
+  /**
+   * 카카오 로그인 — 인가코드를 access_token 으로 교환 → 사용자 식별 →
+   * **본인 카카오 id(ADMIN_KAKAO_ID)일 때만** 어드민 토큰(ADMIN_TOKEN)을 발급한다.
+   * 발급된 토큰은 기존 AdminGuard 로 보호되는 모든 어드민 라우트에 그대로 쓰인다.
+   */
+  async loginWithKakao(dto: KakaoLoginDto) {
+    const restKey = process.env.KAKAO_REST_KEY;
+    const adminKakaoId = process.env.ADMIN_KAKAO_ID;
+    const adminToken = process.env.ADMIN_TOKEN;
+    if (!restKey || !adminKakaoId || !adminToken) {
+      this.logger.error(
+        '카카오 로그인 환경변수 누락(KAKAO_REST_KEY / ADMIN_KAKAO_ID / ADMIN_TOKEN)',
+      );
+      throw new UnauthorizedException('로그인이 구성되지 않았습니다.');
+    }
+
+    // 1) 인가코드 → access_token
+    const params = new URLSearchParams({
+      grant_type: 'authorization_code',
+      client_id: restKey,
+      redirect_uri: dto.redirectUri,
+      code: dto.code,
+    });
+    const clientSecret = process.env.KAKAO_CLIENT_SECRET;
+    if (clientSecret) params.set('client_secret', clientSecret);
+
+    const tokenRes = await fetch('https://kauth.kakao.com/oauth/token', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: params.toString(),
+    });
+    if (!tokenRes.ok) {
+      this.logger.warn(`카카오 토큰 교환 실패: ${tokenRes.status}`);
+      throw new UnauthorizedException('카카오 인증에 실패했습니다.');
+    }
+    const tokenBody = (await tokenRes.json()) as { access_token?: string };
+    if (!tokenBody.access_token) {
+      throw new UnauthorizedException('카카오 토큰을 받지 못했습니다.');
+    }
+
+    // 2) access_token → 사용자 식별
+    const meRes = await fetch('https://kapi.kakao.com/v2/user/me', {
+      headers: { Authorization: `Bearer ${tokenBody.access_token}` },
+    });
+    if (!meRes.ok) {
+      throw new UnauthorizedException('카카오 사용자 조회에 실패했습니다.');
+    }
+    const me = (await meRes.json()) as {
+      id?: number;
+      kakao_account?: { profile?: { nickname?: string } };
+    };
+
+    // 3) 본인 계정만 승인 권한 부여
+    if (String(me.id) !== adminKakaoId) {
+      this.logger.warn(`권한 없는 카카오 계정 접근 시도: ${me.id}`);
+      throw new ForbiddenException('승인 권한이 없는 계정입니다.');
+    }
+
+    return {
+      token: adminToken,
+      nickname: me.kakao_account?.profile?.nickname ?? '관리자',
+    };
   }
 
   /** 시간표 AI 초안 목록(status 필터, 미지정 시 PENDING, 최근순 최대 200건) */

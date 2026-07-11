@@ -20,7 +20,9 @@
   - 신규 `ScheduleDraft` 검수 큐 모델 + 마이그레이션 `3_schedule_drafts`(증분 CREATE, 안전).
   - `scripts/enrich-swim-schedules.ts` 재작성: 정규 sessions 스키마만 생성 + 방어 검증(요일·시각 없으면 폐기) → **Pool 에 직접 쓰지 않고 ScheduleDraft(PENDING) 적재**. `limit` 인자로 배치 제어.
   - 어드민 엔드포인트: `GET /admin/schedule-drafts`, `POST .../:id/approve`(교정값 우선, 승인 시 Pool.freeSwim 반영+dataStatus full+updatedAt 갱신), `POST .../:id/reject`.
-  - **남은 일**: ① 커밋·push → CD 가 마이그레이션 배포 ② 컨테이너에서 enrich 실행해 초안 적재 ③ **프론트 어드민 검수 UI(다음 작업)** ④ 승인 운영. 자동 발행 없음(잘못된 "지금 열림" 방지).
+  - **카카오 로그인 게이트**: 공개 `POST /admin/auth/kakao`(인가코드 검증 → 본인 `ADMIN_KAKAO_ID`일 때만 `ADMIN_TOKEN` 발급). 기존 AdminGuard 그대로 재사용. 프론트 `/admin` 카카오 로그인 + 시간표 초안 검수 UI 완료.
+  - **필요 env(서버 .env)**: `ADMIN_KAKAO_ID`(본인 카카오 id), `KAKAO_CLIENT_SECRET`(콘솔에서 켠 경우만). 프론트: `NEXT_PUBLIC_KAKAO_REST_KEY`. 카카오 개발자콘솔: 카카오 로그인 활성화 + Redirect URI(`<도메인>/admin`, `localhost:3000/admin`) 등록.
+  - **남은 일**: ① 커밋·push → CD 가 마이그레이션 배포 ② env 세팅 + 카카오 콘솔 설정 ③ 컨테이너에서 enrich 실행해 초안 적재 ④ 카카오 로그인 후 승인 운영. 자동 발행 없음(잘못된 "지금 열림" 방지).
 - **전화번호·웹사이트 enrich(`scripts/enrich-pool-details.ts`)는 그대로 사용 가능**: 카카오 로컬 검색만 쓰고 정확한 필드에 저장. 배포 후 컨테이너에서 바로 실행하면 quick win.
 - **이행 후 정리**: 프론트 라이브 이후 `/pools` top-level `freeSwimPriceTiers` 호환 shim 제거.
 - **자유수영 시간표 점진 채우기**: 리스팅 602곳 중 시간표 미입력 수영장을 지역별로 어드민/제보로 `full` 승격.
