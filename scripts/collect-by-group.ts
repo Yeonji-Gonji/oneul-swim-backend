@@ -72,17 +72,19 @@ async function applyGroupFees() {
 
   for (const g of groups) {
     const { sido, sigungu, fees, notice, applyFull } = g;
-    if (!sido || !sigungu || !fees) {
+    if (!sido || !fees) {
       console.warn(`[WARN] Invalid group config: ${JSON.stringify(g)}. Skipping.`);
       continue;
     }
 
-    // Find all matching pools in the group
+    // Find all matching pools in the group (if sigungu is null/undefined, match whole sido)
+    const whereClause: any = { sido };
+    if (sigungu !== null && sigungu !== undefined) {
+      whereClause.sigungu = sigungu;
+    }
+
     const targetPools = await prisma.pool.findMany({
-      where: {
-        sido,
-        sigungu
-      }
+      where: whereClause
     });
 
     console.log(`[INFO] Group [${sido} ${sigungu}]: Found ${targetPools.length} pools in database.`);

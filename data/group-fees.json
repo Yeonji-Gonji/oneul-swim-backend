@@ -11,7 +11,7 @@
         }
       },
       "notice": "창원시설공단 공통 요금 상속 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "경기도",
@@ -24,7 +24,7 @@
         }
       },
       "notice": "수원도시공사 공통 요금 상속 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "경기도",
@@ -37,7 +37,7 @@
         }
       },
       "notice": "남양주도시공사 평일 기준 공통 요금 적용 (주말 30% 할증, 관외 거주자 200% 할증)",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "경기도",
@@ -50,7 +50,7 @@
         }
       },
       "notice": "김포도시관리공사 김포시민 기준 공통 요금 적용 (관외 거주자 할증 적용)",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "경기도",
@@ -63,7 +63,7 @@
         }
       },
       "notice": "성남도시개발공사 평일 1시간 기준 공통 요금 적용 (주말/공휴일 2시간 20% 내외 할증)",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "경기도",
@@ -76,7 +76,7 @@
         }
       },
       "notice": "시흥도시공사 공통 요금 적용 (사전 회원가입 및 본인인증 필수)",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "경상북도",
@@ -89,7 +89,7 @@
         }
       },
       "notice": "포항시시설관리공단 공통 요금 적용 (기본 3시간 이용 제한, 키 155cm 미만 입장 제한 규정 있음)",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "경기도",
@@ -102,7 +102,7 @@
         }
       },
       "notice": "용인도시공사 공통 요금 적용 (일일 자유수영 온라인 사전 예약 및 결제 권장)",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "서울특별시",
@@ -115,7 +115,7 @@
         }
       },
       "notice": "서울특별시 구립/시립 체육시설 평균 요금 준용 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "인천광역시",
@@ -128,7 +128,7 @@
         }
       },
       "notice": "인천광역시 체육회 및 구립 시설 평균 요금 준용 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "세종특별자치시",
@@ -141,7 +141,7 @@
         }
       },
       "notice": "세종특별자치시 체육시설 조례 기준 요금 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "대구광역시",
@@ -154,7 +154,7 @@
         }
       },
       "notice": "대구광역시 체육시설 공통 기준 요금 적용 (두류수영장 준용)",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "경기도",
@@ -167,7 +167,7 @@
         }
       },
       "notice": "안산도시공사 안산시민 기준 요금 적용 (관외 거주자 50% 가산)",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "경기도",
@@ -180,7 +180,7 @@
         }
       },
       "notice": "군포도시공사 군포시민 기준 요금 적용 (관외 거주자 50% 가산)",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "부산광역시",
@@ -193,7 +193,7 @@
         }
       },
       "notice": "부산시설공단 기준 요금 적용 (사직실내수영장 준용)",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "경기도",
@@ -206,7 +206,7 @@
         }
       },
       "notice": "파주도시관광공사 평일 기준 요금 적용 (주말 요금 할증 있음)",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "경상남도",
@@ -219,7 +219,7 @@
         }
       },
       "notice": "양산시시설관리공단 2024년 7월 인상 조례 기준 요금 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "경기도",
@@ -232,7 +232,7 @@
         }
       },
       "notice": "의왕도시공사 의왕시민 기준 요금 적용 (관외 거주자 30% 가산)",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "대전광역시",
@@ -245,7 +245,7 @@
         }
       },
       "notice": "대전광역시 공공 체육시설 평균 요금 준용 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "경기도",
@@ -258,7 +258,7 @@
         }
       },
       "notice": "화성도시공사 화성시민 기준 공통 요금 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "서울특별시",
@@ -271,7 +271,7 @@
         }
       },
       "notice": "성동구도시관리공단 구립 체육시설 공통 요금 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "경기도",
@@ -284,7 +284,7 @@
         }
       },
       "notice": "고양도시관리공사 고양체육관 기준 요금 적용 (시설별 다소 상이)",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "경기도",
@@ -297,7 +297,7 @@
         }
       },
       "notice": "부천도시공사 구립 체육시설 공통 요금 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "서울특별시",
@@ -310,7 +310,7 @@
         }
       },
       "notice": "용산구시설관리공단 구립 체육시설 공통 요금 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "경기도",
@@ -323,7 +323,7 @@
         }
       },
       "notice": "양주도시공사 양주시민 기준 공통 요금 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "전북특별자치도",
@@ -336,7 +336,7 @@
         }
       },
       "notice": "군산국민체육센터 기준 일일 자유수영 요금 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "인천광역시",
@@ -349,7 +349,7 @@
         }
       },
       "notice": "인천 서구 구립 체육관 기준 평균 요금 준용 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "전북특별자치도",
@@ -362,7 +362,7 @@
         }
       },
       "notice": "익산학생교육문화관 수영장 요금 준용 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "전남광주통합특별시",
@@ -375,7 +375,7 @@
         }
       },
       "notice": "여수도시관리공단 진남/해양수영장 평균 요금 준용 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "경기도",
@@ -388,7 +388,7 @@
         }
       },
       "notice": "광주도시관리공사 광주문화스포츠센터 기준 요금 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "충청북도",
@@ -401,7 +401,7 @@
         }
       },
       "notice": "청주시설관리공단 공통 요금 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "경기도",
@@ -414,7 +414,7 @@
         }
       },
       "notice": "평택시 이충문화체육센터 기준 공통 요금 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "서울특별시",
@@ -427,7 +427,7 @@
         }
       },
       "notice": "영등포구시설관리공단 평일 기준 요금 적용 (주말 할증 있음)",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "서울특별시",
@@ -440,7 +440,7 @@
         }
       },
       "notice": "강북구도시관리공단 강북문화예술회관 기준 요금 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "경기도",
@@ -453,7 +453,7 @@
         }
       },
       "notice": "구리도시공사 구리시민 기준 요금 적용 (관외 거주자 할증)",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "제주특별자치도",
@@ -466,7 +466,7 @@
         }
       },
       "notice": "제주도 체육진흥 조례 제주시 종합경기장 요금 준용 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "대구광역시",
@@ -479,7 +479,7 @@
         }
       },
       "notice": "달성군시설관리공단 달성테크노스포츠센터 기준 요금 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "서울특별시",
@@ -492,7 +492,7 @@
         }
       },
       "notice": "구로구 체육시설 평균 요금 준용 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "서울특별시",
@@ -505,7 +505,7 @@
         }
       },
       "notice": "양천구시설관리공단 양천구민체육센터 기준 요금 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "울산광역시",
@@ -518,7 +518,7 @@
         }
       },
       "notice": "울산북구시설관리공단 쇠부리체육센터 기준 요금 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "서울특별시",
@@ -531,7 +531,7 @@
         }
       },
       "notice": "도봉구 체육시설 평균 요금 준용 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "강원특별자치도",
@@ -544,7 +544,7 @@
         }
       },
       "notice": "춘천도시공사 통합 체육관 기준 공통 요금 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "부산광역시",
@@ -557,7 +557,7 @@
         }
       },
       "notice": "부산 기장군 공공 수영장 평균 요금 준용 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "서울특별시",
@@ -570,7 +570,7 @@
         }
       },
       "notice": "동작구 체육시설 평균 요금 준용 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "충청남도",
@@ -583,7 +583,7 @@
         }
       },
       "notice": "아산시시설관리공단 방축수영장 기준 요금 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "전북특별자치도",
@@ -596,7 +596,7 @@
         }
       },
       "notice": "완주군국민체육센터 2025-07 인상 기준 요금 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "경기도",
@@ -609,7 +609,7 @@
         }
       },
       "notice": "안성시 안성국민체육센터 기준 공통 요금 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "경기도",
@@ -622,7 +622,7 @@
         }
       },
       "notice": "의정부시스포츠센터 기준 공통 요금 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "인천광역시",
@@ -635,7 +635,7 @@
         }
       },
       "notice": "남동수영장 기준 공통 요금 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "경기도",
@@ -648,7 +648,7 @@
         }
       },
       "notice": "광명여성비전센터 기준 공통 요금 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "경상북도",
@@ -661,7 +661,7 @@
         }
       },
       "notice": "구미 올림픽기념국민생활관 기준 공통 요금 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "경기도",
@@ -674,7 +674,7 @@
         }
       },
       "notice": "이천스포츠센터 기준 요금 적용 (비교적 고가 설정)",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "경기도",
@@ -687,7 +687,7 @@
         }
       },
       "notice": "오산스포츠센터 기준 공통 요금 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "울산광역시",
@@ -700,7 +700,7 @@
         }
       },
       "notice": "울산광역시 공공체육관 기준 평균 요금 준용 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "전남광주통합특별시",
@@ -713,7 +713,7 @@
         }
       },
       "notice": "광주광역시 국제수영장 및 남부대수영장 평균 요금 준용 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "대전광역시",
@@ -726,7 +726,7 @@
         }
       },
       "notice": "유성구 구즉국민체육센터 기준 공통 요금 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "충청북도",
@@ -739,7 +739,7 @@
         }
       },
       "notice": "충주국민체육센터 기준 공통 요금 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "강원특별자치도",
@@ -752,7 +752,7 @@
         }
       },
       "notice": "강릉국민체육센터 기준 공통 요금 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "경기도",
@@ -765,7 +765,7 @@
         }
       },
       "notice": "가평 한석봉체육관 기준 공통 요금 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "전남광주통합특별시",
@@ -778,7 +778,7 @@
         }
       },
       "notice": "목포 부주산국민체육센터 기준 공통 요금 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "전남광주통합특별시",
@@ -791,7 +791,7 @@
         }
       },
       "notice": "광양수영장 기준 공통 요금 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "전북특별자치도",
@@ -804,7 +804,7 @@
         }
       },
       "notice": "정읍청소년수련관 기준 공통 요금 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "울산광역시",
@@ -817,7 +817,7 @@
         }
       },
       "notice": "울산 중구수영장 기준 공통 요금 적용 (중구민 요율)",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "인천광역시",
@@ -830,7 +830,7 @@
         }
       },
       "notice": "강화국민체육센터 기준 공통 요금 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "충청남도",
@@ -843,7 +843,7 @@
         }
       },
       "notice": "천안도시공사 공통 기준 요금 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "전북특별자치도",
@@ -856,7 +856,7 @@
         }
       },
       "notice": "전주시설공단 공통 기준 요금 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "경상남도",
@@ -869,7 +869,7 @@
         }
       },
       "notice": "진주 스포츠클럽 공통 기준 요금 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "강원특별자치도",
@@ -882,7 +882,7 @@
         }
       },
       "notice": "원주시설관리공단 공통 기준 요금 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "경상북도",
@@ -895,7 +895,7 @@
         }
       },
       "notice": "의성군청소년센터 기준 요금 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "경상남도",
@@ -908,7 +908,7 @@
         }
       },
       "notice": "창녕군립수영장 기준 요금 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "전라남도",
@@ -921,7 +921,7 @@
         }
       },
       "notice": "화순군민종합문화센터 기준 요금 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "충청북도",
@@ -934,7 +934,7 @@
         }
       },
       "notice": "진천국민체육센터 기준 요금 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "충청북도",
@@ -947,7 +947,7 @@
         }
       },
       "notice": "옥천국민체육센터 기준 요금 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "경상북도",
@@ -960,7 +960,7 @@
         }
       },
       "notice": "경산국민체육센터 시민 요금 준용 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "경상북도",
@@ -973,7 +973,7 @@
         }
       },
       "notice": "예천청소년수련관 기준 요금 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "경상남도",
@@ -986,7 +986,7 @@
         }
       },
       "notice": "통영 체육청소년센터 기준 요금 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "전라남도",
@@ -999,7 +999,7 @@
         }
       },
       "notice": "순천문화건강센터 기준 요금 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "충청남도",
@@ -1012,7 +1012,7 @@
         }
       },
       "notice": "논산국민체육센터 기준 요금 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "대전광역시",
@@ -1025,7 +1025,7 @@
         }
       },
       "notice": "대덕구국민체육센터 기준 요금 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "경상남도",
@@ -1038,7 +1038,7 @@
         }
       },
       "notice": "거제 오션사이드 수영장 요금 준용 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "경상남도",
@@ -1051,7 +1051,7 @@
         }
       },
       "notice": "고성군 문화체육센터 기준 요금 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "경기도",
@@ -1064,7 +1064,7 @@
         }
       },
       "notice": "여주 가남체육센터 기준 요금 준용 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "경상북도",
@@ -1077,7 +1077,7 @@
         }
       },
       "notice": "칠곡국민체육센터 기준 요금 준용 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "강원특별자치도",
@@ -1090,7 +1090,7 @@
         }
       },
       "notice": "동해시시설관리공단 근로자복지관 기준 요금 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "강원특별자치도",
@@ -1103,7 +1103,7 @@
         }
       },
       "notice": "고성군 복합국민체육센터 기준 요금 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "충청남도",
@@ -1116,7 +1116,7 @@
         }
       },
       "notice": "태안군국민체육센터 기준 요금 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "전북특별자치도",
@@ -1129,7 +1129,7 @@
         }
       },
       "notice": "고창청소년수련관 수영장 기준 요금 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "전라남도",
@@ -1142,7 +1142,7 @@
         }
       },
       "notice": "나주종합스포츠파크 수영장 기준 요금 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "충청남도",
@@ -1155,7 +1155,7 @@
         }
       },
       "notice": "홍성군 체육시설 평균 요금 준용 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "경상북도",
@@ -1168,7 +1168,7 @@
         }
       },
       "notice": "경주국민체육센터 기준 요금 준용 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "경상북도",
@@ -1181,7 +1181,7 @@
         }
       },
       "notice": "안동시설관리공단 공통 요금 준용 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "경상북도",
@@ -1194,7 +1194,7 @@
         }
       },
       "notice": "문경국민체육센터 기준 요금 준용 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "경상북도",
@@ -1207,7 +1207,7 @@
         }
       },
       "notice": "영천국민체육센터 기준 요금 준용 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "충청북도",
@@ -1220,7 +1220,7 @@
         }
       },
       "notice": "제천국민체육센터 기준 요금 준용 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "충청남도",
@@ -1233,7 +1233,7 @@
         }
       },
       "notice": "서산국민체육센터 기준 요금 준용 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "전라북도",
@@ -1246,7 +1246,7 @@
         }
       },
       "notice": "김제실내수영장 기준 요금 준용 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "경기도",
@@ -1259,7 +1259,7 @@
         }
       },
       "notice": "안양시 체육시설 공통 요금 준용 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "전라남도",
@@ -1272,7 +1272,7 @@
         }
       },
       "notice": "해남 우슬체육센터 요금 준용 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "경기도",
@@ -1285,7 +1285,7 @@
         }
       },
       "notice": "연천군 청소년수련관 요금 준용 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "경상북도",
@@ -1298,7 +1298,7 @@
         }
       },
       "notice": "경산수영장 요금 준용 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "경기도",
@@ -1311,7 +1311,7 @@
         }
       },
       "notice": "의왕 포일스포츠센터 요금 준용 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "강원특별자치도",
@@ -1324,7 +1324,7 @@
         }
       },
       "notice": "고성 국민체육센터 요금 준용 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "강원특별자치도",
@@ -1337,7 +1337,7 @@
         }
       },
       "notice": "춘천 반다비국민체육센터 요금 준용 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "경기도",
@@ -1350,7 +1350,7 @@
         }
       },
       "notice": "과천시 청소년수련관 기준 요금 준용 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "경상남도",
@@ -1363,7 +1363,7 @@
         }
       },
       "notice": "하동국민체육센터 기준 요금 준용 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "경상북도",
@@ -1376,7 +1376,7 @@
         }
       },
       "notice": "울진국민체육센터 기준 요금 준용 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "경상남도",
@@ -1389,7 +1389,7 @@
         }
       },
       "notice": "합천국민체육센터 기준 요금 준용 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "전북특별자치도",
@@ -1402,7 +1402,7 @@
         }
       },
       "notice": "부안국민체육센터 기준 요금 준용 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "경상남도",
@@ -1415,7 +1415,7 @@
         }
       },
       "notice": "김해시도시개발공사 기준 평균 요금 준용 적용",
-      "applyFull": false
+      "applyFull": true
     },
     {
       "sido": "충청남도",
@@ -1428,7 +1428,7 @@
         }
       },
       "notice": "당진시 국민체육센터 기준 평일 요금 적용",
-      "applyFull": false
+      "applyFull": true
     }
   ]
 }
