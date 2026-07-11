@@ -71,7 +71,7 @@ async function applyGroupFees() {
   let totalUpdated = 0;
 
   for (const g of groups) {
-    const { sido, sigungu, fees, notice, applyFull } = g;
+    const { sido, sigungu, fees, notice } = g;
     if (!sido || !fees) {
       console.warn(`[WARN] Invalid group config: ${JSON.stringify(g)}. Skipping.`);
       continue;
@@ -94,15 +94,16 @@ async function applyGroupFees() {
       const updateData: any = {
         fees
       };
-      
+
       if (notice) {
         updateData.notice = notice;
       }
-      
-      // If applyFull is true, upgrade dataStatus to full
-      if (applyFull) {
-        updateData.dataStatus = 'full';
-      }
+
+      // dataStatus 는 여기서 건드리지 않는다.
+      // "full" = 자유수영 시간표까지 있는 시설. 요금만으로 승격하면
+      // 시간표 없는 시설이 full 로 잘못 표기된다(정합성 이슈의 원인이었음).
+      // dataStatus 의 단일 기준은 scripts/recompute-data-status.ts (freeSwim 세션 유무).
+      // 요금 적재 후 필요하면 그 스크립트를 돌려 재계산할 것.
 
       await prisma.pool.update({
         where: { id: pool.id },

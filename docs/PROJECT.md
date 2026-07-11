@@ -1,6 +1,6 @@
 # PROJECT: oneul-swim-backend 현황판
 
-> 갱신일: 2026-07-11 (서버 정식 배포 완료 + 전국 확장 실데이터 적재 완료 + 시간표 파이프라인 실패 진행중)
+> 갱신일: 2026-07-11 (서버 배포·전국 실데이터 적재 완료 + dataStatus 정합성 재계산 코드 완료·서버 apply 대기)
 > 히스토리·의사결정 정본: obsidian vault `projects/oneul-swim.md` (private)
 > 운영 런북: [OPERATIONS.md](./OPERATIONS.md)
 
@@ -8,18 +8,18 @@
 
 - NestJS 11 + Prisma 6 + PostgreSQL 16. Oracle Cloud A1(오사카) Docker Compose 3컨테이너(caddy+api+db) 운영 중.
 - 도메인 **`https://oneul-swim.duckdns.org`** (DuckDNS + Caddy 자동 HTTPS). 이전 sslip.io에서 전환. 월 0원(Always Free 한도 내 PAYG).
-- **Prisma migrate 정식 운영**: `0_init`(채택됨) → `1_data_pipeline`(적용) → `2_nationwide`(적용 완료). DB 현황: Pool 606곳(하남 4 + 전국 602), 요금 입력 완료, 자유수영 시간표 일부 입력(진행중).
+- **Prisma migrate 정식 운영**: `0_init`(채택됨) → `1_data_pipeline`(적용) → `2_nationwide`(적용 완료). DB 현황: Pool 604곳(하남 중복 정리 완료), 요금 입력 완료, 자유수영 시간표 32곳 입력(나머지는 listing, 진행중).
 - CD 정상: main 푸시 → GHCR **arm64** 이미지 빌드(QEMU) → 서버 pull → `npx prisma migrate deploy` → 무중단 교체.
 - 운영 자동화 가동: 일일 백업 03:30(7일 롤링 + healthchecks 핑), /health 5분 감시, DuckDNS 5분 갱신. healthchecks.io 체크 3개.
 - 배포 디렉토리는 서버상 `~/app` (런북/워크플로 경로 그에 맞춤).
 
 ## 진행 중 / 남은 일
 
-- **시간표 파이프라인 실패 진행중**: `scripts/enrich-swim-schedules.ts`(카카오 검색 → Gemini 추출 → DB 저장) 재시도 중. 실패 원인 두 가지: ① Gemini API 429(분당 제한) ② 웹에 시간표 자체가 없는 수영장 다수(applyFull=false 건너뜀 비율 높음). 자동화로는 한계 도달 → 어드민+제보 크라우드소싱으로 전환 검토.
+- **dataStatus 정합성 재계산 — 서버 apply 대기(코드 완료)**: 요금 일괄적재(collect-by-group `applyFull=true`)가 시간표 유무와 무관하게 604곳 전부를 `full`로 승격시켜, 실제 시간표는 32곳뿐인데 572곳이 `full`로 잘못 표기됨. 화면은 프론트가 freeSwim 실데이터로 판정해 정상이나, "채울 대상" 추적 신호가 사라짐. 해결: ① `scripts/recompute-data-status.ts` 신규(freeSwim 세션 유무 단일 기준으로 재계산, 기본 dry-run·`apply` 인자로 반영) ② `collect-by-group.ts`가 더는 dataStatus를 건드리지 않도록 수정(재발 방지). **서버에서 `npx tsx scripts/recompute-data-status.ts apply` 실행 필요**(백업 후).
+- **시간표 파이프라인 실패 진행중**: `scripts/enrich-swim-schedules.ts`(카카오 검색 → Gemini 추출 → DB 저장) 재시도 중. 실패 원인 두 가지: ① Gemini API 429(분당 제한) ② 웹에 시간표 자체가 없는 수영장 다수(건너뜀 비율 높음). 자동화로는 한계 도달 → 어드민+제보 크라우드소싱으로 전환 검토.
 - **이행 후 정리**: 프론트 라이브 이후 `/pools` top-level `freeSwimPriceTiers` 호환 shim 제거.
 - **자유수영 시간표 점진 채우기**: 리스팅 602곳 중 시간표 미입력 수영장을 지역별로 어드민/제보로 `full` 승격.
-- **KSPO 데이터 중복 정리**: 하남 4곳이 KSPO import로 중복 가능성 있음. 어드민에서 수동 확인·정리.
-- (선택) 정기 재임포트로 신선도 갱신 — `import-kspo.ts` 재실행(upsert).
+- (선택) 정기 재임포트로 신선도 갱신 — `import-kspo.ts` 재실행(upsert). 재임포트/요금 재적재 후에는 `recompute-data-status.ts`로 dataStatus 재계산할 것.
 
 ## 최근 완료
 
