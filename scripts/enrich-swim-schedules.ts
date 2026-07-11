@@ -125,14 +125,10 @@ async function main() {
     process.exit(1);
   }
 
-  // 아직 자유수영 시간표 정보가 채워지지 않은 수영장 가져오기
-  const pools = await prisma.pool.findMany({
-    where: {
-      OR: [
-        { freeSwim: null },
-        { laneInfo: '' }
-      ]
-    }
+  // 전체 수영장을 가져와서 메모리에서 필터링 (Prisma JSON null 조회 오류 방지)
+  const allPools = await prisma.pool.findMany();
+  const pools = allPools.filter((pool) => {
+    return !pool.freeSwim || pool.laneInfo === '';
   });
 
   console.log(`[INFO] Found ${pools.length} pools awaiting AI schedule enrichment.`);
@@ -155,8 +151,8 @@ async function main() {
     }
 
     // 2. Gemini API로 구조화 데이터 추출
-    // API 한도 제약을 감안해 순차적 실행 (초당 2~3회 수준 방어 위해 500ms 딜레이)
-    await delay(500);
+    // API 한도 제약을 감안해 순차적 실행 (초당 2~3회 수준 방어 위해 4500ms 딜레이)
+    await delay(4500);
     const aiResult = await extractScheduleWithAI(pool.name, context, geminiKey);
 
     if (aiResult && aiResult.applyFull) {
