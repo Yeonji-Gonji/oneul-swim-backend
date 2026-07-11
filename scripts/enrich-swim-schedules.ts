@@ -93,10 +93,7 @@ Rules:
               }
             ]
           }
-        ],
-        generationConfig: {
-          responseMimeType: 'application/json'
-        }
+        ]
       })
     });
 
@@ -106,10 +103,13 @@ Rules:
     }
 
     const resBody = await res.json();
-    const rawText = resBody?.candidates?.[0]?.content?.parts?.[0]?.text;
+    let rawText = resBody?.candidates?.[0]?.content?.parts?.[0]?.text;
     if (!rawText) return null;
 
-    return JSON.parse(rawText.trim());
+    // 만약 마크다운 백틱 코드 블록(```json)이 포함되어 있다면 제거
+    rawText = rawText.replace(/```json/i, '').replace(/```/g, '').trim();
+
+    return JSON.parse(rawText);
   } catch (error) {
     console.error(`[ERROR] Gemini API extraction failed for: ${poolName}`, error);
     return null;
