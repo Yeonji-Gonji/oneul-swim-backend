@@ -1,5 +1,6 @@
 import { Type } from 'class-transformer';
 import {
+  IsArray,
   IsBoolean,
   IsIn,
   IsInt,
@@ -105,6 +106,38 @@ export class ReplaceFeesDto {
 export class UpdateFreshnessDto {
   @IsBoolean()
   resolved: boolean;
+}
+
+/** 시간표 초안 상태(Prisma DraftStatus 와 동일) */
+export const DRAFT_STATUSES = ['PENDING', 'APPROVED', 'REJECTED'] as const;
+export type DraftStatusValue = (typeof DRAFT_STATUSES)[number];
+
+/** GET /admin/schedule-drafts?status= (미지정 시 PENDING) */
+export class ListDraftsQueryDto {
+  @IsOptional()
+  @IsIn(DRAFT_STATUSES)
+  status?: DraftStatusValue;
+}
+
+/**
+ * POST /admin/schedule-drafts/:id/approve
+ * 어드민이 초안을 그대로 승인하거나(본문 없음), 검수 중 교정한 값으로 덮어써 승인할 수 있다.
+ * sessions 미지정 시 초안의 sessions 를 그대로 Pool.freeSwim 에 반영한다.
+ */
+export class ApproveDraftDto {
+  @IsOptional()
+  @IsArray()
+  sessions?: Record<string, unknown>[];
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(500)
+  laneInfo?: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(2000)
+  notice?: string;
 }
 
 /** POST /admin/announce — 강습 접수 소식 구독자 전체에게 푸시 */

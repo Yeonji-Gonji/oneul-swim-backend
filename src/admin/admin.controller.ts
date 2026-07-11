@@ -13,6 +13,8 @@ import { AdminGuard } from './admin.guard';
 import { AdminService } from './admin.service';
 import {
   AnnounceDto,
+  ApproveDraftDto,
+  ListDraftsQueryDto,
   ListReportsQueryDto,
   RegisterPushTargetDto,
   ReplaceFeesDto,
@@ -75,5 +77,23 @@ export class AdminController {
   @Post('announce')
   announce(@Body() dto: AnnounceDto) {
     return this.admin.announce(dto);
+  }
+
+  /** 자유수영 시간표 AI 초안 목록(status 필터, 미지정 시 PENDING) */
+  @Get('schedule-drafts')
+  listScheduleDrafts(@Query() query: ListDraftsQueryDto) {
+    return this.admin.listScheduleDrafts(query.status);
+  }
+
+  /** 초안 승인 → Pool.freeSwim 에 반영(어드민 교정값 우선) */
+  @Post('schedule-drafts/:id/approve')
+  approveScheduleDraft(@Param('id') id: string, @Body() dto: ApproveDraftDto) {
+    return this.admin.approveScheduleDraft(id, dto);
+  }
+
+  /** 초안 반려 */
+  @Post('schedule-drafts/:id/reject')
+  rejectScheduleDraft(@Param('id') id: string) {
+    return this.admin.rejectScheduleDraft(id);
   }
 }

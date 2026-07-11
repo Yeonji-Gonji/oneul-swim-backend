@@ -118,3 +118,34 @@ model AdminPushTarget {
   auth      String
   updatedAt DateTime @updatedAt
 }
+
+/// 자유수영 시간표 AI 초안 검수 큐.
+/// enrich-swim-schedules 스크립트가 카카오 검색+Gemini 추출로 PENDING 초안을 적재하고,
+/// 어드민이 검수·승인해야 Pool.freeSwim 에 반영된다(자동 발행 금지 — 잘못된 시간은 헛걸음을 유발).
+model ScheduleDraft {
+  id     String @id @default(cuid())
+  poolId String
+  /// 어드민 목록 표시용 denormalized 시설명
+  poolName String
+  /// AI 추출 세션 배열(정규 FreeSwimSession[] shape). 승인 시 Pool.freeSwim.sessions 로 반영
+  sessions Json
+  laneInfo String @default("")
+  notice   String @default("")
+  /// 근거 스니펫(검수·감사용) + 검색 쿼리
+  sourceContext String @default("")
+  sourceQuery   String @default("")
+  /// AI 자기신뢰도: 'low' | 'medium' | 'high'
+  confidence String      @default("low")
+  status     DraftStatus @default(PENDING)
+  createdAt  DateTime    @default(now())
+  reviewedAt DateTime?
+
+  @@index([status, createdAt])
+  @@index([poolId])
+}
+
+enum DraftStatus {
+  PENDING // 검수 대기
+  APPROVED // 승인 → Pool 반영됨
+  REJECTED // 반려
+}

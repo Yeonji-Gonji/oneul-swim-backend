@@ -9,6 +9,8 @@ import {
 } from '../push/web-push.helper';
 import {
   AnnounceDto,
+  ApproveDraftDto,
+  DraftStatusValue,
   RegisterPushTargetDto,
   ReplaceFeesDto,
   ReportStatusValue,
@@ -69,6 +71,63 @@ export class AdminService {
     const updated = await this.prisma.pool.update({ where: { id }, data });
     this.pools.invalidateCache();
     return updated;
+  }
+
+  /** 시간표 AI 초안 목록(status 필터, 미지정 시 PENDING, 최근순 최대 200건) */
+  listScheduleDrafts(status?: DraftStatusValue) {
+    return this.prisma.scheduleDraft.findMany({
+      where: { status: status ?? 'PENDING' },
+      orderBy: { createdAt: 'desc' },
+      take: 200,
+    });
+  }
+
+  /**
+   * 초안 승인 → Pool.freeSwim 에 반영.
+   * 어드민이 본문으로 교정한 sessions/laneInfo/notice 가 있으면 그 값을, 없으면 초안 값을 쓴다.
+   * 반영과 동시에 dataStatus 를 full 로 올리고(세션이 생겼으므로), 신선도용 updatedAt 을 오늘로 갱신한다.
+   */
+  async approveScheduleDraft(id: string, dto: ApproveDraftDto) {
+    const draft = await this.ensureExists(
+      this.prisma.scheduleDraft.findUnique({ where: { id } }),
+    );
+    await this.ensureExists(
+      this.prisma.pool.findUnique({ where: { id: draft.poolId } }),
+    );
+
+    const sessions = dto.sessions ?? (draft.sessions as Prisma.InputJsonValue);
+    const laneInfo = dto.laneInfo ?? draft.laneInfo;
+    const notice = dto.notice ?? draft.notice;
+
+    const poolData: Prisma.PoolUpdateInput = {
+      freeSwim: { sessions } as Prisma.InputJsonValue,
+      dataStatus: 'full',
+      updatedAt: new Date().toISOString().slice(0, 10),
+    };
+    if (laneInfo) poolData.laneInfo = laneInfo;
+    if (notice) poolData.notice = notice;
+
+    await this.prisma.pool.update({
+      where: { id: draft.poolId },
+      data: poolData,
+    });
+    const reviewed = await this.prisma.scheduleDraft.update({
+      where: { id },
+      data: { status: 'APPROVED', reviewedAt: new Date() },
+    });
+    this.pools.invalidateCache();
+    return { ok: true, poolId: draft.poolId, draft: reviewed };
+  }
+
+  /** 초안 반려 */
+  async rejectScheduleDraft(id: string) {
+    await this.ensureExists(
+      this.prisma.scheduleDraft.findUnique({ where: { id } }),
+    );
+    return this.prisma.scheduleDraft.update({
+      where: { id },
+      data: { status: 'REJECTED', reviewedAt: new Date() },
+    });
   }
 
   /**

@@ -16,7 +16,12 @@
 ## 진행 중 / 남은 일
 
 - **dataStatus 정합성 재계산 — 서버 apply 대기(코드 완료)**: 요금 일괄적재(collect-by-group `applyFull=true`)가 시간표 유무와 무관하게 604곳 전부를 `full`로 승격시켜, 실제 시간표는 32곳뿐인데 572곳이 `full`로 잘못 표기됨. 화면은 프론트가 freeSwim 실데이터로 판정해 정상이나, "채울 대상" 추적 신호가 사라짐. 해결: ① `scripts/recompute-data-status.ts` 신규(freeSwim 세션 유무 단일 기준으로 재계산, 기본 dry-run·`apply` 인자로 반영) ② `collect-by-group.ts`가 더는 dataStatus를 건드리지 않도록 수정(재발 방지). **서버에서 `npx tsx scripts/recompute-data-status.ts apply` 실행 필요**(백업 후).
-- **시간표 파이프라인 실패 진행중**: `scripts/enrich-swim-schedules.ts`(카카오 검색 → Gemini 추출 → DB 저장) 재시도 중. 실패 원인 두 가지: ① Gemini API 429(분당 제한) ② 웹에 시간표 자체가 없는 수영장 다수(건너뜀 비율 높음). 자동화로는 한계 도달 → 어드민+제보 크라우드소싱으로 전환 검토.
+- **시간표 파이프라인 → "AI 초안·어드민 승인" 하이브리드로 재설계(백엔드 코드 완료·배포 대기)**: 기존 enrich 스크립트는 freeSwim 를 자유텍스트로 써서 앱이 읽는 `freeSwim.sessions[{start,end,tier,dayCodes}]` 계약과 불일치 → 성공해도 화면에 안 뜨는 게 실패의 진짜 원인이었음(429는 표면). 재설계:
+  - 신규 `ScheduleDraft` 검수 큐 모델 + 마이그레이션 `3_schedule_drafts`(증분 CREATE, 안전).
+  - `scripts/enrich-swim-schedules.ts` 재작성: 정규 sessions 스키마만 생성 + 방어 검증(요일·시각 없으면 폐기) → **Pool 에 직접 쓰지 않고 ScheduleDraft(PENDING) 적재**. `limit` 인자로 배치 제어.
+  - 어드민 엔드포인트: `GET /admin/schedule-drafts`, `POST .../:id/approve`(교정값 우선, 승인 시 Pool.freeSwim 반영+dataStatus full+updatedAt 갱신), `POST .../:id/reject`.
+  - **남은 일**: ① 커밋·push → CD 가 마이그레이션 배포 ② 컨테이너에서 enrich 실행해 초안 적재 ③ **프론트 어드민 검수 UI(다음 작업)** ④ 승인 운영. 자동 발행 없음(잘못된 "지금 열림" 방지).
+- **전화번호·웹사이트 enrich(`scripts/enrich-pool-details.ts`)는 그대로 사용 가능**: 카카오 로컬 검색만 쓰고 정확한 필드에 저장. 배포 후 컨테이너에서 바로 실행하면 quick win.
 - **이행 후 정리**: 프론트 라이브 이후 `/pools` top-level `freeSwimPriceTiers` 호환 shim 제거.
 - **자유수영 시간표 점진 채우기**: 리스팅 602곳 중 시간표 미입력 수영장을 지역별로 어드민/제보로 `full` 승격.
 - (선택) 정기 재임포트로 신선도 갱신 — `import-kspo.ts` 재실행(upsert). 재임포트/요금 재적재 후에는 `recompute-data-status.ts`로 dataStatus 재계산할 것.
