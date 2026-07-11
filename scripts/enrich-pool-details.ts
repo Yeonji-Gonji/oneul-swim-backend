@@ -49,9 +49,7 @@ async function main() {
     where: {
       OR: [
         { phone: '' },
-        { phone: null },
         { websiteUrl: '' },
-        { websiteUrl: null },
         { websiteUrl: { startsWith: '국민체육' } }
       ]
     }
