@@ -79,37 +79,53 @@ Rules:
 `;
 
   try {
-    const res = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        contents: [
-          {
-            parts: [
-              {
-                text: `${systemPrompt}\n\nContext:\n${context}`
-              }
-            ]
-          }
-        ]
-      })
-    });
+    // 최대 3회 재시도 (429 Rate Limit 방어)
+    for (let attempt = 0; attempt < 3; attempt++) {
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          contents: [
+            {
+              parts: [
+                {
+                  text: `${systemPrompt}\n\nContext:\n${context}`
+                }
+              ]
+            }
+          ]
+        })
+      });
 
-    if (!res.ok) {
-      console.error(`[ERROR] Gemini API status: ${res.status}, body: ${await res.text()}`);
-      return null;
+      if (res.status === 429) {
+        // 구글이 알려준 대기 시간 파싱, 없으면 60초 기본 대기
+        const bodyText = await res.text();
+        const retryMatch = bodyText.match(/retryDelay.*?(\d+)s/);
+        const waitSec = retryMatch ? parseInt(retryMatch[1]) + 5 : 60;
+        console.log(`   -> [RATE LIMIT] 분당 할당량 초과. ${waitSec}초 대기 후 재시도... (${attempt + 1}/3)`);
+        await delay(waitSec * 1000);
+        continue;
+      }
+
+      if (!res.ok) {
+        console.error(`[ERROR] Gemini API status: ${res.status}, body: ${await res.text()}`);
+        return null;
+      }
+
+      const resBody = await res.json();
+      let rawText = resBody?.candidates?.[0]?.content?.parts?.[0]?.text;
+      if (!rawText) return null;
+
+      // 만약 마크다운 백틱 코드 블록(```json)이 포함되어 있다면 제거
+      rawText = rawText.replace(/```json/i, '').replace(/```/g, '').trim();
+
+      return JSON.parse(rawText);
     }
 
-    const resBody = await res.json();
-    let rawText = resBody?.candidates?.[0]?.content?.parts?.[0]?.text;
-    if (!rawText) return null;
-
-    // 만약 마크다운 백틱 코드 블록(```json)이 포함되어 있다면 제거
-    rawText = rawText.replace(/```json/i, '').replace(/```/g, '').trim();
-
-    return JSON.parse(rawText);
+    console.error(`[ERROR] 3회 재시도 모두 실패: ${poolName}`);
+    return null;
   } catch (error) {
     console.error(`[ERROR] Gemini API extraction failed for: ${poolName}`, error);
     return null;
