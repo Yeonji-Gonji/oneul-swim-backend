@@ -1,0 +1,3060 @@
+[
+  {
+    "id": "kspo-A7D7C251D47FFE4BE409195B9F54F8F8",
+    "name": "화도체육문화센터수영장",
+    "found": true,
+    "sourceUrl": "https://www.ncuc.or.kr/hd/470",
+    "asOf": "2026-07-11",
+    "operator": "남양주도시공사",
+    "notice": "자유수영 회차별 운영. 일요일·공휴일 휴관 정책은 미확인(출처 페이지에 일/공휴일 회차 명시됨).",
+    "sessions": [
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          2,
+          4
+        ],
+        "start": "08:00",
+        "end": "08:50",
+        "tier": "full",
+        "capacity": 90
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "12:00",
+        "end": "12:50",
+        "tier": "full",
+        "capacity": 70
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "19:00",
+        "end": "19:50",
+        "tier": "full",
+        "capacity": 70
+      },
+      {
+        "daysLabel": "토",
+        "dayCodes": [
+          6
+        ],
+        "start": "08:00",
+        "end": "08:50",
+        "tier": "full",
+        "capacity": 90
+      },
+      {
+        "daysLabel": "토",
+        "dayCodes": [
+          6
+        ],
+        "start": "12:00",
+        "end": "12:50",
+        "tier": "full",
+        "capacity": 90
+      },
+      {
+        "daysLabel": "토",
+        "dayCodes": [
+          6
+        ],
+        "start": "19:00",
+        "end": "19:50",
+        "tier": "full",
+        "capacity": 70
+      },
+      {
+        "daysLabel": "일·공휴일",
+        "dayCodes": [
+          0
+        ],
+        "start": "09:00",
+        "end": "10:50",
+        "tier": "full",
+        "capacity": 100
+      },
+      {
+        "daysLabel": "일·공휴일",
+        "dayCodes": [
+          0
+        ],
+        "start": "12:00",
+        "end": "13:50",
+        "tier": "full",
+        "capacity": 100
+      },
+      {
+        "daysLabel": "일·공휴일",
+        "dayCodes": [
+          0
+        ],
+        "start": "15:00",
+        "end": "16:50",
+        "tier": "full",
+        "capacity": 100
+      }
+    ]
+  },
+  {
+    "id": "kspo-F4E492DA3DCC0CE906AA1BC458955113",
+    "name": "와부체육문화센터수영장",
+    "found": true,
+    "sourceUrl": "https://www.ncuc.or.kr/wb/507",
+    "asOf": "2026-07-11",
+    "operator": "남양주도시공사",
+    "notice": "자유수영 회차별 운영. 정기휴관 둘째·넷째주 일요일 및 명절연휴 (일요일 회차는 1·3·5주만 반영).",
+    "sessions": [
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "08:00",
+        "end": "08:50",
+        "tier": "full",
+        "capacity": 40
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "12:00",
+        "end": "12:50",
+        "tier": "full",
+        "capacity": 40
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "15:00",
+        "end": "15:50",
+        "tier": "full",
+        "capacity": 30
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "18:00",
+        "end": "18:50",
+        "tier": "full",
+        "capacity": 35
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "19:00",
+        "end": "19:50",
+        "tier": "full",
+        "capacity": 40
+      },
+      {
+        "daysLabel": "토",
+        "dayCodes": [
+          6
+        ],
+        "start": "12:00",
+        "end": "13:50",
+        "tier": "full",
+        "capacity": 80
+      },
+      {
+        "daysLabel": "토",
+        "dayCodes": [
+          6
+        ],
+        "start": "15:00",
+        "end": "16:50",
+        "tier": "full",
+        "capacity": 100
+      },
+      {
+        "daysLabel": "토",
+        "dayCodes": [
+          6
+        ],
+        "start": "18:00",
+        "end": "19:50",
+        "tier": "full",
+        "capacity": 100
+      },
+      {
+        "daysLabel": "일·공휴일",
+        "dayCodes": [
+          0
+        ],
+        "weeksOfMonth": [
+          1,
+          3,
+          5
+        ],
+        "start": "09:00",
+        "end": "10:50",
+        "tier": "full",
+        "capacity": 120
+      },
+      {
+        "daysLabel": "일·공휴일",
+        "dayCodes": [
+          0
+        ],
+        "weeksOfMonth": [
+          1,
+          3,
+          5
+        ],
+        "start": "12:00",
+        "end": "13:50",
+        "tier": "full",
+        "capacity": 110
+      },
+      {
+        "daysLabel": "일·공휴일",
+        "dayCodes": [
+          0
+        ],
+        "weeksOfMonth": [
+          1,
+          3,
+          5
+        ],
+        "start": "15:00",
+        "end": "16:50",
+        "tier": "full",
+        "capacity": 120
+      }
+    ]
+  },
+  {
+    "id": "kspo-05632B55F73102E5D4B4FB36B7A7A85E",
+    "name": "에코-랜드 수영장",
+    "found": true,
+    "sourceUrl": "https://www.ncuc.or.kr/eco/645",
+    "asOf": "2026-07-11",
+    "operator": "남양주도시공사",
+    "notice": "자유수영(핀수영 병행) 회차별 운영. 정기휴관 둘째·넷째주 일요일 (일요일 회차는 1·3·5주만 반영). 정원 원문은 자유수영/핀수영 병기(예 80/10).",
+    "sessions": [
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "08:00",
+        "end": "08:50",
+        "tier": "full",
+        "capacity": 80
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "12:00",
+        "end": "12:50",
+        "tier": "full",
+        "capacity": 80
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          2,
+          4
+        ],
+        "start": "19:00",
+        "end": "19:50",
+        "tier": "full",
+        "capacity": 40
+      },
+      {
+        "daysLabel": "토",
+        "dayCodes": [
+          6
+        ],
+        "start": "08:00",
+        "end": "08:50",
+        "tier": "full",
+        "capacity": 80
+      },
+      {
+        "daysLabel": "토",
+        "dayCodes": [
+          6
+        ],
+        "start": "11:00",
+        "end": "12:50",
+        "tier": "full",
+        "capacity": 50
+      },
+      {
+        "daysLabel": "토",
+        "dayCodes": [
+          6
+        ],
+        "start": "13:00",
+        "end": "14:50",
+        "tier": "full",
+        "capacity": 80
+      },
+      {
+        "daysLabel": "토",
+        "dayCodes": [
+          6
+        ],
+        "start": "19:00",
+        "end": "19:50",
+        "tier": "full",
+        "capacity": 40
+      },
+      {
+        "daysLabel": "일·공휴일",
+        "dayCodes": [
+          0
+        ],
+        "weeksOfMonth": [
+          1,
+          3,
+          5
+        ],
+        "start": "09:00",
+        "end": "10:50",
+        "tier": "full",
+        "capacity": 80
+      },
+      {
+        "daysLabel": "일·공휴일",
+        "dayCodes": [
+          0
+        ],
+        "weeksOfMonth": [
+          1,
+          3,
+          5
+        ],
+        "start": "12:00",
+        "end": "13:50",
+        "tier": "full",
+        "capacity": 80
+      },
+      {
+        "daysLabel": "일·공휴일",
+        "dayCodes": [
+          0
+        ],
+        "weeksOfMonth": [
+          1,
+          3,
+          5
+        ],
+        "start": "15:00",
+        "end": "16:50",
+        "tier": "full",
+        "capacity": 90
+      }
+    ]
+  },
+  {
+    "id": "kspo-346970BB5030A481349BB05AF3898FC1",
+    "name": "계산국민체육센터수영장",
+    "found": true,
+    "sourceUrl": "https://www.insiseol.or.kr/sport/gyesan/program/swim.jsp",
+    "asOf": "2026-07-11",
+    "operator": "인천시설공단",
+    "notice": "일일수영(선착순 유료입장) 기준. 월정기 자유수영은 별도 등록제라 제외. 일요일·공휴일 휴관. 토요일 12:00~13:00 이용불가.",
+    "sessions": [
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "08:00",
+        "end": "08:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "18:00",
+        "end": "18:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          2,
+          4
+        ],
+        "start": "17:00",
+        "end": "17:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토",
+        "dayCodes": [
+          6
+        ],
+        "start": "09:00",
+        "end": "11:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토",
+        "dayCodes": [
+          6
+        ],
+        "start": "13:00",
+        "end": "15:50",
+        "tier": "full"
+      }
+    ]
+  },
+  {
+    "id": "kspo-66F6B7B2C504CED14EA4E2F166663300",
+    "name": "한솔복컴 수영장",
+    "found": true,
+    "sourceUrl": "https://www.sj-sporex.co.kr/m0310004/4/",
+    "asOf": "2026-07-11",
+    "operator": "세종시설관리공단(코오롱스포렉스 위탁)",
+    "notice": "일일 자유수영 회차 기준(월 자유 정기권 별도). 37개월부터 입장, 37개월~7세는 보호자 동반. 운영 사정에 따라 변경 가능.",
+    "sessions": [
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "08:05",
+        "end": "08:55",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "화·목",
+        "dayCodes": [
+          2,
+          4
+        ],
+        "start": "12:00",
+        "end": "12:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "월·수·금",
+        "dayCodes": [
+          1,
+          3,
+          5
+        ],
+        "start": "13:00",
+        "end": "13:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "18:00",
+        "end": "18:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토",
+        "dayCodes": [
+          6
+        ],
+        "start": "06:00",
+        "end": "08:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토",
+        "dayCodes": [
+          6
+        ],
+        "start": "10:00",
+        "end": "12:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토",
+        "dayCodes": [
+          6
+        ],
+        "start": "14:00",
+        "end": "16:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "일·공휴일",
+        "dayCodes": [
+          0
+        ],
+        "start": "09:00",
+        "end": "10:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "일·공휴일",
+        "dayCodes": [
+          0
+        ],
+        "start": "12:00",
+        "end": "13:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "일·공휴일",
+        "dayCodes": [
+          0
+        ],
+        "start": "15:00",
+        "end": "16:50",
+        "tier": "full"
+      }
+    ]
+  },
+  {
+    "id": "kspo-0EB12FD1EFB6F2BAB5E5B907F8998EA2",
+    "name": "웅상문화체육센터 수영장",
+    "found": true,
+    "sourceUrl": "https://www.yssisul.or.kr/stms/us/freeswim",
+    "asOf": "2026-07-11",
+    "operator": "양산시시설관리공단",
+    "notice": "자유수영 회차 기준. 원문은 평일/주말(토·일·공휴일 동일)로 구분. 정원 초과 시 선착순 입장 제한, 실시간 이용현황은 시설 앱/사이트 제공. 요금은 페이지 미표기(적재 안 함).",
+    "sessions": [
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "07:55",
+        "end": "08:55",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "12:00",
+        "end": "15:40",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토",
+        "dayCodes": [
+          6
+        ],
+        "start": "09:00",
+        "end": "11:30",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토",
+        "dayCodes": [
+          6
+        ],
+        "start": "13:10",
+        "end": "15:10",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토",
+        "dayCodes": [
+          6
+        ],
+        "start": "15:40",
+        "end": "17:30",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "일·공휴일",
+        "dayCodes": [
+          0
+        ],
+        "start": "09:00",
+        "end": "11:30",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "일·공휴일",
+        "dayCodes": [
+          0
+        ],
+        "start": "13:10",
+        "end": "15:10",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "일·공휴일",
+        "dayCodes": [
+          0
+        ],
+        "start": "15:40",
+        "end": "17:30",
+        "tier": "full"
+      }
+    ]
+  },
+  {
+    "id": "kspo-5CA19E6A6B41C18C8B68E3FF2E1CB677",
+    "name": "의창스포츠센터수영장",
+    "sourceUrl": "https://www.cwsisul.or.kr/_chucsports/_sub02/sub02_02.html",
+    "operator": "창원시설공단",
+    "notice": "1회 입장 시 최대 3시간 이용. 토요일 오전 09~12시 유아 자유수영 입장제한.",
+    "sessions": [
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "08:00",
+        "end": "09:00",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "13:00",
+        "end": "17:00",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "18:00",
+        "end": "19:00",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "주말·공휴일",
+        "dayCodes": [
+          0,
+          6
+        ],
+        "start": "06:00",
+        "end": "17:50",
+        "tier": "full"
+      }
+    ],
+    "found": true,
+    "asOf": "2026-07-11"
+  },
+  {
+    "id": "kspo-02A0F8C7F06BA7A73E10B810329FF0DC",
+    "name": "용원국민체육센터 수영장",
+    "sourceUrl": "https://www.cwsisul.or.kr/_jhywgymc/_sub02/sub02_01.html",
+    "operator": "창원시설공단",
+    "notice": "1회 입장 시 최대 3시간. 주말·공휴일 브레이크타임 12:00~13:00 입장불가.",
+    "sessions": [
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "08:00",
+        "end": "09:00",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "11:00",
+        "end": "18:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "주말·공휴일",
+        "dayCodes": [
+          0,
+          6
+        ],
+        "start": "06:10",
+        "end": "11:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "주말·공휴일",
+        "dayCodes": [
+          0,
+          6
+        ],
+        "start": "13:00",
+        "end": "17:50",
+        "tier": "full"
+      }
+    ],
+    "found": true,
+    "asOf": "2026-07-11"
+  },
+  {
+    "id": "kspo-FBF18C026155722A6D88B620C95F5F9C",
+    "name": "창원실내수영장",
+    "sourceUrl": "https://www.cwsisul.or.kr/_chinswimr/_sub02/sub02_01.html",
+    "operator": "창원시설공단",
+    "notice": "주말·공휴일 브레이크타임 12:00~13:00 입장불가.",
+    "sessions": [
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "06:00",
+        "end": "21:00",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "주말·공휴일",
+        "dayCodes": [
+          0,
+          6
+        ],
+        "start": "06:00",
+        "end": "12:00",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "주말·공휴일",
+        "dayCodes": [
+          0,
+          6
+        ],
+        "start": "13:00",
+        "end": "18:00",
+        "tier": "full"
+      }
+    ],
+    "found": true,
+    "asOf": "2026-07-11"
+  },
+  {
+    "id": "kspo-3856184733B01BAB3D6028E6FD32E892",
+    "name": "송악문화스포츠센터 수영장",
+    "sourceUrl": "http://www.dangjin.go.kr/fmres/regular/info/?centerId=DJ0009&facilityId=F0090",
+    "operator": "당진시 통합예약시스템",
+    "notice": "휴장 매주 월요일·공휴일. 매시간 50분 수영·10분 휴식.",
+    "sessions": [
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "06:00",
+        "end": "08:00",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "09:00",
+        "end": "12:00",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "13:00",
+        "end": "15:00",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "18:00",
+        "end": "21:00",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "주말·공휴일",
+        "dayCodes": [
+          0,
+          6
+        ],
+        "start": "06:00",
+        "end": "08:30",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "주말·공휴일",
+        "dayCodes": [
+          0,
+          6
+        ],
+        "start": "09:00",
+        "end": "11:30",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "주말·공휴일",
+        "dayCodes": [
+          0,
+          6
+        ],
+        "start": "12:30",
+        "end": "15:00",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "주말·공휴일",
+        "dayCodes": [
+          0,
+          6
+        ],
+        "start": "15:30",
+        "end": "18:00",
+        "tier": "full"
+      }
+    ],
+    "found": true,
+    "asOf": "2026-07-11"
+  },
+  {
+    "id": "kspo-7464F4BD568250DDC31178435741FC71",
+    "name": "강경실내수영장",
+    "sourceUrl": "https://www.nonsan.go.kr/public/html/sub03/030202.html",
+    "operator": "논산시",
+    "notice": "회차 구분 없는 연속 이용창. 1일 1회 최대 2시간. 강습과 일부 시간 겹침(레인 점유 현장확인).",
+    "sessions": [
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "06:00",
+        "end": "11:00",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "13:00",
+        "end": "21:00",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "주말·공휴일",
+        "dayCodes": [
+          0,
+          6
+        ],
+        "start": "09:00",
+        "end": "18:00",
+        "tier": "full"
+      }
+    ],
+    "found": true,
+    "asOf": "2026-07-11"
+  },
+  {
+    "id": "kspo-2851034BE2A9E0D868BE88C04F3BDB91",
+    "name": "배미수영장",
+    "sourceUrl": "https://www.asanfmc.or.kr/new/cms/?no=103",
+    "operator": "아산시시설관리공단",
+    "notice": "자유수영 회차 구분 없이 운영시간 내 상시 이용(1회 2시간). 입장마감 종료 1시간 전. 월요일·공휴일 휴관.",
+    "sessions": [
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "06:00",
+        "end": "21:00",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토요일",
+        "dayCodes": [
+          6
+        ],
+        "start": "06:00",
+        "end": "18:00",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "일요일",
+        "dayCodes": [
+          0
+        ],
+        "start": "09:00",
+        "end": "18:00",
+        "tier": "full"
+      }
+    ],
+    "found": true,
+    "asOf": "2026-07-11"
+  },
+  {
+    "id": "kspo-B0073E3AC143699C5440C210845FC2A1",
+    "name": "서산국민체육센터수영장",
+    "sourceUrl": "https://www.seosan.go.kr/www/contents.do?key=3408",
+    "operator": "서산시",
+    "notice": "평일 자유수영 시간대(점심 12:00~13:00 제외, 강습시간엔 2레인만). 토·일은 타임제 운영이나 회차별 시각 미공개라 미반영. 월요일·공휴일 휴관.",
+    "sessions": [
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "05:00",
+        "end": "05:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "08:00",
+        "end": "09:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "13:00",
+        "end": "21:40",
+        "tier": "full"
+      }
+    ],
+    "found": true,
+    "asOf": "2026-07-11"
+  },
+  {
+    "id": "kspo-1087EC49B8DD8EE14F86D51D9D4D6B36",
+    "name": "보람 수영장",
+    "sourceUrl": "https://www.sjfmc.or.kr/boram/sub03_01.do",
+    "operator": "세종시설관리공단",
+    "notice": "평일 3회차 + 토요일 회차제(수질관리 08:40~10:00·12:40~14:00·17:00~ 제외). 일요일 휴관. 36개월 이상 입장.",
+    "sessions": [
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "08:00",
+        "end": "08:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "12:00",
+        "end": "12:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "18:10",
+        "end": "19:00",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토",
+        "dayCodes": [
+          6
+        ],
+        "start": "06:00",
+        "end": "06:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토",
+        "dayCodes": [
+          6
+        ],
+        "start": "07:00",
+        "end": "07:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토",
+        "dayCodes": [
+          6
+        ],
+        "start": "08:00",
+        "end": "08:30",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토",
+        "dayCodes": [
+          6
+        ],
+        "start": "10:00",
+        "end": "10:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토",
+        "dayCodes": [
+          6
+        ],
+        "start": "11:00",
+        "end": "11:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토",
+        "dayCodes": [
+          6
+        ],
+        "start": "12:00",
+        "end": "12:30",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토",
+        "dayCodes": [
+          6
+        ],
+        "start": "14:00",
+        "end": "14:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토",
+        "dayCodes": [
+          6
+        ],
+        "start": "15:00",
+        "end": "15:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토",
+        "dayCodes": [
+          6
+        ],
+        "start": "16:00",
+        "end": "16:50",
+        "tier": "full"
+      }
+    ],
+    "found": true,
+    "asOf": "2026-07-11"
+  },
+  {
+    "id": "kspo-B5F8CD240B23BE6314E8E41092BD30F8",
+    "name": "조치원복합커뮤니티센터 수영장",
+    "sourceUrl": "https://www.sjfmc.or.kr/jcw/sub03_01.do",
+    "operator": "세종시설관리공단",
+    "notice": "평일 3회차 + 토요일 2블록. 일요일 휴관.",
+    "sessions": [
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "08:00",
+        "end": "08:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "12:00",
+        "end": "12:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "18:10",
+        "end": "19:00",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토",
+        "dayCodes": [
+          6
+        ],
+        "start": "06:00",
+        "end": "11:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토",
+        "dayCodes": [
+          6
+        ],
+        "start": "14:00",
+        "end": "16:50",
+        "tier": "full"
+      }
+    ],
+    "found": true,
+    "asOf": "2026-07-11"
+  },
+  {
+    "id": "kspo-6CC0C2D98DD8DD24002C836EB3F40CED",
+    "name": "도원수영장",
+    "sourceUrl": "https://www.icsports.or.kr/fmcs/561",
+    "operator": "인천광역시체육회",
+    "notice": "토요일·공휴일 동일 시간표.",
+    "sessions": [
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "06:00",
+        "end": "07:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "09:00",
+        "end": "11:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "15:00",
+        "end": "17:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "19:00",
+        "end": "20:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토·공휴일",
+        "dayCodes": [
+          6
+        ],
+        "start": "09:00",
+        "end": "11:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토·공휴일",
+        "dayCodes": [
+          6
+        ],
+        "start": "14:00",
+        "end": "16:50",
+        "tier": "full"
+      }
+    ],
+    "found": true,
+    "asOf": "2026-07-11"
+  },
+  {
+    "id": "kspo-FACEC960E93498269DC320E9D9F43A00",
+    "name": "열우물경기장(수영장)",
+    "sourceUrl": "https://www.icsports.or.kr/fmcs/57",
+    "operator": "인천광역시체육회",
+    "notice": "공휴일은 토요일과 동일.",
+    "sessions": [
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "08:00",
+        "end": "08:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "12:00",
+        "end": "13:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "18:00",
+        "end": "18:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토·공휴일",
+        "dayCodes": [
+          6
+        ],
+        "start": "09:00",
+        "end": "11:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토·공휴일",
+        "dayCodes": [
+          6
+        ],
+        "start": "13:00",
+        "end": "16:50",
+        "tier": "full"
+      }
+    ],
+    "found": true,
+    "asOf": "2026-07-11"
+  },
+  {
+    "id": "kspo-CE74E5C4BDCFFC7CC5FCB13D2A24D3DF",
+    "name": "올림픽기념국민생활관수영장",
+    "sourceUrl": "https://www.icsports.or.kr/fmcs/29",
+    "operator": "인천광역시체육회",
+    "notice": "평일 3부(16:00~17:50)는 월회원 전용이라 제외. 공휴일은 별도 편성이라 미반영(평일·토만).",
+    "sessions": [
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "08:00",
+        "end": "08:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "13:00",
+        "end": "14:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "18:00",
+        "end": "18:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토",
+        "dayCodes": [
+          6
+        ],
+        "start": "07:00",
+        "end": "08:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토",
+        "dayCodes": [
+          6
+        ],
+        "start": "10:00",
+        "end": "11:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토",
+        "dayCodes": [
+          6
+        ],
+        "start": "13:00",
+        "end": "14:50",
+        "tier": "full"
+      }
+    ],
+    "found": true,
+    "asOf": "2026-07-11"
+  },
+  {
+    "id": "kspo-28A9310D49AC66878974E67CE1172FD2",
+    "name": "삼산월드체육관수영장",
+    "sourceUrl": "https://www.insiseol.or.kr/sport/samsan/program/swim.jsp",
+    "operator": "인천시설공단",
+    "notice": "평일 자유수영은 월정기회원 전용(일일입장 불가)이라 제외. 일일 자유수영은 토요일만 운영.",
+    "sessions": [
+      {
+        "daysLabel": "토",
+        "dayCodes": [
+          6
+        ],
+        "start": "09:00",
+        "end": "11:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토",
+        "dayCodes": [
+          6
+        ],
+        "start": "13:00",
+        "end": "15:50",
+        "tier": "full"
+      }
+    ],
+    "found": true,
+    "asOf": "2026-07-11"
+  },
+  {
+    "id": "kspo-E575463A1F0AA76FE87BAE911C1DA509",
+    "name": "양산주민편익시설",
+    "sourceUrl": "https://www.yssisul.or.kr/stms/jm/freeswim",
+    "operator": "양산시시설관리공단",
+    "notice": "운영상황에 따라 레인 축소·시간 변경 가능. 실시간 이용현황은 시설 사이트 제공.",
+    "sessions": [
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "08:00",
+        "end": "08:55",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "12:00",
+        "end": "15:55",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "주말",
+        "dayCodes": [
+          0,
+          6
+        ],
+        "start": "09:00",
+        "end": "11:30",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "주말",
+        "dayCodes": [
+          0,
+          6
+        ],
+        "start": "13:10",
+        "end": "15:10",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "주말",
+        "dayCodes": [
+          0,
+          6
+        ],
+        "start": "15:40",
+        "end": "17:30",
+        "tier": "full"
+      }
+    ],
+    "found": true,
+    "asOf": "2026-07-11"
+  },
+  {
+    "id": "kspo-615E00B6909CD5508A690BFD43AC442F",
+    "name": "양산국민체육센터(중앙)",
+    "sourceUrl": "https://www.yssisul.or.kr/stms/ks/freeSwim",
+    "operator": "양산시시설관리공단",
+    "notice": "KSPO '양산국민체육센터'=양산중앙국민체육센터. 운영상황에 따라 변경 가능.",
+    "sessions": [
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "08:00",
+        "end": "08:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "12:00",
+        "end": "15:40",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "주말",
+        "dayCodes": [
+          0,
+          6
+        ],
+        "start": "09:00",
+        "end": "11:30",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "주말",
+        "dayCodes": [
+          0,
+          6
+        ],
+        "start": "13:10",
+        "end": "15:10",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "주말",
+        "dayCodes": [
+          0,
+          6
+        ],
+        "start": "15:40",
+        "end": "17:30",
+        "tier": "full"
+      }
+    ],
+    "found": true,
+    "asOf": "2026-07-11"
+  },
+  {
+    "id": "kspo-F5224DD51620804B3F56FE7DFEAFDAFC",
+    "name": "쌍벽루국민체육센터",
+    "sourceUrl": "https://www.yssisul.or.kr/stms/sb/freeswim",
+    "operator": "양산시시설관리공단",
+    "notice": "운영상황에 따라 변경 가능.",
+    "sessions": [
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "06:00",
+        "end": "07:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "09:00",
+        "end": "11:30",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "19:00",
+        "end": "21:30",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "주말",
+        "dayCodes": [
+          0,
+          6
+        ],
+        "start": "09:00",
+        "end": "11:30",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "주말",
+        "dayCodes": [
+          0,
+          6
+        ],
+        "start": "13:10",
+        "end": "15:10",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "주말",
+        "dayCodes": [
+          0,
+          6
+        ],
+        "start": "15:40",
+        "end": "17:30",
+        "tier": "full"
+      }
+    ],
+    "found": true,
+    "asOf": "2026-07-11"
+  },
+  {
+    "id": "kspo-F27624B5095213E4533FD5D07CBF1E90",
+    "name": "천성산국민체육센터",
+    "sourceUrl": "https://www.yssisul.or.kr/stms/yscheonsungsan/freeswim",
+    "operator": "양산시시설관리공단",
+    "notice": "운영상황에 따라 변경 가능.",
+    "sessions": [
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "08:00",
+        "end": "08:55",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "11:10",
+        "end": "14:10",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "15:00",
+        "end": "17:00",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "주말",
+        "dayCodes": [
+          0,
+          6
+        ],
+        "start": "09:00",
+        "end": "11:30",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "주말",
+        "dayCodes": [
+          0,
+          6
+        ],
+        "start": "13:10",
+        "end": "15:10",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "주말",
+        "dayCodes": [
+          0,
+          6
+        ],
+        "start": "15:40",
+        "end": "17:30",
+        "tier": "full"
+      }
+    ],
+    "found": true,
+    "asOf": "2026-07-11"
+  },
+  {
+    "id": "kspo-2DE560E17F1D7C487B278DEB120FC525",
+    "name": "여주 국민체육센터 수영장",
+    "sourceUrl": "https://yeojuuc.or.kr/reservation/yjsc/sportsCenter/",
+    "operator": "여주도시공사",
+    "notice": "자유수영 연속운영(매시간 정각 50분+10분 휴식). 12:00~13:00 수질관리 제외. 토요일 휴관, 일요일 운영(패턴 반대 주의).",
+    "sessions": [
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "06:00",
+        "end": "12:00",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "13:00",
+        "end": "21:00",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "일",
+        "dayCodes": [
+          0
+        ],
+        "start": "06:00",
+        "end": "12:00",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "일",
+        "dayCodes": [
+          0
+        ],
+        "start": "13:00",
+        "end": "16:00",
+        "tier": "full"
+      }
+    ],
+    "found": true,
+    "asOf": "2026-07-11"
+  },
+  {
+    "id": "kspo-E16D34184EA4BB1BA56C91CBBA3E9263",
+    "name": "가남체육센터 수영장",
+    "sourceUrl": "https://yeojuuc.or.kr/reservation/gnsc/sportsCenter/",
+    "operator": "여주도시공사",
+    "notice": "자유수영 연속운영(매시간 정각 50분+10분). 12:00~13:00 제외. 토·일 휴관(공식 기준, 뉴스는 토 운영이라 상충).",
+    "sessions": [
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "06:00",
+        "end": "12:00",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "13:00",
+        "end": "21:00",
+        "tier": "full"
+      }
+    ],
+    "found": true,
+    "asOf": "2026-07-11"
+  },
+  {
+    "id": "kspo-0F33475C2B32256C2D4774DBF0EC88EA",
+    "name": "장량국민체육센터 수영장",
+    "sourceUrl": "https://www.phsisul.org/sisul_11/sub/info_3.do",
+    "operator": "포항시시설관리공단",
+    "notice": "일요일 휴관. 연속운영(오전/오후, 11:50~13:00 미운영). 공휴일은 토요일과 동일.",
+    "sessions": [
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "05:50",
+        "end": "11:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "13:00",
+        "end": "20:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토·공휴일",
+        "dayCodes": [
+          6
+        ],
+        "start": "09:00",
+        "end": "12:00",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토·공휴일",
+        "dayCodes": [
+          6
+        ],
+        "start": "13:00",
+        "end": "17:30",
+        "tier": "full"
+      }
+    ],
+    "found": true,
+    "asOf": "2026-07-11"
+  },
+  {
+    "id": "kspo-D1D4AEC11E3B54E17E90EABE930398ED",
+    "name": "여성문화관수영장",
+    "sourceUrl": "https://www.phsisul.org/sisul_17/sub/info_3.do",
+    "operator": "포항시시설관리공단",
+    "notice": "일요일 휴관. 연속운영. 평일 11:20~14:50 미운영.",
+    "sessions": [
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "05:40",
+        "end": "11:20",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "14:50",
+        "end": "20:20",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토·공휴일",
+        "dayCodes": [
+          6
+        ],
+        "start": "09:00",
+        "end": "11:30",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토·공휴일",
+        "dayCodes": [
+          6
+        ],
+        "start": "13:00",
+        "end": "17:00",
+        "tier": "full"
+      }
+    ],
+    "found": true,
+    "asOf": "2026-07-11"
+  },
+  {
+    "id": "kspo-9173F609C65BF24E9242F79072409C66",
+    "name": "흥해복합커뮤니티센터 수영장",
+    "sourceUrl": "https://www.phsisul.org/sisul_32/sub/info_3.do",
+    "operator": "포항시시설관리공단",
+    "notice": "일요일 휴관. 연속운영. 공휴일은 토요일과 동일.",
+    "sessions": [
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "05:50",
+        "end": "11:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "13:00",
+        "end": "20:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토·공휴일",
+        "dayCodes": [
+          6
+        ],
+        "start": "09:00",
+        "end": "12:00",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토·공휴일",
+        "dayCodes": [
+          6
+        ],
+        "start": "13:00",
+        "end": "17:30",
+        "tier": "full"
+      }
+    ],
+    "found": true,
+    "asOf": "2026-07-11"
+  },
+  {
+    "id": "kspo-946FF16F789337ED099E8B2CF1571DF1",
+    "name": "포항실내수영장",
+    "sourceUrl": "https://www.phsisul.org/sisul_15/sub/info_3.do",
+    "operator": "포항시시설관리공단",
+    "notice": "일요일 휴관. 연속운영. 12:00~13:00 수질관리 입장불가. 공휴일은 토요일과 동일.",
+    "sessions": [
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "05:50",
+        "end": "11:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "13:00",
+        "end": "20:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토·공휴일",
+        "dayCodes": [
+          6
+        ],
+        "start": "09:00",
+        "end": "11:00",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토·공휴일",
+        "dayCodes": [
+          6
+        ],
+        "start": "13:00",
+        "end": "17:30",
+        "tier": "full"
+      }
+    ],
+    "found": true,
+    "asOf": "2026-07-11"
+  },
+  {
+    "id": "kspo-39CAD600405B3DB446E03147972CA9BB",
+    "name": "원동초스포츠센터 수영장",
+    "sourceUrl": "https://www.osansports.or.kr/fmcs/22",
+    "operator": "오산도시공사",
+    "notice": "자유수영 회차제(일일수영). 매월 2·4주 일요일·신정·명절 휴관.",
+    "sessions": [
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "06:00",
+        "end": "08:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "14:30",
+        "end": "15:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "18:00",
+        "end": "20:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토",
+        "dayCodes": [
+          6
+        ],
+        "start": "08:00",
+        "end": "10:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토",
+        "dayCodes": [
+          6
+        ],
+        "start": "12:00",
+        "end": "14:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토",
+        "dayCodes": [
+          6
+        ],
+        "start": "16:00",
+        "end": "18:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "일·공휴일",
+        "dayCodes": [
+          0
+        ],
+        "weeksOfMonth": [
+          1,
+          3,
+          5
+        ],
+        "start": "10:00",
+        "end": "12:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "일·공휴일",
+        "dayCodes": [
+          0
+        ],
+        "weeksOfMonth": [
+          1,
+          3,
+          5
+        ],
+        "start": "14:00",
+        "end": "16:50",
+        "tier": "full"
+      }
+    ],
+    "found": true,
+    "asOf": "2026-07-11"
+  },
+  {
+    "id": "kspo-981E69D003FAE062ADE5C2D38DE61744",
+    "name": "오산스포츠센터수영장",
+    "sourceUrl": "https://www.osansports.or.kr/fmcs/21",
+    "operator": "오산도시공사",
+    "notice": "자유수영 회차제. 매월 1·3주 일요일·명절 등 휴관.",
+    "sessions": [
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "06:00",
+        "end": "10:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "12:00",
+        "end": "14:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "18:00",
+        "end": "20:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토",
+        "dayCodes": [
+          6
+        ],
+        "start": "08:00",
+        "end": "11:00",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토",
+        "dayCodes": [
+          6
+        ],
+        "start": "12:00",
+        "end": "15:00",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토",
+        "dayCodes": [
+          6
+        ],
+        "start": "16:00",
+        "end": "19:00",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "일·공휴일",
+        "dayCodes": [
+          0
+        ],
+        "weeksOfMonth": [
+          2,
+          4,
+          5
+        ],
+        "start": "10:00",
+        "end": "13:00",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "일·공휴일",
+        "dayCodes": [
+          0
+        ],
+        "weeksOfMonth": [
+          2,
+          4,
+          5
+        ],
+        "start": "14:00",
+        "end": "17:00",
+        "tier": "full"
+      }
+    ],
+    "found": true,
+    "asOf": "2026-07-11"
+  },
+  {
+    "id": "kspo-DB5DDB3E639D1FBFD5BD9D311BF55048",
+    "name": "세교복지타운 수영장",
+    "sourceUrl": "https://www.osansports.or.kr/fmcs/23",
+    "operator": "오산도시공사",
+    "notice": "자유수영 회차제. 둘째·넷째 일요일 휴관.",
+    "sessions": [
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "06:00",
+        "end": "08:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "14:00",
+        "end": "15:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "18:00",
+        "end": "20:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토",
+        "dayCodes": [
+          6
+        ],
+        "start": "08:00",
+        "end": "10:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토",
+        "dayCodes": [
+          6
+        ],
+        "start": "12:00",
+        "end": "14:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토",
+        "dayCodes": [
+          6
+        ],
+        "start": "16:00",
+        "end": "18:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "일",
+        "dayCodes": [
+          0
+        ],
+        "weeksOfMonth": [
+          1,
+          3,
+          5
+        ],
+        "start": "10:00",
+        "end": "12:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "일",
+        "dayCodes": [
+          0
+        ],
+        "weeksOfMonth": [
+          1,
+          3,
+          5
+        ],
+        "start": "14:00",
+        "end": "16:50",
+        "tier": "full"
+      }
+    ],
+    "found": true,
+    "asOf": "2026-07-11"
+  },
+  {
+    "id": "kspo-F4C12FAFB18714C92768B29CE9661090",
+    "name": "서구청소년수련관실내수영장",
+    "sourceUrl": "https://www.seoguyouth.or.kr/athletics/athletics01",
+    "operator": "대구 서구",
+    "notice": "토요자유수영만 회차 공개(평일은 회원제·시간 미공개). 일·공휴일 휴관.",
+    "sessions": [
+      {
+        "daysLabel": "토",
+        "dayCodes": [
+          6
+        ],
+        "start": "07:00",
+        "end": "09:00",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토",
+        "dayCodes": [
+          6
+        ],
+        "start": "13:00",
+        "end": "15:30",
+        "tier": "full"
+      }
+    ],
+    "found": true,
+    "asOf": "2026-07-11"
+  },
+  {
+    "id": "kspo-3CB3EDF0D032F42DEAE760B952A98144",
+    "name": "조종국민체육센터수영장",
+    "sourceUrl": "https://www.gpfmc.or.kr/page/selectPage.do?muNo=510",
+    "operator": "가평군시설관리공단",
+    "notice": "자유수영 운영시간(강습시간에도 자유수영 가능). 정비 평일 13:00~13:40·토 12:40~13:40 제외. 일요일·공휴일 휴관.",
+    "sessions": [
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "06:00",
+        "end": "13:00",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "13:40",
+        "end": "21:00",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토",
+        "dayCodes": [
+          6
+        ],
+        "start": "09:00",
+        "end": "12:40",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토",
+        "dayCodes": [
+          6
+        ],
+        "start": "13:40",
+        "end": "18:00",
+        "tier": "full"
+      }
+    ],
+    "found": true,
+    "asOf": "2026-07-11"
+  },
+  {
+    "id": "kspo-10102E157A92A9B4D12844BD6DE652CB",
+    "name": "진접체육문화센터수영장",
+    "sourceUrl": "https://www.ncuc.or.kr/jj/557",
+    "operator": "남양주도시공사",
+    "notice": "평일/주말 회차별. 둘째·넷째주 일요일·신정·명절 휴관. 카드결제만. 만5세 미만 무료.",
+    "sessions": [
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "08:00",
+        "end": "08:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "12:00",
+        "end": "12:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "18:00",
+        "end": "18:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토",
+        "dayCodes": [
+          6
+        ],
+        "start": "08:00",
+        "end": "09:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토",
+        "dayCodes": [
+          6
+        ],
+        "start": "12:00",
+        "end": "13:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토",
+        "dayCodes": [
+          6
+        ],
+        "start": "16:00",
+        "end": "17:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "일·공휴일",
+        "dayCodes": [
+          0
+        ],
+        "start": "09:00",
+        "end": "10:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "일·공휴일",
+        "dayCodes": [
+          0
+        ],
+        "start": "12:00",
+        "end": "13:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "일·공휴일",
+        "dayCodes": [
+          0
+        ],
+        "start": "15:00",
+        "end": "16:50",
+        "tier": "full"
+      }
+    ],
+    "found": true,
+    "asOf": "2026-07-11"
+  },
+  {
+    "id": "kspo-7343CE96CC98DA1A70EA60CCA6807241",
+    "name": "별내커뮤니티센터수영장",
+    "sourceUrl": "https://www.ncuc.or.kr/bn/600",
+    "operator": "남양주도시공사",
+    "notice": "평일 3·4부(13:00·14:00)는 화·목만. 주말·공휴일 가산요금. 카드결제만.",
+    "sessions": [
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "08:00",
+        "end": "08:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "12:00",
+        "end": "12:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "화·목",
+        "dayCodes": [
+          2,
+          4
+        ],
+        "start": "13:00",
+        "end": "13:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "화·목",
+        "dayCodes": [
+          2,
+          4
+        ],
+        "start": "14:00",
+        "end": "14:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "15:00",
+        "end": "15:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "19:00",
+        "end": "19:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "20:00",
+        "end": "20:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "21:00",
+        "end": "21:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토",
+        "dayCodes": [
+          6
+        ],
+        "start": "12:00",
+        "end": "13:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토",
+        "dayCodes": [
+          6
+        ],
+        "start": "15:00",
+        "end": "16:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토",
+        "dayCodes": [
+          6
+        ],
+        "start": "18:00",
+        "end": "19:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "일·공휴일",
+        "dayCodes": [
+          0
+        ],
+        "start": "09:00",
+        "end": "10:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "일·공휴일",
+        "dayCodes": [
+          0
+        ],
+        "start": "12:00",
+        "end": "13:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "일·공휴일",
+        "dayCodes": [
+          0
+        ],
+        "start": "15:00",
+        "end": "16:50",
+        "tier": "full"
+      }
+    ],
+    "found": true,
+    "asOf": "2026-07-11"
+  },
+  {
+    "id": "kspo-0580E5569C19C4C3D767F3B92E759D67",
+    "name": "창녕군립수영장",
+    "sourceUrl": "https://cfmc.kr/swimming/sub.html?code=02_01",
+    "operator": "창녕군",
+    "notice": "자유수영 회차별. 둘째·넷째 일요일·명절·선거일·신정 폐장.",
+    "sessions": [
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "07:10",
+        "end": "08:00",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "08:10",
+        "end": "09:00",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "12:10",
+        "end": "12:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "13:00",
+        "end": "13:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "14:00",
+        "end": "14:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "15:00",
+        "end": "15:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "17:00",
+        "end": "17:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "18:00",
+        "end": "18:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "주말",
+        "dayCodes": [
+          0,
+          6
+        ],
+        "start": "09:00",
+        "end": "09:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "주말",
+        "dayCodes": [
+          0,
+          6
+        ],
+        "start": "10:00",
+        "end": "11:30",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "주말",
+        "dayCodes": [
+          0,
+          6
+        ],
+        "start": "13:00",
+        "end": "13:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "주말",
+        "dayCodes": [
+          0,
+          6
+        ],
+        "start": "14:00",
+        "end": "14:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "주말",
+        "dayCodes": [
+          0,
+          6
+        ],
+        "start": "15:00",
+        "end": "15:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "주말",
+        "dayCodes": [
+          0,
+          6
+        ],
+        "start": "16:00",
+        "end": "16:50",
+        "tier": "full"
+      }
+    ],
+    "found": true,
+    "asOf": "2026-07-11"
+  },
+  {
+    "id": "kspo-8E68C43FD9510F0395F2F5C450CE5EB6",
+    "name": "문화건강센터 수영장",
+    "sourceUrl": "https://www.suncheon.go.kr/yeyak/edu/swim/0001/",
+    "operator": "순천시",
+    "notice": "평일 3회·주말 2회 자유수영. 12:00~13:00 입장불가. 둘째·넷째 일요일 등 휴장. 회차별 최대 140명. 킥판·오리발 사용 금지.",
+    "sessions": [
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "05:30",
+        "end": "11:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "14:20",
+        "end": "16:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "start": "19:00",
+        "end": "20:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "주말·공휴일",
+        "dayCodes": [
+          0,
+          6
+        ],
+        "start": "09:00",
+        "end": "11:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "주말·공휴일",
+        "dayCodes": [
+          0,
+          6
+        ],
+        "start": "13:00",
+        "end": "17:50",
+        "tier": "full"
+      }
+    ],
+    "found": true,
+    "asOf": "2026-07-11"
+  },
+  {
+    "id": "kspo-4F5DCCE8ED3A130C9BB7846CF15089F6",
+    "name": "예천청소년수련관수영장",
+    "found": true,
+    "sourceUrl": "https://onestop.ycg.kr/resve/facilList.do?alsfcCd=COM014-01",
+    "asOf": "2026-07-11",
+    "operator": "예천군 체육사업소",
+    "notice": "통합예약 일일이용권. 월요일·명절 휴장. 아쿠아로빅(화~금 11:30~12:20·16:00~16:50)엔 자유수영 1개 레인만.",
+    "sessions": [
+      {
+        "daysLabel": "화~일",
+        "dayCodes": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          0
+        ],
+        "start": "06:00",
+        "end": "20:00",
+        "tier": "full"
+      }
+    ]
+  }
+]

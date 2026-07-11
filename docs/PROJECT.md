@@ -23,6 +23,7 @@
   - **카카오 로그인 게이트**: 공개 `POST /admin/auth/kakao`(인가코드 검증 → 본인 `ADMIN_KAKAO_ID`일 때만 `ADMIN_TOKEN` 발급). 기존 AdminGuard 그대로 재사용. 프론트 `/admin` 카카오 로그인 + 시간표 초안 검수 UI 완료.
   - **필요 env(서버 .env)**: `ADMIN_KAKAO_ID`(본인 카카오 id), `KAKAO_CLIENT_SECRET`(콘솔에서 켠 경우만). 프론트: `NEXT_PUBLIC_KAKAO_REST_KEY`. 카카오 개발자콘솔: 카카오 로그인 활성화 + Redirect URI(`<도메인>/admin`, `localhost:3000/admin`) 등록.
   - **남은 일**: ① 커밋·push → CD 가 마이그레이션 배포 ② env 세팅 + 카카오 콘솔 설정 ③ 컨테이너에서 enrich 실행해 초안 적재 ④ 카카오 로그인 후 승인 운영. 자동 발행 없음(잘못된 "지금 열림" 방지).
+  - **직접 웹수집 경로도 병행 가능(파일럿 완료)**: 하이브리드 배포 전에도, 출처 검수한 회차표를 `data/schedule-pilot.json` + `scripts/apply-schedules.ts apply`로 바로 반영 가능(아래 최근 완료 참조). 공식 홈페이지 있는 시설은 서브에이전트 병렬 웹수집으로 회차 추출 성공. 홈페이지 없는 시설은 원천부재라 제보 크라우드소싱 필요.
 - **공공개방데이터 홈페이지·전화 보강 — 계획 완료·서버 apply 대기**: data.go.kr 전국공공시설개방정보 표준데이터(15013117)에서 수영장 142건 중 **좌표매칭(<250m) 112건** 확보. 그중 우리 빈 칸을 채울 수 있는 **공식 websiteUrl 77곳 + 전화 43곳**을 `scripts/import-open-facility.ts` 로 계획화(`data/open-facility-plan.json`, 커밋 대상). 값이 카카오맵 링크가 아니라 실제 공식 홈페이지(도시공사 사이트 등)라 시간표 큐레이션 가속에도 직접 도움. **이 데이터에 자유수영 세션은 없음**(시설 개방시각뿐)이라 freeSwim 은 못 채움. **서버 컨테이너에서 `npx tsx scripts/import-open-facility.ts apply` 실행 필요**(계획파일만 읽으므로 7.7MB 원본은 서버 이관 불필요, 원본은 gitignore). 재실행 안전(이미 채워진 값 미덮어씀).
 - **전화번호·웹사이트 enrich(`scripts/enrich-pool-details.ts`)도 사용 가능**: 카카오 로컬 검색 기반. 위 공공개방데이터로 못 채운 나머지의 보완용(카카오 place_url 이 들어가므로 공공개방데이터 apply 를 먼저 돌린 뒤 잔여분에만).
 - **이행 후 정리**: 프론트 라이브 이후 `/pools` top-level `freeSwimPriceTiers` 호환 shim 제거.
@@ -31,6 +32,7 @@
 
 ## 최근 완료
 
+- **2026-07-11 자유수영 시간표 웹수집(38곳 적용대기·233세션)**: 공식 홈페이지 확보 72곳 전체를 운영주체별 서브에이전트 병렬로 회차표 수집(출처 URL 필수·불확실 스킵·시설운영시간과 회차 구분·요금 없으면 비움). 결과 = **적용 대기 39곳(234세션)** `data/schedule-pilot.json` + `scripts/apply-schedules.ts`(fees 불변, dayCodes/HH:mm/tier 계약 검증, dry-run 39곳 스킵0 통과). **보류 29곳** `data/schedule-review.json`(연속운영·강습병행으로 제외구간 인코딩 애매 / 출처 비공식 / DB중복 등 사유·원자료 보존). 원천부재 skip ~9곳(홈페이지 있어도 시간표 미게시). 정제 원칙: 월정기 등록전용 회차는 제외하고 "지금 가면 되는" 일일 자유수영만, 격주 휴관은 weeksOfMonth로. **핵심 한계**: 이 수율은 "공식 홈페이지 있는 72곳" 한정 — 홈페이지 없는 나머지(~530곳)는 원천부재라 웹수집 불가, 제보 크라우드소싱이 본체. **서버 `npx tsx scripts/apply-schedules.ts apply` 실행 대기**.
 - **2026-07-11 공공개방데이터 보강 임포터 완성(계획 생성 완료)**: data.go.kr 15013117 표준데이터를 좌표(haversine)로만 매칭하는 `scripts/import-open-facility.ts` 작성(이름매칭은 오매칭 심해 폐기). 2단계 워크플로우: dry-run 이 `data/open-facility-plan.json`(소형·커밋) 생성 → 서버 `apply` 가 그 계획만 읽어 반영(원본 7.7MB 는 gitignore). 규칙: 빈 websiteUrl/전화만 채우고 카카오맵 링크·플레이스홀더는 공식 홈페이지로 교체, 요금·시간표·dataStatus 불변. 결과 계획 = website 77 + phone 43(112곳 매칭). 타입체크 그린.
 - **2026-07-11 요금 데이터 일괄 적재 완료**: 공공 수영장 요금은 지자체 도시공사 단위로 동일 적용된다는 점에 착안. 카카오 검색으로 도시공사별 요금을 조사해 `data/group-fees.json`에 정리 후, `scripts/collect-by-group.ts apply`로 시군구 기준 DB 수영장 전체에 일괄 적용. 개별 시설 홈페이지를 뒤지는 대신 도시공사 단위로 조사해 커버리지를 높임. 요금 미확인 시설은 `pilot_results.json`(개별 조사결과)을 `scripts/apply-pilot-results.ts`로 적용해 보완. 결과: `dataStatus=full` 승격 처리 완료.
 - **2026-07-11 전국 확장 실데이터 임포트**: KSPO 전국체육시설 API(data.go.kr, `SRVC_API_SFMS_FACI/TODZ_API_SFMS_FACI`)에서 `ftype_nm=수영장`·`faci_gb_nm=공공`·`faci_stat_nm=정상운영`·좌표유효 필터 → **공공 수영장 602곳** upsert(`dataStatus=listing`). `/pools` 606곳(기존 4 + 602). 좌표가 API에 내장돼 지오코딩 불필요. 임포터 `scripts/import-kspo.ts`(재실행=신선도 갱신). (엑셀+지오코딩 경로는 폐기)
