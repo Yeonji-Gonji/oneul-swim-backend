@@ -51,7 +51,7 @@ async function extractScheduleWithAI(
   freeSwim: any | null;
   applyFull: boolean;
 } | null> {
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiKey}`;
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key=${geminiKey}`;
   
   const systemPrompt = `
 You are an expert data assistant. Your job is to extract public swimming pool schedule and lane specification from search context.
