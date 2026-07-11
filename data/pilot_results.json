@@ -1,0 +1,1237 @@
+[
+  {
+    "id": "kspo-00EEB8D0E9D9E2C6241443C57B2B1003",
+    "name": "화명야외수영장",
+    "found": false,
+    "notice": "2019년 7월 이후 현재까지 운영 중단 상태"
+  },
+  {
+    "id": "kspo-8C9F3F4B23446ED31D55D71193360782",
+    "name": "남국국민체육센터 1관(수영장)",
+    "found": false,
+    "notice": "토요일 회차별 자유수영 운영하나 비회원 일일입장 요금 미확인"
+  },
+  {
+    "id": "kspo-02A0F8C7F06BA7A73E10B810329FF0DC",
+    "name": "용원국민체육센터 수영장",
+    "found": true,
+    "sourceUrl": "https://www.cwsisul.or.kr/",
+    "asOf": "2026",
+    "operator": "창원시설공단",
+    "notice": "매월 2, 4째 일요일 휴관. 강습과 병행 시 일부 레인만 이용 가능.",
+    "sessions": [
+      {
+        "daysLabel": "평일",
+        "dayCodes": [1, 2, 3, 4, 5],
+        "start": "08:00",
+        "end": "08:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [1, 2, 3, 4, 5],
+        "start": "11:00",
+        "end": "19:00",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "주말 및 공휴일",
+        "dayCodes": [0, 6],
+        "start": "06:00",
+        "end": "18:00",
+        "tier": "full"
+      }
+    ],
+    "fees": {
+      "full": {
+        "성인": 4000,
+        "청소년": 3500,
+        "어린이": 3000
+      }
+    }
+  },
+  {
+    "id": "kspo-5962F0E7BF1AD7FE556039C38F627307",
+    "name": "우리누리청소년문화센터실내수영장",
+    "found": true,
+    "sourceUrl": "https://www.cwsisul.or.kr/",
+    "asOf": "2026",
+    "operator": "창원시설공단",
+    "notice": "매월 2, 4째 일요일 휴관. 매 정각 50분 운영 후 10분 안전 점검.",
+    "sessions": [
+      {
+        "daysLabel": "평일",
+        "dayCodes": [1, 2, 3, 4, 5],
+        "start": "06:00",
+        "end": "19:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "주말 및 공휴일",
+        "dayCodes": [0, 6],
+        "start": "06:00",
+        "end": "17:50",
+        "tier": "full"
+      }
+    ],
+    "fees": {
+      "full": {
+        "성인": 4000,
+        "청소년": 3500,
+        "어린이": 3000
+      }
+    }
+  },
+  {
+    "id": "kspo-B8C5E83D1364447A88BFF558E46E441D",
+    "name": "산청문화예술회관 수영장",
+    "found": false,
+    "notice": "전화 문의(055-974-0412) 필수, 구체적인 일일 요금 및 시간표 웹 미확인"
+  },
+  {
+    "id": "kspo-0553B43667FF6AB59E1BA2001D67828A",
+    "name": "시흥시청소년수련관 수영장",
+    "found": false,
+    "notice": "자유수영은 강습 회원 중심으로 일일 입장 가능 여부 및 요금 미확인"
+  },
+  {
+    "id": "kspo-1236FA120DF86262B0FA9FBE7F36AE88",
+    "name": "연천군청소년수련관수영장",
+    "found": true,
+    "sourceUrl": "http://www.ycyc.or.kr/",
+    "asOf": "2026",
+    "operator": "연천군청소년수련관",
+    "notice": "평일 및 토요일 타임제 운영.",
+    "sessions": [
+      {
+        "daysLabel": "평일",
+        "dayCodes": [1, 2, 3, 4, 5],
+        "start": "06:00",
+        "end": "06:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [1, 2, 3, 4, 5],
+        "start": "09:00",
+        "end": "09:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [1, 2, 3, 4, 5],
+        "start": "11:00",
+        "end": "11:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [1, 2, 3, 4, 5],
+        "start": "19:00",
+        "end": "19:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토요일",
+        "dayCodes": [6],
+        "start": "09:00",
+        "end": "11:40",
+        "tier": "full"
+      }
+    ],
+    "fees": {
+      "full": {
+        "성인": 3000
+      }
+    }
+  },
+  {
+    "id": "kspo-26114CD4D6BB90F07E12259F3A829718",
+    "name": "부곡체육시설 수영장",
+    "found": false,
+    "notice": "운영 주체 이관(도시공사->진흥원)으로 정확한 시간표 및 요금 변동성 큼"
+  },
+  {
+    "id": "kspo-3E6C62008B5E65755CFDB8B90F75070C",
+    "name": "안성국민체육센터수영장",
+    "found": true,
+    "sourceUrl": "http://www.anseongswim.or.kr/",
+    "asOf": "2026",
+    "operator": "안성시",
+    "notice": "평일 8개 타임별 이용(각 타임 50분 수영 후 10분 휴식). 이용시간은 발권 후 총 2시간(초과 시 라커 자동 잠금).",
+    "sessions": [
+      {
+        "daysLabel": "평일 타임 1",
+        "dayCodes": [1, 2, 3, 4, 5],
+        "start": "06:10",
+        "end": "07:00",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일 타임 2",
+        "dayCodes": [1, 2, 3, 4, 5],
+        "start": "07:10",
+        "end": "08:00",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일 타임 3",
+        "dayCodes": [1, 2, 3, 4, 5],
+        "start": "08:10",
+        "end": "09:00",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일 타임 4",
+        "dayCodes": [1, 2, 3, 4, 5],
+        "start": "16:00",
+        "end": "16:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일 타임 5",
+        "dayCodes": [1, 2, 3, 4, 5],
+        "start": "17:00",
+        "end": "17:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일 타임 6",
+        "dayCodes": [1, 2, 3, 4, 5],
+        "start": "18:00",
+        "end": "18:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일 타임 7",
+        "dayCodes": [1, 2, 3, 4, 5],
+        "start": "19:00",
+        "end": "19:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일 타임 8",
+        "dayCodes": [1, 2, 3, 4, 5],
+        "start": "20:00",
+        "end": "20:50",
+        "tier": "full"
+      }
+    ],
+    "fees": {
+      "full": {
+        "성인": 3000,
+        "청소년": 2500
+      }
+    }
+  },
+  {
+    "id": "kspo-5D8EAAB961895176B4FE8860B46D8DF6",
+    "name": "수원체육문화센타",
+    "found": true,
+    "sourceUrl": "http://www.sscc3030.or.kr/",
+    "asOf": "2026",
+    "operator": "수원시",
+    "notice": "매주 일요일 및 법정공휴일 정기 휴관. 50분 운영 후 10분 수질 점검.",
+    "sessions": [
+      {
+        "daysLabel": "평일",
+        "dayCodes": [1, 2, 3, 4, 5],
+        "start": "06:00",
+        "end": "08:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일(월수금)",
+        "dayCodes": [1, 3, 5],
+        "start": "12:00",
+        "end": "13:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일(화목)",
+        "dayCodes": [2, 4],
+        "start": "13:00",
+        "end": "13:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [1, 2, 3, 4, 5],
+        "start": "19:00",
+        "end": "21:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토요일",
+        "dayCodes": [6],
+        "start": "06:00",
+        "end": "08:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토요일",
+        "dayCodes": [6],
+        "start": "12:00",
+        "end": "17:50",
+        "tier": "full"
+      }
+    ],
+    "fees": {
+      "full": {
+        "성인": 5500
+      }
+    }
+  },
+  {
+    "id": "kspo-83D69F1BC082C0B8EF6FE0A52EB1A2DB",
+    "name": "유앤아이센터내실내수영장",
+    "found": true,
+    "sourceUrl": "https://yeyak.hsuco.or.kr",
+    "asOf": "2026",
+    "operator": "화성도시공사",
+    "notice": "매월 둘째, 넷째 일요일만 운영(10:00~16:50). 매시간 50분 수영 후 10분 휴식.",
+    "sessions": [
+      {
+        "daysLabel": "평일",
+        "dayCodes": [1, 2, 3, 4, 5],
+        "start": "06:00",
+        "end": "20:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토요일",
+        "dayCodes": [6],
+        "start": "06:00",
+        "end": "17:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "일요일(둘째/넷째)",
+        "dayCodes": [0],
+        "start": "10:00",
+        "end": "16:50",
+        "tier": "full"
+      }
+    ],
+    "fees": {
+      "full": {
+        "성인": 3000,
+        "청소년": 2500,
+        "어린이": 2000
+      }
+    }
+  },
+  {
+    "id": "kspo-A17A9F2FAF4F58502711CE4A881A7759",
+    "name": "포일 스포츠센터 수영장",
+    "found": true,
+    "sourceUrl": "https://www.uuc.or.kr/",
+    "asOf": "2026",
+    "operator": "의왕도시공사",
+    "notice": "매월 첫째 일요일 휴관. 평일/토요일 5부제 운영, 공휴일 3부제 운영.",
+    "sessions": [
+      {
+        "daysLabel": "월~토 1부",
+        "dayCodes": [1, 2, 3, 4, 5, 6],
+        "start": "06:00",
+        "end": "07:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "월~토 2부",
+        "dayCodes": [1, 2, 3, 4, 5, 6],
+        "start": "09:00",
+        "end": "10:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "월~토 3부",
+        "dayCodes": [1, 2, 3, 4, 5, 6],
+        "start": "13:00",
+        "end": "14:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "월~토 4부",
+        "dayCodes": [1, 2, 3, 4, 5, 6],
+        "start": "16:00",
+        "end": "17:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "월~토 5부",
+        "dayCodes": [1, 2, 3, 4, 5, 6],
+        "start": "19:00",
+        "end": "20:50",
+        "tier": "full"
+      }
+    ],
+    "fees": {
+      "full": {
+        "성인": 3410,
+        "청소년": 2860,
+        "어린이": 2310
+      }
+    }
+  },
+  {
+    "id": "kspo-B5EFB97AFD5B2F2C39CE873AA6CD27E3",
+    "name": "광교복합체육센터(수영장)",
+    "found": true,
+    "sourceUrl": "https://www.suwonsports.or.kr",
+    "asOf": "2026",
+    "operator": "수원도시공사",
+    "notice": "매월 마지막 일요일 휴관. 평일 어린이는 이용 불가.",
+    "sessions": [
+      {
+        "daysLabel": "평일(성인/청소년)",
+        "dayCodes": [1, 2, 3, 4, 5],
+        "start": "06:00",
+        "end": "21:30",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "주말 1부",
+        "dayCodes": [0, 6],
+        "start": "09:00",
+        "end": "12:00",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "주말 2부",
+        "dayCodes": [0, 6],
+        "start": "14:00",
+        "end": "17:30",
+        "tier": "full"
+      }
+    ],
+    "fees": {
+      "full": {
+        "성인": 4000,
+        "청소년": 3500,
+        "어린이": 3000
+      }
+    }
+  },
+  {
+    "id": "kspo-CBEE10F5A45BE196EE965EAA13FEB953",
+    "name": "이충문화체육센터실내수영장",
+    "found": true,
+    "sourceUrl": "https://www.pyeongtaek.go.kr/",
+    "asOf": "2026",
+    "operator": "평택시",
+    "notice": "매주 월요일 휴관. 중간에 시설 점검 시간 존재.",
+    "sessions": [
+      {
+        "daysLabel": "화~금 오전",
+        "dayCodes": [2, 3, 4, 5],
+        "start": "06:00",
+        "end": "12:00",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "화~금 오후",
+        "dayCodes": [2, 3, 4, 5],
+        "start": "14:00",
+        "end": "20:30",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토요일",
+        "dayCodes": [6],
+        "start": "09:00",
+        "end": "18:00",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "일요일",
+        "dayCodes": [0],
+        "start": "09:00",
+        "end": "17:00",
+        "tier": "full"
+      }
+    ],
+    "fees": {
+      "full": {
+        "성인": 3300,
+        "청소년": 2200,
+        "어린이": 1650
+      }
+    }
+  },
+  {
+    "id": "kspo-E16D34184EA4BB1BA56C91CBBA3E9263",
+    "name": "가남체육센터",
+    "found": true,
+    "sourceUrl": "https://health.yjcmc.or.kr/",
+    "asOf": "2026",
+    "operator": "여주도시공사",
+    "notice": "토, 일요일 및 공휴일 휴관. 12:00~13:00 시설 점검.",
+    "sessions": [
+      {
+        "daysLabel": "평일",
+        "dayCodes": [1, 2, 3, 4, 5],
+        "start": "06:00",
+        "end": "21:00",
+        "tier": "full"
+      }
+    ],
+    "fees": {
+      "full": {
+        "성인": 4000,
+        "청소년": 2000
+      }
+    }
+  },
+  {
+    "id": "kspo-0570299DC755863D8E99E2440075283C",
+    "name": "남부문화스포츠센터 반다비수영장",
+    "found": true,
+    "sourceUrl": "https://www.dangjin.go.kr/res/sub02_01.do",
+    "asOf": "2026",
+    "operator": "당진도시공사",
+    "notice": "매주 월요일 휴관. 평일 및 주말 각 4부제 운영.",
+    "sessions": [
+      {
+        "daysLabel": "평일 1부",
+        "dayCodes": [2, 3, 4, 5],
+        "start": "06:00",
+        "end": "08:00",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일 2부",
+        "dayCodes": [2, 3, 4, 5],
+        "start": "09:00",
+        "end": "12:00",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일 3부",
+        "dayCodes": [2, 3, 4, 5],
+        "start": "13:00",
+        "end": "15:00",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일 4부",
+        "dayCodes": [2, 3, 4, 5],
+        "start": "18:00",
+        "end": "21:00",
+        "tier": "full"
+      }
+    ],
+    "fees": {
+      "full": {
+        "성인": 3500
+      }
+    }
+  },
+  {
+    "id": "kspo-06A7E84E09953619AA8297F593B20A15",
+    "name": "예체문화관수달수영장",
+    "found": true,
+    "sourceUrl": "https://tour.muju.go.kr/yechae/contents.do?key=591",
+    "asOf": "2026",
+    "operator": "무주군청",
+    "notice": "매주 일요일 및 국공휴일 휴관. 12:00~13:00 브레이크 타임.",
+    "sessions": [
+      {
+        "daysLabel": "평일",
+        "dayCodes": [1, 2, 3, 4, 5],
+        "start": "06:00",
+        "end": "21:00",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토요일",
+        "dayCodes": [6],
+        "start": "09:00",
+        "end": "17:00",
+        "tier": "full"
+      }
+    ],
+    "fees": {
+      "full": {
+        "성인": 2200,
+        "청소년": 1800,
+        "어린이": 1000
+      }
+    }
+  },
+  {
+    "id": "kspo-68415B8857D5130B7E5ED5EBCA4BB637",
+    "name": "문화센터 물놀이장",
+    "found": false,
+    "notice": "하절기(7~8월) 야외 한시 무료 물놀이장으로 상시 자유수영 대상 아님"
+  },
+  {
+    "id": "kspo-070098F480829EACE72EB566E3D13B73",
+    "name": "경산수영장",
+    "found": true,
+    "sourceUrl": "http://gbgs.go.kr/swimmingpool/sub/main.do",
+    "asOf": "2026",
+    "operator": "경산시",
+    "notice": "매주 일요일 휴관. 1일 1회 2시간 이용 가능.",
+    "sessions": [
+      {
+        "daysLabel": "평일",
+        "dayCodes": [1, 2, 3, 4, 5],
+        "start": "06:00",
+        "end": "20:30",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토요일 및 공휴일",
+        "dayCodes": [6],
+        "start": "06:00",
+        "end": "18:00",
+        "tier": "full"
+      }
+    ],
+    "fees": {
+      "full": {
+        "성인": 4000
+      }
+    }
+  },
+  {
+    "id": "kspo-646DC280EC19E3A4D9E856F8F850FB52",
+    "name": "청도군건강증진센터수영장",
+    "found": false,
+    "notice": "시간표와 요금의 웹 공시 없음 (다자녀 감면 중심 안내, 확인 필요)"
+  },
+  {
+    "id": "kspo-0728629250B22B107F012D5237321060",
+    "name": "강북문화예술회관 수영장",
+    "found": true,
+    "sourceUrl": "https://www.gangbukmc.go.kr/",
+    "asOf": "2026",
+    "operator": "강북구도시관리공단",
+    "notice": "둘째, 넷째 일요일 휴관.",
+    "sessions": [
+      {
+        "daysLabel": "평일",
+        "dayCodes": [1, 2, 3, 4, 5],
+        "start": "18:00",
+        "end": "18:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토요일 1부",
+        "dayCodes": [6],
+        "start": "06:50",
+        "end": "07:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토요일 2부",
+        "dayCodes": [6],
+        "start": "10:00",
+        "end": "11:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토요일 3부",
+        "dayCodes": [6],
+        "start": "16:00",
+        "end": "17:50",
+        "tier": "full"
+      }
+    ],
+    "fees": {
+      "full": {
+        "성인": 4000
+      }
+    }
+  },
+  {
+    "id": "kspo-2B454D8DC5E97C350DE415FEB31E3ADF",
+    "name": "잠실 자연형 물놀이장",
+    "found": true,
+    "sourceUrl": "https://hangang.seoul.go.kr/",
+    "asOf": "2026",
+    "operator": "서울특별시 한강사업본부",
+    "notice": "하절기(6월~8월) 야외 한시 개장(09:00~22:00). 12-13시 및 17:30-19시 입수 불가.",
+    "sessions": [
+      {
+        "daysLabel": "하절기 매일",
+        "dayCodes": [0, 1, 2, 3, 4, 5, 6],
+        "start": "09:00",
+        "end": "22:00",
+        "tier": "full"
+      }
+    ],
+    "fees": {
+      "full": {
+        "성인": 3000,
+        "청소년": 2000,
+        "어린이": 1000
+      }
+    }
+  },
+  {
+    "id": "kspo-4E4BAC528CF40BAD8830902843F30D68",
+    "name": "서대문청소년센터",
+    "found": true,
+    "sourceUrl": "https://www.ssyac.or.kr",
+    "asOf": "2026",
+    "operator": "서대문청소년센터",
+    "notice": "평일 및 토요일 지정 타임(50분)만 이용 가능.",
+    "sessions": [
+      {
+        "daysLabel": "평일(월수금)",
+        "dayCodes": [1, 3, 5],
+        "start": "08:00",
+        "end": "08:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일",
+        "dayCodes": [1, 2, 3, 4, 5],
+        "start": "12:00",
+        "end": "12:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일(월수금)",
+        "dayCodes": [1, 3, 5],
+        "start": "18:00",
+        "end": "18:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토요일",
+        "dayCodes": [6],
+        "start": "16:00",
+        "end": "16:50",
+        "tier": "full"
+      }
+    ],
+    "fees": {
+      "full": {
+        "성인": 4700,
+        "청소년": 2500,
+        "어린이": 1800
+      }
+    }
+  },
+  {
+    "id": "kspo-70B815274D27D96FA5C0E4AF463663D1",
+    "name": "양천구민체육센터수영장",
+    "found": true,
+    "sourceUrl": "https://www.ycs.or.kr/",
+    "asOf": "2026",
+    "operator": "양천구시설관리공단",
+    "notice": "선착순 발권제. 매월 마지막 금요일 18시는 환경정비 휴장.",
+    "sessions": [
+      {
+        "daysLabel": "평일 2부",
+        "dayCodes": [1, 2, 3, 4, 5],
+        "start": "16:00",
+        "end": "16:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일 3부",
+        "dayCodes": [1, 2, 3, 4, 5],
+        "start": "17:00",
+        "end": "17:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일 4부",
+        "dayCodes": [1, 2, 3, 4, 5],
+        "start": "18:00",
+        "end": "18:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토요일 2부",
+        "dayCodes": [6],
+        "start": "17:00",
+        "end": "17:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토요일 3부",
+        "dayCodes": [6],
+        "start": "18:00",
+        "end": "18:50",
+        "tier": "full"
+      }
+    ],
+    "fees": {
+      "full": {
+        "성인": 3500,
+        "청소년": 2200,
+        "어린이": 1800
+      }
+    }
+  },
+  {
+    "id": "kspo-9AA325CBCB3F2948A5372CD82F8312CA",
+    "name": "망우청소년센터수영장",
+    "found": true,
+    "sourceUrl": "http://www.mangwoo.kr/",
+    "asOf": "2026",
+    "operator": "시립망우청소년센터",
+    "notice": "1회 50분 이용 제한. 정원 초과 시 입장 제한.",
+    "sessions": [
+      {
+        "daysLabel": "평일 오전",
+        "dayCodes": [1, 2, 3, 4, 5],
+        "start": "08:00",
+        "end": "08:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일 저녁",
+        "dayCodes": [1, 2, 3, 4, 5],
+        "start": "18:00",
+        "end": "18:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토요일",
+        "dayCodes": [6],
+        "start": "08:00",
+        "end": "08:50",
+        "tier": "full"
+      }
+    ],
+    "fees": {
+      "full": {
+        "성인": 4700
+      }
+    }
+  },
+  {
+    "id": "kspo-C8D4617E46B02D4E12BCB8DB67C61FA2",
+    "name": "은평구민체육센터수영장",
+    "found": true,
+    "sourceUrl": "https://www.efmc.or.kr",
+    "asOf": "2026",
+    "operator": "은평구시설관리공단",
+    "notice": "강습회원은 1일입장 시 30% 할인 가능.",
+    "sessions": [
+      {
+        "daysLabel": "평일 오전",
+        "dayCodes": [1, 2, 3, 4, 5],
+        "start": "08:00",
+        "end": "08:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일 저녁(화목)",
+        "dayCodes": [2, 4],
+        "start": "19:00",
+        "end": "19:50",
+        "tier": "full"
+      }
+    ],
+    "fees": {
+      "full": {
+        "성인": 4000,
+        "청소년": 3000,
+        "어린이": 2300
+      }
+    }
+  },
+  {
+    "id": "kspo-0A7407C2BD0B4F7C6FE029DFAF79CAEB",
+    "name": "영종국민체육센터 수영장",
+    "found": false,
+    "notice": "시간표와 요금의 웹 공시 없음 (감면 혜택 위주 안내, 전화 확인 필요)"
+  },
+  {
+    "id": "kspo-6CC0C2D98DD8DD24002C836EB3F40CED",
+    "name": "도원수영장",
+    "found": true,
+    "sourceUrl": "http://www.icsports.or.kr/fmcs/21",
+    "asOf": "2026",
+    "operator": "인천광역시체육회",
+    "notice": "50m 레인 8개(수심 2m).",
+    "sessions": [
+      {
+        "daysLabel": "평일 1부",
+        "dayCodes": [1, 2, 3, 4, 5],
+        "start": "06:00",
+        "end": "07:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일 2부",
+        "dayCodes": [1, 2, 3, 4, 5],
+        "start": "09:00",
+        "end": "12:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일 3부",
+        "dayCodes": [1, 2, 3, 4, 5],
+        "start": "19:00",
+        "end": "20:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토/공휴일 1부",
+        "dayCodes": [0, 6],
+        "start": "09:00",
+        "end": "11:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토/공휴일 2부",
+        "dayCodes": [0, 6],
+        "start": "14:00",
+        "end": "16:50",
+        "tier": "full"
+      }
+    ],
+    "fees": {
+      "full": {
+        "성인": 4000
+      }
+    }
+  },
+  {
+    "id": "kspo-0A89189A0C0816586D27CBEA299912A1",
+    "name": "쇠부리체육센터수영장",
+    "found": true,
+    "sourceUrl": "https://www.bukgu.ulsan.kr/facility/index.do",
+    "asOf": "2026",
+    "operator": "울산북구시설관리공단",
+    "notice": "1회 1시간 기준.",
+    "sessions": [
+      {
+        "daysLabel": "매일",
+        "dayCodes": [1, 2, 3, 4, 5, 6],
+        "start": "06:00",
+        "end": "20:00",
+        "tier": "full"
+      }
+    ],
+    "fees": {
+      "full": {
+        "성인": 3500,
+        "청소년": 2500,
+        "어린이": 2500
+      }
+    }
+  },
+  {
+    "id": "kspo-0A9567CC19ADC46E52A0353FBB50E335",
+    "name": "달성테크노스포츠센터",
+    "found": true,
+    "sourceUrl": "https://www.dssiseol.or.kr",
+    "asOf": "2026",
+    "operator": "달성군시설관리공단",
+    "notice": "12-13시 수질관리 시간 입수 불가. 매월 둘째 넷째 일요일 휴관.",
+    "sessions": [
+      {
+        "daysLabel": "평일 1부",
+        "dayCodes": [1, 2, 3, 4, 5],
+        "start": "13:00",
+        "end": "15:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일 2부",
+        "dayCodes": [1, 2, 3, 4, 5],
+        "start": "18:00",
+        "end": "18:50",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토요일",
+        "dayCodes": [6],
+        "start": "06:00",
+        "end": "17:30",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "공휴일",
+        "dayCodes": [0, 6],
+        "start": "09:00",
+        "end": "17:30",
+        "tier": "full"
+      }
+    ],
+    "fees": {
+      "full": {
+        "성인": 4000,
+        "청소년": 3000,
+        "어린이": 2000
+      }
+    }
+  },
+  {
+    "id": "kspo-0BB3B8D52C4E6AB874BFA5DD87A2BC08",
+    "name": "복대국민체육센터",
+    "found": true,
+    "sourceUrl": "https://www.cjsisul.or.kr",
+    "asOf": "2026",
+    "operator": "청주시설관리공단",
+    "notice": "1회 2시간 기준. 초과 시 가산 요금 적용.",
+    "sessions": [
+      {
+        "daysLabel": "평일",
+        "dayCodes": [1, 2, 3, 4, 5],
+        "start": "06:00",
+        "end": "22:00",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "주말",
+        "dayCodes": [0, 6],
+        "start": "06:00",
+        "end": "17:00",
+        "tier": "full"
+      }
+    ],
+    "fees": {
+      "full": {
+        "성인": 3000,
+        "청소년": 2000,
+        "어린이": 1500
+      }
+    }
+  },
+  {
+    "id": "kspo-0C479F19238A6C63A2F0A67C37B65EE3",
+    "name": "여성발전센터수영장",
+    "found": true,
+    "sourceUrl": "https://www.gmcc.co.kr",
+    "asOf": "2026",
+    "operator": "광주광역시 일가정양립지원본부",
+    "notice": "월~금 09:00~12:00는 여성 전용 시간(남성 입장 불가).",
+    "sessions": [
+      {
+        "daysLabel": "평일 1부",
+        "dayCodes": [1, 2, 3, 4, 5],
+        "start": "06:00",
+        "end": "08:00",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일 2부(여성전용)",
+        "dayCodes": [1, 2, 3, 4, 5],
+        "start": "09:00",
+        "end": "12:00",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일 3부",
+        "dayCodes": [1, 2, 3, 4, 5],
+        "start": "14:00",
+        "end": "17:00",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일 4부",
+        "dayCodes": [1, 2, 3, 4, 5],
+        "start": "17:00",
+        "end": "21:00",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토요일",
+        "dayCodes": [6],
+        "start": "06:00",
+        "end": "18:00",
+        "tier": "full"
+      }
+    ],
+    "fees": {
+      "full": {
+        "성인": 4000,
+        "청소년": 2500,
+        "어린이": 2000
+      }
+    }
+  },
+  {
+    "id": "kspo-78DBE13BE3E7402E1258BF5587D9E3C9",
+    "name": "우슬국민체육센터(구: 우슬국민체육센터수영장)",
+    "found": true,
+    "sourceUrl": "https://www.haenam.go.kr/",
+    "asOf": "2026",
+    "operator": "해남군청",
+    "notice": "일요일 정기 휴관.",
+    "sessions": [
+      {
+        "daysLabel": "평일",
+        "dayCodes": [1, 2, 3, 4, 5],
+        "start": "06:00",
+        "end": "21:00",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토요일 및 공휴일",
+        "dayCodes": [6],
+        "start": "09:00",
+        "end": "18:00",
+        "tier": "full"
+      }
+    ],
+    "fees": {
+      "full": {
+        "성인": 2500,
+        "청소년": 2000,
+        "어린이": 1500
+      }
+    }
+  },
+  {
+    "id": "kspo-B6BCE4D32AD48986B8380A992A599835",
+    "name": "광주실내수영장",
+    "found": true,
+    "sourceUrl": "https://www.gmcc.co.kr",
+    "asOf": "2026",
+    "operator": "광주광역시도시공사",
+    "notice": "염주실내수영장. 1회 입장 발권제 운영.",
+    "sessions": [
+      {
+        "daysLabel": "평일 1부",
+        "dayCodes": [1, 2, 3, 4, 5],
+        "start": "05:30",
+        "end": "08:00",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일 2부",
+        "dayCodes": [1, 2, 3, 4, 5],
+        "start": "09:00",
+        "end": "12:00",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "평일 3부",
+        "dayCodes": [1, 2, 3, 4, 5],
+        "start": "13:00",
+        "end": "20:30",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토요일 1부",
+        "dayCodes": [6],
+        "start": "05:30",
+        "end": "15:00",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "토요일 2부",
+        "dayCodes": [6],
+        "start": "15:30",
+        "end": "20:30",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "일요일 1부",
+        "dayCodes": [0],
+        "start": "07:00",
+        "end": "15:00",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "일요일 2부",
+        "dayCodes": [0],
+        "start": "15:30",
+        "end": "18:00",
+        "tier": "full"
+      }
+    ],
+    "fees": {
+      "full": {
+        "성인": 5000,
+        "청소년": 3500,
+        "어린이": 2500
+      }
+    }
+  },
+  {
+    "id": "kspo-103FC9F88D46529BEC0CAF577960D7ED",
+    "name": "해돋이 힐링센터(수영장)",
+    "found": false,
+    "notice": "사우나 및 찜질방 복합 시설로 수영장 요금은 전화 확인 필수"
+  },
+  {
+    "id": "kspo-1087EC49B8DD8EE14F86D51D9D4D6B36",
+    "name": "보람 수영장",
+    "found": true,
+    "sourceUrl": "https://www.siseol.or.kr/",
+    "asOf": "2026",
+    "operator": "세종시설관리공단",
+    "notice": "매월 운영 일정에 따라 자유수영 시간대 유동적.",
+    "sessions": [],
+    "fees": {
+      "full": {
+        "성인": 4000,
+        "청소년": 2500,
+        "어린이": 2000
+      }
+    }
+  },
+  {
+    "id": "kspo-1509D63D89906D5A3547277739FABA99",
+    "name": "국민체육센터(수영장)",
+    "found": true,
+    "sourceUrl": "https://www.gwgoseong.go.kr/",
+    "asOf": "2026",
+    "operator": "고성군청",
+    "notice": "매주 월요일 및 법정공휴일 휴관.",
+    "sessions": [
+      {
+        "daysLabel": "평일",
+        "dayCodes": [1, 2, 3, 4, 5],
+        "start": "06:00",
+        "end": "21:00",
+        "tier": "full"
+      },
+      {
+        "daysLabel": "주말",
+        "dayCodes": [0, 6],
+        "start": "09:00",
+        "end": "18:00",
+        "tier": "full"
+      }
+    ],
+    "fees": {
+      "full": {
+        "성인": 3500,
+        "청소년": 2450,
+        "어린이": 1750
+      }
+    }
+  },
+  {
+    "id": "kspo-7C69ED247E79DCDC23E6A312E39E6C0D",
+    "name": "반다비 국민체육센터(수영장)",
+    "found": true,
+    "sourceUrl": "https://rev.cuc.or.kr/www/",
+    "asOf": "2026",
+    "operator": "춘천도시공사",
+    "notice": "장애인/비장애인 통합 체육시설. 1회 2시간 이용.",
+    "sessions": [
+      {
+        "daysLabel": "평일 및 토요일",
+        "dayCodes": [1, 2, 3, 4, 5, 6],
+        "start": "05:00",
+        "end": "21:00",
+        "tier": "full"
+      }
+    ],
+    "fees": {
+      "full": {
+        "성인": 3000
+      }
+    }
+  },
+  {
+    "id": "kspo-1A483E203BB1AF6FD96B626F838FD253",
+    "name": "대덕구청소년수련관수영장",
+    "found": false,
+    "notice": "최근(2026-06-30) 재개관 완료하여 시설 가동 중이나 자유수영 일일 요금 및 시간표는 전화 문의 필수"
+  }
+]
