@@ -22,6 +22,8 @@ services:
     image: ghcr.io/yeonji-gonji/oneul-swim-backend:latest
     build: .
     restart: unless-stopped
+    ports:
+      - '5555:5555'
     environment:
       DATABASE_URL: postgresql://oneul:${POSTGRES_PASSWORD}@db:5432/oneul_swim
       CORS_ORIGINS: ${CORS_ORIGINS}
