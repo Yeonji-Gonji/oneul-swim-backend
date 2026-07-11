@@ -101,7 +101,7 @@ Rules:
     });
 
     if (!res.ok) {
-      console.error(`[ERROR] Gemini API status: ${res.status}`);
+      console.error(`[ERROR] Gemini API status: ${res.status}, body: ${await res.text()}`);
       return null;
     }
 
