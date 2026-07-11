@@ -3,3 +3,8 @@ dist/
 .env
 *.log
 .DS_Store
+
+# data.go.kr 원본 표준데이터 덤프(재다운로드 가능, 7.7MB) — 커밋 불필요.
+# 좌표매칭 결과는 data/open-facility-plan.json(소형)으로 커밋된다.
+전국공공시설개방정보표준데이터.json
+docs/전국공공시설개방정보표준데이터.json

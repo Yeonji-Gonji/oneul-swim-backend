@@ -153,6 +153,19 @@ export class AnnounceDto {
   body: string;
 }
 
+/** POST /admin/auth/kakao — 카카오 인가코드로 로그인(본인 계정만 어드민 토큰 발급) */
+export class KakaoLoginDto {
+  @IsString()
+  @MinLength(1)
+  @MaxLength(1024)
+  code: string;
+
+  @IsString()
+  @MinLength(1)
+  @MaxLength(500)
+  redirectUri: string;
+}
+
 /** POST /admin/push-target — 관리자 기기 등록 */
 export class RegisterPushTargetDto {
   @IsString()

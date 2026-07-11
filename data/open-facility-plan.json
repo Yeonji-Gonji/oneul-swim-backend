@@ -1,0 +1,642 @@
+{
+  "thresholdM": 250,
+  "matched": 112,
+  "plans": [
+    {
+      "poolId": "kspo-A7D7C251D47FFE4BE409195B9F54F8F8",
+      "poolName": "화도체육문화센터수영장",
+      "distance": 0,
+      "stdName": "화도체육문화센터 수영장",
+      "setWebsite": "https://www.ncuc.or.kr/hd/451",
+      "setPhone": "031-560-1431"
+    },
+    {
+      "poolId": "kspo-0EB12FD1EFB6F2BAB5E5B907F8998EA2",
+      "poolName": "(수영장-03) 웅상문화체육센터",
+      "distance": 0,
+      "stdName": "웅상문화체육센터 수영장",
+      "setWebsite": "http://www.yssisul.or.kr",
+      "setPhone": "055-379-8585"
+    },
+    {
+      "poolId": "kspo-1E0C2069A7B76B25591EC6F7D90D1162",
+      "poolName": "천안시북부스포츠센터(북부스포츠센터)",
+      "distance": 0,
+      "stdName": "북부스포츠센터 수영장",
+      "setWebsite": "https://cauc.or.kr/_buksports/"
+    },
+    {
+      "poolId": "kspo-E575463A1F0AA76FE87BAE911C1DA509",
+      "poolName": "(수영장-02) 양산주민편익시설",
+      "distance": 0,
+      "stdName": "양산주민편익시설 수영장",
+      "setWebsite": "http://www.yssisul.or.kr/",
+      "setPhone": "055-379-8620"
+    },
+    {
+      "poolId": "kspo-F4E492DA3DCC0CE906AA1BC458955113",
+      "poolName": "와부체육문화센터수영장",
+      "distance": 0,
+      "stdName": "와부체육문화센터 수영장",
+      "setWebsite": "https://www.ncuc.or.kr/wb/495"
+    },
+    {
+      "poolId": "kspo-818695D085223AFE1B62F16C8D63F08C",
+      "poolName": "천안도시공사 한들문화센터",
+      "distance": 0,
+      "stdName": "한들문화센터 수영장",
+      "setWebsite": "https://cauc.or.kr/_swim/",
+      "setPhone": "041-529-5177"
+    },
+    {
+      "poolId": "kspo-346970BB5030A481349BB05AF3898FC1",
+      "poolName": "계산국민체육센터수영장",
+      "distance": 0,
+      "stdName": "인천광역시 계산국민체육센터(수영 자유수영 월수금)",
+      "setWebsite": "https://www.insiseol.or.kr/sport/gyesan/"
+    },
+    {
+      "poolId": "kspo-0F33475C2B32256C2D4774DBF0EC88EA",
+      "poolName": "장량체육국민센터 수영장",
+      "distance": 0,
+      "stdName": "장량국민체육센터 수영장",
+      "setWebsite": "https://www.phsisul.org/sisul_11/main.do",
+      "setPhone": "054-280-9590"
+    },
+    {
+      "poolId": "kspo-D1D4AEC11E3B54E17E90EABE930398ED",
+      "poolName": "여성문화관수영장",
+      "distance": 0,
+      "stdName": "여성문화관수영장 수영장",
+      "setWebsite": "https://www.phsisul.org/sisul_17/main.do",
+      "setPhone": "054-280-9550"
+    },
+    {
+      "poolId": "kspo-0A3389E7DB5DB805B462741AE7227C3D",
+      "poolName": "덕업관어린이수영장",
+      "distance": 0,
+      "stdName": "덕업관어린이수영장 수영장",
+      "setWebsite": "http://www.phsisul.org/home/59",
+      "setPhone": "054-280-9580"
+    },
+    {
+      "poolId": "kspo-3B0E0D4BE35C3678DD528A4CECD0ABB3",
+      "poolName": "남부문화체육센터 수영장",
+      "distance": 0,
+      "stdName": "남부문화체육센터 수영장",
+      "setPhone": "055-973-7373"
+    },
+    {
+      "poolId": "kspo-05632B55F73102E5D4B4FB36B7A7A85E",
+      "poolName": "에코-랜드 수영장 ",
+      "distance": 0,
+      "stdName": "에코랜드수영장 풋살구장",
+      "setWebsite": "https://www.ncuc.or.kr/eco/620"
+    },
+    {
+      "poolId": "kspo-66F6B7B2C504CED14EA4E2F166663300",
+      "poolName": "한솔복컴 수영장",
+      "distance": 0,
+      "stdName": "한솔동 복합커뮤니티센터 수영장",
+      "setWebsite": "https://www.sj-sporex.co.kr",
+      "setPhone": "044-865-9501"
+    },
+    {
+      "poolId": "kspo-71D54C76BB52E341FFBCEA9B7DECF233",
+      "poolName": "서구국민체육센터",
+      "distance": 0,
+      "stdName": "서국국민체육센터 수영장",
+      "setWebsite": "http://www.sgsport.co.kr"
+    },
+    {
+      "poolId": "kspo-6C8EBEA6CC3A4BE310B937CB40D3F3F5",
+      "poolName": "평택시실내수영장",
+      "distance": 0,
+      "stdName": "소사벌레포츠타운 평택실내수영장",
+      "setWebsite": "http://www.pyeongtaek.go.kr"
+    },
+    {
+      "poolId": "kspo-9966DAE3CCEDD5F2BF485FFBC1FD9B84",
+      "poolName": "당진교육문화스포츠센터수영장",
+      "distance": 0,
+      "stdName": "수영장",
+      "setWebsite": "http://www.dangjin.go.kr/fmres/"
+    },
+    {
+      "poolId": "kspo-BFBD6AB3366435D8384638B885232091",
+      "poolName": "오션 수영장",
+      "distance": 0,
+      "stdName": "거제문화예술회관별관 오션사이드수영장",
+      "setWebsite": "https://www.gmdc.co.kr/_geojesp/_sub02/sub02_25.html",
+      "setPhone": "055-639-8143"
+    },
+    {
+      "poolId": "kspo-0C9AC7C87FAF4DA1725E174E8EA08BAF",
+      "poolName": "함양국민체육센터",
+      "distance": 0,
+      "stdName": "함양국민체육센터 헬스 수영장",
+      "setWebsite": "https://www.hygn.go.kr/sports.web"
+    },
+    {
+      "poolId": "kspo-677C93B6BBFA60F0B575F9EF06CF7D4C",
+      "poolName": "구리시멀티스포츠센터수영장",
+      "distance": 0,
+      "stdName": "구리시 멀티스포츠센터 수영장",
+      "setWebsite": "https://www.guriuc.or.kr/sports/main/main.do;jsessionid=5577CC9AA5BE1EC5C3AA56EFAE999454.res2"
+    },
+    {
+      "poolId": "kspo-91506ACCAA3A66B01A24B59EC59A37FE",
+      "poolName": "옥천국민체육센터",
+      "distance": 0,
+      "stdName": "옥천국민체육센터_수영장",
+      "setWebsite": "http://www.oc.go.kr"
+    },
+    {
+      "poolId": "kspo-89F547793D8BB736A93D8C8880C9C2D6",
+      "poolName": "기장군국민체육센터수영장",
+      "distance": 0,
+      "stdName": "기장생활체육센터 수영장",
+      "setWebsite": "https://regs.gijangcmc.or.kr/gijang/main/",
+      "setPhone": "051-792-4790"
+    },
+    {
+      "poolId": "kspo-28DDF2382AEB459056AFB8E935F3EF0C",
+      "poolName": "경주국민체육센터수영장",
+      "distance": 0,
+      "stdName": "경주국민체육센터 수영장",
+      "setPhone": "054-750-8560"
+    },
+    {
+      "poolId": "kspo-13F825B08CD1F9626491093B7FE79012",
+      "poolName": "구례국민체육센터(구례군민체육센터수영장)",
+      "distance": 0,
+      "stdName": "구례실내수영장",
+      "setWebsite": "https://www.gurye.go.kr/kr/subPage.do?menuNo=117017002003",
+      "setPhone": "061-780-2549"
+    },
+    {
+      "poolId": "kspo-28A9310D49AC66878974E67CE1172FD2",
+      "poolName": "삼산월드체육관수영장",
+      "distance": 0,
+      "stdName": "인천광역시 삼산월드체육관(수영 자유수영 화목)",
+      "setWebsite": "https://www.insiseol.or.kr/sport/samsan/"
+    },
+    {
+      "poolId": "kspo-6CC0C2D98DD8DD24002C836EB3F40CED",
+      "poolName": "도원수영장",
+      "distance": 0,
+      "stdName": "인천광역시 도원수영장 수영장",
+      "setWebsite": "https://www.icsports.or.kr/fmcs/21"
+    },
+    {
+      "poolId": "kspo-28AC90D7F3C0EFFB17665F3B0D78D529",
+      "poolName": "강화국민체육센터",
+      "distance": 0,
+      "stdName": "강화국민체육센터 수영장",
+      "setWebsite": "https://icghsports.or.kr/"
+    },
+    {
+      "poolId": "kspo-FACEC960E93498269DC320E9D9F43A00",
+      "poolName": "열우물경기장",
+      "distance": 0,
+      "stdName": "인천광역시 열우물경기장(수영장)",
+      "setWebsite": "https://www.icsports.or.kr/fmcs/55"
+    },
+    {
+      "poolId": "kspo-2B4B80BA926350E8068F378E9A436906",
+      "poolName": "종합문화복지타운",
+      "distance": 0,
+      "stdName": "종합문화복지타운 수영장",
+      "setPhone": "054-870-6577"
+    },
+    {
+      "poolId": "kspo-8E19055A755C205B4DDC71BD422D7189",
+      "poolName": "중구수영장",
+      "distance": 0,
+      "stdName": "중구수영장 성인 및 유아풀",
+      "setWebsite": "https://crs.ujcmc.or.kr/"
+    },
+    {
+      "poolId": "kspo-84C6D15CCB7DB3DFA3FCAC12373CD3A4",
+      "poolName": "보령국민체육센터(보령국민체육센터수영장)",
+      "distance": 0,
+      "stdName": "보령국민체육센터 수영장",
+      "setWebsite": "https://www.brcn.go.kr/sport/fmcs/4",
+      "setPhone": "041-930-3348"
+    },
+    {
+      "poolId": "kspo-615E00B6909CD5508A690BFD43AC442F",
+      "poolName": "(수영장-01) 양산국민체육센터",
+      "distance": 0,
+      "stdName": "양산중앙국민체육센터 수영장",
+      "setWebsite": "http://www.yssisul.or.kr/",
+      "setPhone": "055-379-8640"
+    },
+    {
+      "poolId": "kspo-B0073E3AC143699C5440C210845FC2A1",
+      "poolName": "서산국민체육센터수영장",
+      "distance": 0,
+      "stdName": "국민체육센터 수영장",
+      "setWebsite": "https://yeyak.seosan.go.kr/"
+    },
+    {
+      "poolId": "kspo-CBEE10F5A45BE196EE965EAA13FEB953",
+      "poolName": "이충문화체육센터실내수영장",
+      "distance": 0,
+      "stdName": "이충문화체육센터 수영장",
+      "setWebsite": "http://www.pyeongtaek.go.kr",
+      "setPhone": "031-8024-7444"
+    },
+    {
+      "poolId": "kspo-99B28B70295B5EDF616272BD33C9BEC4",
+      "poolName": "담양국민체육센터(구: 국민체육센터 담빛 수영장)",
+      "distance": 0,
+      "stdName": "담빛수영장",
+      "setPhone": "061-380-2626"
+    },
+    {
+      "poolId": "kspo-F4C12FAFB18714C92768B29CE9661090",
+      "poolName": "서구청소년수련관실내수영장",
+      "distance": 0,
+      "stdName": "서구청소년수련관 수영장",
+      "setWebsite": "http://www.seoguyouth.or.kr/",
+      "setPhone": "053-572-2451"
+    },
+    {
+      "poolId": "kspo-F92592949871036D2FCE9F1D380C299C",
+      "poolName": "광양수영장",
+      "distance": 0,
+      "stdName": "광양수영장",
+      "setWebsite": "https://www.gysports.co.kr/sports/"
+    },
+    {
+      "poolId": "kspo-9A06678905B1AC60BB22A59C79F719FB",
+      "poolName": "봉화국민체육센터(봉화국민체육센터 수영장)",
+      "distance": 0,
+      "stdName": "봉화국민체육센터 수영장",
+      "setWebsite": "https://www.bonghwa.go.kr/facility/contents.do?mid=0301000000",
+      "setPhone": "054-679-6982"
+    },
+    {
+      "poolId": "kspo-0DDC29F8D5F77A2251833C7A9E3213C9",
+      "poolName": "완산수영장",
+      "distance": 1,
+      "stdName": "완산수영장",
+      "setWebsite": "http://jjss.or.kr"
+    },
+    {
+      "poolId": "kspo-4F5DCCE8ED3A130C9BB7846CF15089F6",
+      "poolName": "예천청소년수련관수영장",
+      "distance": 1,
+      "stdName": "예천청소년수련관 수영장",
+      "setWebsite": "http://www.ycg.kr/open.content/culture/?hl=ko"
+    },
+    {
+      "poolId": "kspo-7464F4BD568250DDC31178435741FC71",
+      "poolName": "강경실내수영장",
+      "distance": 1,
+      "stdName": "강경실내수영장",
+      "setWebsite": "http://www.nonsan.go.kr/public/html/sub01/010101.html"
+    },
+    {
+      "poolId": "kspo-B54F1ED4EB4EFA7CB1169C222FCC0BF5",
+      "poolName": "홍성반다비수영장",
+      "distance": 1,
+      "stdName": "홍성반다비수영장",
+      "setWebsite": "http://www.eshare.go.kr",
+      "setPhone": "041-630-1934"
+    },
+    {
+      "poolId": "kspo-39CAD600405B3DB446E03147972CA9BB",
+      "poolName": "원동초스포츠센터 수영장",
+      "distance": 1,
+      "stdName": "오산시 원동초스포츠센터 수영장",
+      "setWebsite": "http://www.osansports.or.kr",
+      "setPhone": "031-371-1850"
+    },
+    {
+      "poolId": "kspo-0580E5569C19C4C3D767F3B92E759D67",
+      "poolName": "창녕군립수영장",
+      "distance": 2,
+      "stdName": "창녕군립수영장",
+      "setWebsite": "https://cfmc.kr/swimming/index2.html",
+      "setPhone": "055-533-4466"
+    },
+    {
+      "poolId": "kspo-1EC8A9C188628E838114691DE7FA24DE",
+      "poolName": "청평호반문화체육센터 수영장",
+      "distance": 2,
+      "stdName": "청평호반문화체육센터 수영장",
+      "setWebsite": "http://share.gg.go.kr",
+      "setPhone": "031-8078-8322"
+    },
+    {
+      "poolId": "kspo-2440AA6F99707D2BF5AFA181839738C2",
+      "poolName": "서구청소년수련관실내수영장",
+      "distance": 2,
+      "stdName": "청소년수련관 수영장",
+      "setPhone": "032-577-7979"
+    },
+    {
+      "poolId": "kspo-981E69D003FAE062ADE5C2D38DE61744",
+      "poolName": "오산스포츠센터수영장",
+      "distance": 2,
+      "stdName": "오산스포츠센터 수영장",
+      "setWebsite": "http://www.osansports.or.kr",
+      "setPhone": "031-371-1717"
+    },
+    {
+      "poolId": "kspo-6114906F6DC6382579A69CA2A3D8428A",
+      "poolName": "문경시국민체육센터",
+      "distance": 3,
+      "stdName": "국민체육센터 수영장",
+      "setWebsite": "http://www.gbmg.go.kr/"
+    },
+    {
+      "poolId": "kspo-9173F609C65BF24E9242F79072409C66",
+      "poolName": "흥해복합커뮤니티센터 수영장",
+      "distance": 3,
+      "stdName": "흥해복합커뮤니티센터 수영장",
+      "setWebsite": "https://www.phsisul.org/sisul_32/main.do",
+      "setPhone": "054-280-9480"
+    },
+    {
+      "poolId": "kspo-10102E157A92A9B4D12844BD6DE652CB",
+      "poolName": "진접체육문화센터수영장",
+      "distance": 3,
+      "stdName": "진접체육문화센터 수영장",
+      "setWebsite": "https://www.ncuc.or.kr/jj/536",
+      "setPhone": "031-560-1351"
+    },
+    {
+      "poolId": "kspo-06A7E84E09953619AA8297F593B20A15",
+      "poolName": "예체문화관수달수영장",
+      "distance": 3,
+      "stdName": "예체문화관 수달수영장",
+      "setWebsite": "https://tour.muju.go.kr/yechae/index.do"
+    },
+    {
+      "poolId": "kspo-F5224DD51620804B3F56FE7DFEAFDAFC",
+      "poolName": "(수영장-06)쌍벽루국민체육센터",
+      "distance": 4,
+      "stdName": "쌍벽루국민체육센터(수영장)",
+      "setWebsite": "https://www.yssisul.or.kr/stms/sb",
+      "setPhone": "055-379-8445"
+    },
+    {
+      "poolId": "kspo-DB5DDB3E639D1FBFD5BD9D311BF55048",
+      "poolName": "세교복지타운 수영장",
+      "distance": 4,
+      "stdName": "오산시 세교복지타운 수영장",
+      "setWebsite": "http://www.osansports.or.kr"
+    },
+    {
+      "poolId": "kspo-D2507F0FCAC45E848F70761E88D8CDA7",
+      "poolName": "합천실내수영장",
+      "distance": 4,
+      "stdName": "합천체육관 실내수영장",
+      "setWebsite": "https://www.hc.go.kr/yeyak.web"
+    },
+    {
+      "poolId": "kspo-563F844B0104726EAB38AA4025309563",
+      "poolName": "증평국민체육센터",
+      "distance": 5,
+      "stdName": "증평국민체육센터 수영장+G.X실+헬스장",
+      "setWebsite": "http://new.jp.go.kr/facility.do"
+    },
+    {
+      "poolId": "kspo-67E8F5D5640CBE39E1BCA59D51A4D9B3",
+      "poolName": "고창군 실내수영장",
+      "distance": 5,
+      "stdName": "고창군 청소년수련관 실내수영장",
+      "setWebsite": "http://www.gochangsports.or.kr/index.gochang",
+      "setPhone": "063-560-8934"
+    },
+    {
+      "poolId": "kspo-3856184733B01BAB3D6028E6FD32E892",
+      "poolName": "송악문화스포츠센터 수영장",
+      "distance": 5,
+      "stdName": "수영장",
+      "setWebsite": "http://www.dangjin.go.kr/fmres/",
+      "setPhone": "041-358-9914"
+    },
+    {
+      "poolId": "kspo-CE74E5C4BDCFFC7CC5FCB13D2A24D3DF",
+      "poolName": "올림픽기념국민생활관수영장",
+      "distance": 6,
+      "stdName": "인천광역시 올림픽기념국민생활관 수영장",
+      "setWebsite": "https://www.icsports.or.kr/fmcs/29"
+    },
+    {
+      "poolId": "kspo-9B970F416D37DE089408FB14117D57DA",
+      "poolName": "군산월명체육관실내수영장",
+      "distance": 6,
+      "stdName": "군산월명종합경기장실내수영장",
+      "setPhone": "063-454-5573"
+    },
+    {
+      "poolId": "kspo-7343CE96CC98DA1A70EA60CCA6807241",
+      "poolName": "별내커뮤니티센터수영장",
+      "distance": 7,
+      "stdName": "별내커뮤니티센터 수영장",
+      "setWebsite": "https://www.ncuc.or.kr/bn/582"
+    },
+    {
+      "poolId": "kspo-6EF8F608687BB7AB80B87D8C0E642445",
+      "poolName": "상주국민체육센터수영장",
+      "distance": 10,
+      "stdName": "상주국민체육센터 수영장",
+      "setWebsite": "http://sportspark.sangju.go.kr"
+    },
+    {
+      "poolId": "kspo-B701E11B585AB580F61B09D810DBC8F8",
+      "poolName": "성황수영장",
+      "distance": 11,
+      "stdName": "성황스포츠센터 수영장",
+      "setWebsite": "https://www.gysports.co.kr/sports/"
+    },
+    {
+      "poolId": "kspo-3CB3EDF0D032F42DEAE760B952A98144",
+      "poolName": "조종국민체육센터수영장",
+      "distance": 11,
+      "stdName": "조종국민체육센터 수영장",
+      "setWebsite": "http://share.gg.go.kr"
+    },
+    {
+      "poolId": "kspo-F27624B5095213E4533FD5D07CBF1E90",
+      "poolName": "(수영장-05) 천성산국민체육센터(양산 생활밀착형 국민체육센터)",
+      "distance": 20,
+      "stdName": "천성산국민체육센터 수영장",
+      "setWebsite": "http://www.yssisul.or.kr",
+      "setPhone": "055-379-8420"
+    },
+    {
+      "poolId": "kspo-756D2BE9E33FFBE7B35B646CF1D52C9C",
+      "poolName": "검단복지회관실내수영장",
+      "distance": 21,
+      "stdName": "검단복지회관 수영장",
+      "setPhone": "032-561-4115"
+    },
+    {
+      "poolId": "kspo-FC4B20225CBC85B5063DEAFC8F0EE6DC",
+      "poolName": "도마실국민체육센터 수영장",
+      "distance": 26,
+      "stdName": "도마실국민체육센터 수영장",
+      "setPhone": "042-533-5556"
+    },
+    {
+      "poolId": "kspo-1087EC49B8DD8EE14F86D51D9D4D6B36",
+      "poolName": "보람 수영장",
+      "distance": 30,
+      "stdName": "보람동 복합커뮤니티센터 수영장",
+      "setWebsite": "https://www.sjfmc.or.kr"
+    },
+    {
+      "poolId": "kspo-23D5676BB144F21883ACD782382397DD",
+      "poolName": "하남스포츠센터 수영장",
+      "distance": 36,
+      "stdName": "하남스포츠센터 수영장",
+      "setPhone": "055-359-4760"
+    },
+    {
+      "poolId": "kspo-8F59C60D928AAA2B1EB93C25E759B29D",
+      "poolName": "보은국민체육센터",
+      "distance": 37,
+      "stdName": "보은국민체육센터수영장",
+      "setWebsite": "https://www.boeun.go.kr/sports/index.do",
+      "setPhone": "043-540-3742"
+    },
+    {
+      "poolId": "kspo-5CA19E6A6B41C18C8B68E3FF2E1CB677",
+      "poolName": "의창스포츠센터수영장",
+      "distance": 41,
+      "stdName": "의창스포츠센터 수영장",
+      "setWebsite": "http://www.cwsisul.or.kr"
+    },
+    {
+      "poolId": "kspo-B5F8CD240B23BE6314E8E41092BD30F8",
+      "poolName": "조치원복합커뮤니티센터 수영장",
+      "distance": 42,
+      "stdName": "조치원 복합커뮤니티센터 수영장",
+      "setWebsite": "https://www.sjfmc.or.kr"
+    },
+    {
+      "poolId": "kspo-4667B0D5EF74910C49C397191BCCBDF4",
+      "poolName": "시민생활체육관수영장",
+      "distance": 50,
+      "stdName": "시민생활체육관 수영장",
+      "setWebsite": "http://www.cwsisul.or.kr"
+    },
+    {
+      "poolId": "kspo-A079E3B8E03A3018CFF12044C576F76A",
+      "poolName": "장성실내수영장",
+      "distance": 52,
+      "stdName": "장성실내수영장",
+      "setWebsite": "https://jangseong.go.kr/home/culture"
+    },
+    {
+      "poolId": "kspo-2DE560E17F1D7C487B278DEB120FC525",
+      "poolName": "국민체육센터 수영장",
+      "distance": 52,
+      "stdName": "여주시국민체육센터 수영장",
+      "setWebsite": "http://yeojuuc.or.kr",
+      "setPhone": "031-880-4053"
+    },
+    {
+      "poolId": "kspo-6A1116BE62BED6180AAA66827A01829F",
+      "poolName": "늘푸른전당수영장",
+      "distance": 55,
+      "stdName": "늘푸른전당 수영장",
+      "setWebsite": "http://www.cwsisul.or.kr"
+    },
+    {
+      "poolId": "kspo-02A0F8C7F06BA7A73E10B810329FF0DC",
+      "poolName": "용원국민체육센터 수영장",
+      "distance": 82,
+      "stdName": "용원국민체육센터 수영장",
+      "setWebsite": "http://www.cwsisul.or.kr",
+      "setPhone": "055-712-0880"
+    },
+    {
+      "poolId": "kspo-845E5D16789D431F2E033D560A14FE9E",
+      "poolName": "남선공원수영장",
+      "distance": 95,
+      "stdName": "남선공원종합체육관 수영장",
+      "setWebsite": "https://www.namsunpark.com/"
+    },
+    {
+      "poolId": "kspo-E16D34184EA4BB1BA56C91CBBA3E9263",
+      "poolName": "가남체육센터",
+      "distance": 96,
+      "stdName": "가남체육센터 수영장",
+      "setWebsite": "http://yeojuuc.or.kr"
+    },
+    {
+      "poolId": "kspo-36F0700497232F7AC3812360994BA38E",
+      "poolName": "동래구국민체육센터실내수영장",
+      "distance": 105,
+      "stdName": "동래구국민체육센터 수영장",
+      "setWebsite": "http://sports.dongnae.go.kr",
+      "setPhone": "051-504-6640"
+    },
+    {
+      "poolId": "kspo-8E68C43FD9510F0395F2F5C450CE5EB6",
+      "poolName": "문화건강센터 수영장",
+      "distance": 126,
+      "stdName": "문화건강센터 수영장",
+      "setWebsite": "https://www.suncheon.go.kr/yeyak/training/list/"
+    },
+    {
+      "poolId": "kspo-C1AA478BEC38C9CE1184BE28AE866FBD",
+      "poolName": "서평택국민체육센터 실내수영장",
+      "distance": 129,
+      "stdName": "서평택국민체육센터 수영장",
+      "setWebsite": "http://www.pyeongtaek.go.kr"
+    },
+    {
+      "poolId": "kspo-1278BE529896AC490452A8B48E09C076",
+      "poolName": "장애인형국민체육센터 수영장",
+      "distance": 129,
+      "stdName": "장애인형국민체육센터 수영장",
+      "setWebsite": "http://www.phsisul.org/sisul_30/main.do",
+      "setPhone": "054-280-9475"
+    },
+    {
+      "poolId": "kspo-0629F5F44F8EAD367F0E2DCD3456613B",
+      "poolName": "한석봉체육관 수영장",
+      "distance": 134,
+      "stdName": "한석봉체육관 수영장",
+      "setWebsite": "http://share.gg.go.kr",
+      "setPhone": "031-8087-8016"
+    },
+    {
+      "poolId": "kspo-FBF18C026155722A6D88B620C95F5F9C",
+      "poolName": "창원실내수영장",
+      "distance": 135,
+      "stdName": "창원실내수영장 건강센터",
+      "setWebsite": "http://www.cwsisul.or.kr"
+    },
+    {
+      "poolId": "kspo-79CB1B04EC7F65FEC181E163E42C2DCF",
+      "poolName": "제주종합경기장실내수영장",
+      "distance": 146,
+      "stdName": "제주종합경기장 실내수영장",
+      "setWebsite": "http://www.jejusi.go.kr/sports/main.do"
+    },
+    {
+      "poolId": "kspo-946FF16F789337ED099E8B2CF1571DF1",
+      "poolName": "포항실내수영장",
+      "distance": 164,
+      "stdName": "포항수영장 수영장",
+      "setWebsite": "https://www.phsisul.org/sisul_15/main.do"
+    },
+    {
+      "poolId": "kspo-2851034BE2A9E0D868BE88C04F3BDB91",
+      "poolName": "배미수영장",
+      "distance": 212,
+      "stdName": "배미수영장",
+      "setWebsite": "https://asanfmc.or.kr",
+      "setPhone": "041-536-8816"
+    }
+  ]
+}
