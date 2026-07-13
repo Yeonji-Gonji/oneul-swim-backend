@@ -1,6 +1,6 @@
 # PROJECT: oneul-swim-backend 현황판
 
-> 갱신일: 2026-07-11 (자유수영 시간표 54곳·홈페이지77·전화43 실서버 반영 완료. dataStatus full 32→82곳)
+> 갱신일: 2026-07-11 (테스트 레코드 삭제로 Pool 604→603곳. 자유수영 시간표 54곳·홈페이지77·전화43 실서버 반영 완료. dataStatus full 32→82곳)
 > 히스토리·의사결정 정본: obsidian vault `projects/oneul-swim.md` (private)
 > 운영 런북: [OPERATIONS.md](./OPERATIONS.md)
 
@@ -8,7 +8,7 @@
 
 - NestJS 11 + Prisma 6 + PostgreSQL 16. Oracle Cloud A1(오사카) Docker Compose 3컨테이너(caddy+api+db) 운영 중.
 - 도메인 **`https://oneul-swim.duckdns.org`** (DuckDNS + Caddy 자동 HTTPS). 이전 sslip.io에서 전환. 월 0원(Always Free 한도 내 PAYG).
-- **Prisma migrate 정식 운영**: `0_init`(채택됨) → `1_data_pipeline`(적용) → `2_nationwide`(적용 완료). DB 현황: Pool 604곳(하남 중복 정리 완료), 요금 입력 완료, 자유수영 시간표 32곳 입력(나머지는 listing, 진행중).
+- **Prisma migrate 정식 운영**: `0_init`(채택됨) → `1_data_pipeline`(적용) → `2_nationwide`(적용 완료). DB 현황: **Pool 603곳**(하남 중복 정리 + KSPO 원본 테스트 레코드 삭제 완료), 요금 입력 완료, 자유수영 시간표 82곳 full(나머지는 listing, 진행중).
 - CD 정상: main 푸시 → GHCR **arm64** 이미지 빌드(QEMU) → 서버 pull → `npx prisma migrate deploy` → 무중단 교체.
 - 운영 자동화 가동: 일일 백업 03:30(7일 롤링 + healthchecks 핑), /health 5분 감시, DuckDNS 5분 갱신. healthchecks.io 체크 3개.
 - 배포 디렉토리는 서버상 `~/app` (런북/워크플로 경로 그에 맞춤).
@@ -32,6 +32,7 @@
 
 ## 최근 완료
 
+- **2026-07-11 테스트 레코드 삭제(604→603곳)**: KSPO 원본 데이터에 섞여 있던 더미 시설 `테스트공단20171111`(id `kspo-9AFC8D2A713549B8FE1751FC9A899886`, operator·전화 빈값·지역/주소 불일치·listing)이 임포트 필터를 통과해 들어와 있던 것을 확인. api 컨테이너 Prisma `pool.deleteMany({where:{id}})`로 실서버 1건 삭제(멱등). `/pools` `source:db` 603곳·테스트 0건 검증. (재임포트 시 원본에 남아 재유입 가능하나 재임포트 예정 없어 필터 미추가.)
 - **2026-07-11 자유수영 시간표 웹수집(38곳 적용대기·233세션)**: 공식 홈페이지 확보 72곳 전체를 운영주체별 서브에이전트 병렬로 회차표 수집(출처 URL 필수·불확실 스킵·시설운영시간과 회차 구분·요금 없으면 비움). 결과 = **적용 대기 54곳(283세션)** `data/schedule-pilot.json` + `scripts/apply-schedules.ts`(fees 불변, dayCodes/HH:mm/tier 계약 검증, dry-run 54곳 스킵0 통과). 1차 수집 39곳 + 보류분 재검토(B)로 15곳 salvage(12~13시 브레이크 분리·강습분리 불가한 평일 제외 등 정제). **보류 14곳** `data/schedule-review.json`(출처 비공식(뉴스·블로그·3자DB) / 데이터 충돌 / 복잡 그리드 / DB중복 → 전화확인·수동검토 필요). 원천부재 skip ~9곳(홈페이지 있어도 시간표 미게시). 정제 원칙: 월정기 등록전용 회차는 제외하고 "지금 가면 되는" 일일 자유수영만, 격주 휴관은 weeksOfMonth로. **핵심 한계**: 이 수율은 "공식 홈페이지 있는 72곳" 한정 — 홈페이지 없는 나머지(~530곳)는 원천부재라 웹수집 불가, 제보 크라우드소싱이 본체. **2026-07-11 실서버 반영 완료**(`apply-schedules.ts apply` → 54곳 283세션, full 32→82). ⚠️ Prisma 직접 write라 `GET /pools` 캐시 미갱신 → **`docker restart app-api-1`로 캐시 비워야 반영됨**(재시작 직후 curl은 부팅 전이라 0, 10~30초 후 정상).
 - **2026-07-11 공공개방데이터 보강 임포터 완성(계획 생성 완료)**: data.go.kr 15013117 표준데이터를 좌표(haversine)로만 매칭하는 `scripts/import-open-facility.ts` 작성(이름매칭은 오매칭 심해 폐기). 2단계 워크플로우: dry-run 이 `data/open-facility-plan.json`(소형·커밋) 생성 → 서버 `apply` 가 그 계획만 읽어 반영(원본 7.7MB 는 gitignore). 규칙: 빈 websiteUrl/전화만 채우고 카카오맵 링크·플레이스홀더는 공식 홈페이지로 교체, 요금·시간표·dataStatus 불변. 결과 계획 = website 77 + phone 43(112곳 매칭). 타입체크 그린.
 - **2026-07-11 요금 데이터 일괄 적재 완료**: 공공 수영장 요금은 지자체 도시공사 단위로 동일 적용된다는 점에 착안. 카카오 검색으로 도시공사별 요금을 조사해 `data/group-fees.json`에 정리 후, `scripts/collect-by-group.ts apply`로 시군구 기준 DB 수영장 전체에 일괄 적용. 개별 시설 홈페이지를 뒤지는 대신 도시공사 단위로 조사해 커버리지를 높임. 요금 미확인 시설은 `pilot_results.json`(개별 조사결과)을 `scripts/apply-pilot-results.ts`로 적용해 보완. 결과: `dataStatus=full` 승격 처리 완료.
