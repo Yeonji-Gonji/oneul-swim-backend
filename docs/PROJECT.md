@@ -1,6 +1,6 @@
 # PROJECT: oneul-swim-backend 현황판
 
-> 갱신일: 2026-07-11 (테스트 레코드 삭제로 Pool 604→603곳. 자유수영 시간표 54곳·홈페이지77·전화43 실서버 반영 완료. dataStatus full 32→82곳)
+> 갱신일: 2026-07-31 (시간표 수집 전략 피벗 확정 반영: AI 자동수집 폐기 → 제보 + 검수된 웹수집 벌크 적재. 데이터 현황은 7/11 기준: Pool 603곳, 시간표 full 82곳, 홈페이지77·전화43 보강 반영 완료)
 > 히스토리·의사결정 정본: obsidian vault `projects/oneul-swim.md` (private)
 > 운영 런북: [OPERATIONS.md](./OPERATIONS.md)
 
@@ -16,14 +16,15 @@
 ## 진행 중 / 남은 일
 
 - **dataStatus 정합성 재계산 — 2026-07-11 실서버 반영 완료**: `recompute-data-status.ts apply` 실행 → freeSwim 세션 유무 단일 기준으로 재계산, 결과 full=82·listing=522로 **변경 0곳(이미 정합)**. `collect-by-group.ts`도 더는 dataStatus 안 건드림(재발 방지). 재임포트/요금 재적재 후에는 이 스크립트 재실행.
-- **시간표 파이프라인 → "AI 초안·어드민 승인" 하이브리드로 재설계(백엔드 코드 완료·배포 대기)**: 기존 enrich 스크립트는 freeSwim 를 자유텍스트로 써서 앱이 읽는 `freeSwim.sessions[{start,end,tier,dayCodes}]` 계약과 불일치 → 성공해도 화면에 안 뜨는 게 실패의 진짜 원인이었음(429는 표면). 재설계:
+- **시간표 수집 전략 피벗(2026-07-30 확정)**: AI 자동수집(Gemini enrich) 경로는 운영하지 않기로 함 — 홈페이지 없는 ~530곳은 원천 부재라 자동수집이 구조적으로 불가하고, 홈페이지 있는 72곳은 이미 수동 웹수집으로 반영 완료(아래). **현행 = ① 사용자 제보(오프라인 정보) → 어드민 승인 ② 출처 검수된 웹수집 데이터 `apply-schedules.ts` 벌크 적재**. `GEMINI_API_KEY` 불필요. 단 **카카오 로그인 게이트는 어드민 운영(제보 처리·데이터 수정)에 여전히 필요** → 남은 일: 서버 .env `ADMIN_KAKAO_ID`·`KAKAO_REST_KEY`(+콘솔에서 켠 경우 `KAKAO_CLIENT_SECRET`) 설정 여부 확인 + 카카오 콘솔 로그인 활성화·Redirect URI(`<도메인>/admin`, `localhost:3000/admin`) 등록 여부 확인(2026-07-31 기준 미확인).
+- (보류·이력) **시간표 파이프라인 "AI 초안·어드민 승인" 하이브리드 재설계(코드 완료, 위 피벗으로 미가동)**: 기존 enrich 스크립트는 freeSwim 를 자유텍스트로 써서 앱이 읽는 `freeSwim.sessions[{start,end,tier,dayCodes}]` 계약과 불일치 → 성공해도 화면에 안 뜨는 게 실패의 진짜 원인이었음(429는 표면). 재설계:
   - 신규 `ScheduleDraft` 검수 큐 모델 + 마이그레이션 `3_schedule_drafts`(증분 CREATE, 안전).
   - `scripts/enrich-swim-schedules.ts` 재작성: 정규 sessions 스키마만 생성 + 방어 검증(요일·시각 없으면 폐기) → **Pool 에 직접 쓰지 않고 ScheduleDraft(PENDING) 적재**. `limit` 인자로 배치 제어.
   - 어드민 엔드포인트: `GET /admin/schedule-drafts`, `POST .../:id/approve`(교정값 우선, 승인 시 Pool.freeSwim 반영+dataStatus full+updatedAt 갱신), `POST .../:id/reject`.
   - **카카오 로그인 게이트**: 공개 `POST /admin/auth/kakao`(인가코드 검증 → 본인 `ADMIN_KAKAO_ID`일 때만 `ADMIN_TOKEN` 발급). 기존 AdminGuard 그대로 재사용. 프론트 `/admin` 카카오 로그인 + 시간표 초안 검수 UI 완료.
   - **필요 env(서버 .env)**: `ADMIN_KAKAO_ID`(본인 카카오 id), `KAKAO_CLIENT_SECRET`(콘솔에서 켠 경우만). 프론트: `NEXT_PUBLIC_KAKAO_REST_KEY`. 카카오 개발자콘솔: 카카오 로그인 활성화 + Redirect URI(`<도메인>/admin`, `localhost:3000/admin`) 등록.
-  - **남은 일**: ① 커밋·push → CD 가 마이그레이션 배포 ② env 세팅 + 카카오 콘솔 설정 ③ 컨테이너에서 enrich 실행해 초안 적재 ④ 카카오 로그인 후 승인 운영. 자동 발행 없음(잘못된 "지금 열림" 방지).
-  - **직접 웹수집 경로도 병행 가능(파일럿 완료)**: 하이브리드 배포 전에도, 출처 검수한 회차표를 `data/schedule-pilot.json` + `scripts/apply-schedules.ts apply`로 바로 반영 가능(아래 최근 완료 참조). 공식 홈페이지 있는 시설은 서브에이전트 병렬 웹수집으로 회차 추출 성공. 홈페이지 없는 시설은 원천부재라 제보 크라우드소싱 필요.
+  - **남은 일(피벗으로 보류)**: enrich 초안 적재·ScheduleDraft 승인 운영은 가동하지 않음. 재개하려면 ① env 세팅 + 카카오 콘솔 설정 ② 컨테이너에서 enrich 실행해 초안 적재 ③ 승인 운영. 자동 발행 없음(잘못된 "지금 열림" 방지).
+  - **직접 웹수집 경로가 현행 주 경로(적용 완료)**: 출처 검수한 회차표를 `data/schedule-pilot.json` + `scripts/apply-schedules.ts apply`로 바로 반영 가능(아래 최근 완료 참조). 공식 홈페이지 있는 시설은 서브에이전트 병렬 웹수집으로 회차 추출 성공. 홈페이지 없는 시설은 원천부재라 제보 크라우드소싱 필요.
 - **공공개방데이터 홈페이지·전화 보강 — 계획 완료·서버 apply 대기**: data.go.kr 전국공공시설개방정보 표준데이터(15013117)에서 수영장 142건 중 **좌표매칭(<250m) 112건** 확보. 그중 우리 빈 칸을 채울 수 있는 **공식 websiteUrl 77곳 + 전화 43곳**을 `scripts/import-open-facility.ts` 로 계획화(`data/open-facility-plan.json`, 커밋 대상). 값이 카카오맵 링크가 아니라 실제 공식 홈페이지(도시공사 사이트 등)라 시간표 큐레이션 가속에도 직접 도움. **이 데이터에 자유수영 세션은 없음**(시설 개방시각뿐)이라 freeSwim 은 못 채움. **2026-07-11 실서버 반영 완료**(`import-open-facility.ts apply` → 86곳 보강). 계획파일만 읽으므로 7.7MB 원본은 서버 이관 불필요(gitignore). 재실행 안전(이미 채워진 값 미덮어씀, 재실행 시 0곳).
 - **전화번호·웹사이트 enrich(`scripts/enrich-pool-details.ts`)도 사용 가능**: 카카오 로컬 검색 기반. 위 공공개방데이터로 못 채운 나머지의 보완용(카카오 place_url 이 들어가므로 공공개방데이터 apply 를 먼저 돌린 뒤 잔여분에만).
 - **이행 후 정리**: 프론트 라이브 이후 `/pools` top-level `freeSwimPriceTiers` 호환 shim 제거.
