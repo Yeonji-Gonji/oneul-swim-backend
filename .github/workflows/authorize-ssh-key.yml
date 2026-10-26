@@ -1,0 +1,19 @@
+# 1회용: 새 맥(upfallui-MacBookPro)의 공개키를 서버 authorized_keys 에 추가한다. 접속 확인 뒤 PR 로 삭제.
+name: Authorize SSH key (one-off)
+on: { workflow_dispatch: {} }
+concurrency: { group: deploy-prod, cancel-in-progress: false }
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            set -eu
+            K='ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFmOZTlqKmkNDMeRJ4zmCqKosIykwRxBo+EYaKPsmr/3 oneul-swim-oci@upfallui-MacBookPro 2026-10-26'
+            mkdir -p ~/.ssh && chmod 700 ~/.ssh && touch ~/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys
+            grep -qxF "$K" ~/.ssh/authorized_keys && echo "이미 등록됨" || { printf '%s\n' "$K" >> ~/.ssh/authorized_keys; echo "등록 완료"; }
+            ssh-keygen -lf ~/.ssh/authorized_keys
