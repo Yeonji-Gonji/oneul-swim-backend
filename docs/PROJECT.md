@@ -34,7 +34,7 @@ updated: 2026-10-26
   스크립트가 pull → `.env` 태그 기록 → `prisma migrate deploy` → up → `/health` 폴링(60초) → 실패 시 직전 태그로 자동 롤백. 수동 배포·롤백도 같은 스크립트([OPERATIONS.md §1](OPERATIONS.md)).
   main 머지가 곧 운영 배포이므로 main 에 직접 push 하지 않고 브랜치 → PR → CI 통과 → 머지.
 - **런타임 환경변수(서버 `~/app/.env`, 키 목록 = [`.env.example`](../.env.example))**: `API_IMAGE_TAG`(배포 스크립트가 관리) · `POSTGRES_PASSWORD` · `API_DOMAIN` · `CORS_ORIGINS` ·
-  `ADMIN_TOKEN` · `ADMIN_KAKAO_ID`/`KAKAO_REST_KEY`/`KAKAO_CLIENT_SECRET`(어드민 카카오 로그인) · `VAPID_*`(Web Push) · `GEMINI_API_KEY`(미사용 경로, 비워도 됨).
+  `ADMIN_TOKEN` · `ADMIN_KAKAO_ID`/`KAKAO_REST_KEY`/`KAKAO_CLIENT_SECRET`(어드민 카카오 로그인) · `VAPID_*`(Web Push). `GEMINI_API_KEY` 는 2026-10-26 compose 에서 뺐다(서버 실측과 동일, AI 수집 경로 미가동).
   `ADMIN_TOKEN` 이 비면 `/admin/*` 는 503, VAPID 가 비면 푸시 발송은 `{sent:0, failed:0}` 로 조용히 건너뛴다.
 - **네트워크**: caddy 만 80/443 publish. api 는 publish 하지 않는다(caddy 가 `api:3000`). db 는 `127.0.0.1:5432` 루프백만(GUI 툴은 SSH 터널).
 - **로그**: 세 서비스 모두 json-file `max-size 10m × max-file 3`. 컨테이너 교체 시 이전 로그는 사라진다.

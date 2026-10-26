@@ -43,7 +43,6 @@ services:
       KAKAO_REST_KEY: ${KAKAO_REST_KEY}
       KAKAO_CLIENT_SECRET: ${KAKAO_CLIENT_SECRET}
       ADMIN_KAKAO_ID: ${ADMIN_KAKAO_ID}
-      GEMINI_API_KEY: ${GEMINI_API_KEY}
     depends_on:
       db:
         condition: service_healthy
