@@ -28,6 +28,18 @@
 
 ---
 
+## 0-b. 로컬에 SSH 키가 없을 때 (Actions 로 서버 읽기)
+
+`.github/workflows/server-ops.yml`(workflow_dispatch, 읽기 전용)이 Secrets 의 `SSH_KEY` 로 서버에 붙는다. 배포 전 파일 비교와 상태 확인에 쓴다. 결과는 Actions 런 로그.
+
+```bash
+gh workflow run server-ops.yml -R Yeonji-Gonji/oneul-swim-backend --ref main -f task=diff-deploy-files   # 서버 compose·Caddyfile 과 리포 diff
+gh workflow run server-ops.yml -R Yeonji-Gonji/oneul-swim-backend --ref main -f task=show-state          # 현재 태그·컨테이너·이미지·디스크
+```
+
+새 기기의 SSH 접속은 서버 `~/.ssh/authorized_keys` 에 그 기기의 공개키를 넣어야 열린다. 키가 있는 기기에서 `ssh-copy-id -i ~/.ssh/<새키>.pub ubuntu@<서버IP>`,
+없으면 Oracle Cloud 콘솔의 Cloud Shell 또는 인스턴스 "Console connection" 으로 들어가 추가한다. 비밀키는 git·메신저로 옮기지 않는다.
+
 ## 1. 배포 (CD 와 수동이 같은 스크립트)
 
 `main` 브랜치 푸시(문서 전용 변경 제외) 또는 Actions 수동 실행 시 `.github/workflows/deploy.yml` 가:
