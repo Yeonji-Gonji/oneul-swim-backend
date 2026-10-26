@@ -1,18 +1,28 @@
-# CD — main 푸시 시 GHCR 이미지 빌드·푸시 후 서버에 SSH 배포.
+# CD: main 푸시 시 GHCR 이미지 빌드·푸시 후 서버에 SSH 배포.
+# 배포 로직은 scripts/deploy.sh 한 곳에 있다(사람이 수동 배포·롤백할 때도 같은 스크립트, docs/OPERATIONS.md).
 #
 # 필요한 GitHub Secrets (Settings → Secrets and variables → Actions):
-#   SSH_HOST   배포 서버 IP/호스트 (예: 161.33.15.188)
-#   SSH_USER   SSH 사용자 (예: ubuntu)
+#   SSH_HOST   배포 서버 IP/호스트
+#   SSH_USER   SSH 사용자
 #   SSH_KEY    서버 접속용 개인키 전체(-----BEGIN ... END----- 포함)
-#   * GHCR 로그인은 자동 제공되는 GITHUB_TOKEN 을 쓰므로 별도 등록 불필요.
+#   * GHCR 로그인은 자동 제공되는 GITHUB_TOKEN 을 쓰므로 별도 등록 불필요(패키지는 public).
 #
-# 서버 사전 준비: 배포 디렉토리(~/app)에 docker-compose.yml, Caddyfile, .env 존재.
+# 서버 사전 준비: 배포 디렉토리(~/app)에 .env 존재. docker-compose.yml·Caddyfile·scripts/deploy.sh 는 매 배포 때 리포 내용으로 동기화한다.
 name: Deploy
 
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - 'docs/**'
+      - '**.md'
+      - '.gitignore'
   workflow_dispatch:
+
+# 배포는 겹치지 않게 직렬로. 진행 중인 배포를 취소하면 서버가 중간 상태로 남으므로 cancel 하지 않는다.
+concurrency:
+  group: deploy-prod
+  cancel-in-progress: false
 
 env:
   # GHCR 레지스트리 경로는 소문자여야 한다
@@ -24,11 +34,16 @@ jobs:
     permissions:
       contents: read
       packages: write
+    outputs:
+      tag: ${{ steps.tag.outputs.tag }}
     steps:
       - uses: actions/checkout@v4
 
-      # 배포 서버가 ARM(Oracle A1, aarch64)이라 arm64 로 빌드해야 한다.
-      # amd64 러너에서 QEMU 로 arm64 를 크로스 빌드한다.
+      - name: 불변 태그 결정 (sha-<short>)
+        id: tag
+        run: echo "tag=sha-${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
+
+      # 배포 서버가 ARM(Oracle A1, aarch64)이라 arm64 로 빌드해야 한다. amd64 러너에서 QEMU 로 크로스 빌드한다.
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
@@ -48,15 +63,26 @@ jobs:
           context: .
           platforms: linux/arm64
           push: true
-          tags: |
-            ${{ env.IMAGE }}:latest
-            ${{ env.IMAGE }}:${{ github.sha }}
+          tags: ${{ env.IMAGE }}:${{ steps.tag.outputs.tag }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
   deploy:
     needs: build-push
     runs-on: ubuntu-latest
     steps:
-      - name: 서버 SSH 배포
+      - uses: actions/checkout@v4
+
+      - name: 배포 파일 동기화 (docker-compose.yml · Caddyfile · scripts/deploy.sh → ~/app)
+        uses: appleboy/scp-action@v1
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          source: 'docker-compose.yml,Caddyfile,scripts/deploy.sh'
+          target: /home/${{ secrets.SSH_USER }}/app
+
+      - name: 서버 배포 (pull → 마이그레이션 → up → 헬스체크 → 실패 시 롤백)
         uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -64,11 +90,5 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             set -e
-            cd ~/app
-            docker compose pull api
-            # 마이그레이션 먼저 — 실패 시(set -e) 배포 중단, 구 버전 유지.
-            # pnpm 대신 npx: 런타임 pnpm(corepack)은 실행 전 deps 재검사/install 을 시도해
-            # ERR_PNPM_IGNORED_BUILDS 로 실패한다. npx 는 이미지의 로컬 prisma 를 바로 실행한다.
-            docker compose run --rm api npx prisma migrate deploy
-            docker compose up -d --no-build api caddy
-            docker image prune -f
+            chmod +x ~/app/scripts/deploy.sh
+            ~/app/scripts/deploy.sh "${{ needs.build-push.outputs.tag }}"

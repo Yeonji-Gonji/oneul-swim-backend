@@ -1,53 +1,71 @@
-# PROJECT: oneul-swim-backend 현황판
+---
+project: oneul-swim-backend
+type: project-status
+status: 운영
+updated: 2026-10-26
+---
 
-> 갱신일: 2026-07-31 (시간표 수집 전략 피벗 확정 반영: AI 자동수집 폐기 → 제보 + 검수된 웹수집 벌크 적재. 데이터 현황은 7/11 기준: Pool 603곳, 시간표 full 82곳, 홈페이지77·전화43 보강 반영 완료)
-> 히스토리·의사결정 정본: obsidian vault `projects/oneul-swim.md` (private)
-> 운영 런북: [OPERATIONS.md](./OPERATIONS.md)
+# PROJECT: oneul-swim-backend 온보딩 시트
 
-## 현재 상태
+> **이 문서는 리포 온보딩·아키텍처·고정 함정 시트다.**
+> - **현재 라이브 배포 버전 기준**: 서버 `~/app/.env` 의 `API_IMAGE_TAG` · `https://oneul-swim.duckdns.org/health` · `git log`
+> - **남은 일·결정 필요**: GitHub Issues ("허브 기준 점검 2026-10-26" 이슈가 보강 체크리스트)
+> - **변경 이력·왜 그렇게 정했는지**: `git log`·PR 및 [`docs/adr/`](adr/)
+> - **운영 절차(배포·롤백·백업·도메인·모니터링)**: [OPERATIONS.md](OPERATIONS.md)
+> - 2026-07-31 이전 현황판(데이터 적재 경위 포함)은 [archive/status-2026-07-31.md](archive/status-2026-07-31.md)(작성 시점 값으로 고정). 이 문서에는 날짜별 진행 상태를 적지 않는다.
 
-- NestJS 11 + Prisma 6 + PostgreSQL 16. Oracle Cloud A1(오사카) Docker Compose 3컨테이너(caddy+api+db) 운영 중.
-- 도메인 **`https://oneul-swim.duckdns.org`** (DuckDNS + Caddy 자동 HTTPS). 이전 sslip.io에서 전환. 월 0원(Always Free 한도 내 PAYG).
-- **Prisma migrate 정식 운영**: `0_init`(채택됨) → `1_data_pipeline`(적용) → `2_nationwide`(적용 완료). DB 현황: **Pool 603곳**(하남 중복 정리 + KSPO 원본 테스트 레코드 삭제 완료), 요금 입력 완료, 자유수영 시간표 82곳 full(나머지는 listing, 진행중).
-- CD 정상: main 푸시 → GHCR **arm64** 이미지 빌드(QEMU) → 서버 pull → `npx prisma migrate deploy` → 무중단 교체.
-- 운영 자동화 가동: 일일 백업 03:30(7일 롤링 + healthchecks 핑), /health 5분 감시, DuckDNS 5분 갱신. healthchecks.io 체크 3개.
-- 배포 디렉토리는 서버상 `~/app` (런북/워크플로 경로 그에 맞춤).
+## 요약
 
-## 진행 중 / 남은 일
+전국 공공 수영장(약 600곳)의 자유수영 시간표·요금·위치를 제공하는 REST API. 프론트([oneul-swim-frontend](https://github.com/Yeonji-Gonji/oneul-swim-frontend))의
+데이터 원천이고, 사용자 제보 접수·어드민 검수·Web Push(아침 요약·강습 접수 소식)·데이터 신선도 감시를 담당한다.
 
-- **dataStatus 정합성 재계산 — 2026-07-11 실서버 반영 완료**: `recompute-data-status.ts apply` 실행 → freeSwim 세션 유무 단일 기준으로 재계산, 결과 full=82·listing=522로 **변경 0곳(이미 정합)**. `collect-by-group.ts`도 더는 dataStatus 안 건드림(재발 방지). 재임포트/요금 재적재 후에는 이 스크립트 재실행.
-- **시간표 수집 전략 피벗(2026-07-30 확정)**: AI 자동수집(Gemini enrich) 경로는 운영하지 않기로 함 — 홈페이지 없는 ~530곳은 원천 부재라 자동수집이 구조적으로 불가하고, 홈페이지 있는 72곳은 이미 수동 웹수집으로 반영 완료(아래). **현행 = ① 사용자 제보(오프라인 정보) → 어드민 승인 ② 출처 검수된 웹수집 데이터 `apply-schedules.ts` 벌크 적재**. `GEMINI_API_KEY` 불필요. 단 **카카오 로그인 게이트는 어드민 운영(제보 처리·데이터 수정)에 여전히 필요** → 남은 일: 서버 .env `ADMIN_KAKAO_ID`·`KAKAO_REST_KEY`(+콘솔에서 켠 경우 `KAKAO_CLIENT_SECRET`) 설정 여부 확인 + 카카오 콘솔 로그인 활성화·Redirect URI(`<도메인>/admin`, `localhost:3000/admin`) 등록 여부 확인(2026-07-31 기준 미확인).
-- (보류·이력) **시간표 파이프라인 "AI 초안·어드민 승인" 하이브리드 재설계(코드 완료, 위 피벗으로 미가동)**: 기존 enrich 스크립트는 freeSwim 를 자유텍스트로 써서 앱이 읽는 `freeSwim.sessions[{start,end,tier,dayCodes}]` 계약과 불일치 → 성공해도 화면에 안 뜨는 게 실패의 진짜 원인이었음(429는 표면). 재설계:
-  - 신규 `ScheduleDraft` 검수 큐 모델 + 마이그레이션 `3_schedule_drafts`(증분 CREATE, 안전).
-  - `scripts/enrich-swim-schedules.ts` 재작성: 정규 sessions 스키마만 생성 + 방어 검증(요일·시각 없으면 폐기) → **Pool 에 직접 쓰지 않고 ScheduleDraft(PENDING) 적재**. `limit` 인자로 배치 제어.
-  - 어드민 엔드포인트: `GET /admin/schedule-drafts`, `POST .../:id/approve`(교정값 우선, 승인 시 Pool.freeSwim 반영+dataStatus full+updatedAt 갱신), `POST .../:id/reject`.
-  - **카카오 로그인 게이트**: 공개 `POST /admin/auth/kakao`(인가코드 검증 → 본인 `ADMIN_KAKAO_ID`일 때만 `ADMIN_TOKEN` 발급). 기존 AdminGuard 그대로 재사용. 프론트 `/admin` 카카오 로그인 + 시간표 초안 검수 UI 완료.
-  - **필요 env(서버 .env)**: `ADMIN_KAKAO_ID`(본인 카카오 id), `KAKAO_CLIENT_SECRET`(콘솔에서 켠 경우만). 프론트: `NEXT_PUBLIC_KAKAO_REST_KEY`. 카카오 개발자콘솔: 카카오 로그인 활성화 + Redirect URI(`<도메인>/admin`, `localhost:3000/admin`) 등록.
-  - **남은 일(피벗으로 보류)**: enrich 초안 적재·ScheduleDraft 승인 운영은 가동하지 않음. 재개하려면 ① env 세팅 + 카카오 콘솔 설정 ② 컨테이너에서 enrich 실행해 초안 적재 ③ 승인 운영. 자동 발행 없음(잘못된 "지금 열림" 방지).
-  - **직접 웹수집 경로가 현행 주 경로(적용 완료)**: 출처 검수한 회차표를 `data/schedule-pilot.json` + `scripts/apply-schedules.ts apply`로 바로 반영 가능(아래 최근 완료 참조). 공식 홈페이지 있는 시설은 서브에이전트 병렬 웹수집으로 회차 추출 성공. 홈페이지 없는 시설은 원천부재라 제보 크라우드소싱 필요.
-- **공공개방데이터 홈페이지·전화 보강 — 계획 완료·서버 apply 대기**: data.go.kr 전국공공시설개방정보 표준데이터(15013117)에서 수영장 142건 중 **좌표매칭(<250m) 112건** 확보. 그중 우리 빈 칸을 채울 수 있는 **공식 websiteUrl 77곳 + 전화 43곳**을 `scripts/import-open-facility.ts` 로 계획화(`data/open-facility-plan.json`, 커밋 대상). 값이 카카오맵 링크가 아니라 실제 공식 홈페이지(도시공사 사이트 등)라 시간표 큐레이션 가속에도 직접 도움. **이 데이터에 자유수영 세션은 없음**(시설 개방시각뿐)이라 freeSwim 은 못 채움. **2026-07-11 실서버 반영 완료**(`import-open-facility.ts apply` → 86곳 보강). 계획파일만 읽으므로 7.7MB 원본은 서버 이관 불필요(gitignore). 재실행 안전(이미 채워진 값 미덮어씀, 재실행 시 0곳).
-- **전화번호·웹사이트 enrich(`scripts/enrich-pool-details.ts`)도 사용 가능**: 카카오 로컬 검색 기반. 위 공공개방데이터로 못 채운 나머지의 보완용(카카오 place_url 이 들어가므로 공공개방데이터 apply 를 먼저 돌린 뒤 잔여분에만).
-- **이행 후 정리**: 프론트 라이브 이후 `/pools` top-level `freeSwimPriceTiers` 호환 shim 제거.
-- **자유수영 시간표 점진 채우기**: 리스팅 602곳 중 시간표 미입력 수영장을 지역별로 어드민/제보로 `full` 승격.
-- (선택) 정기 재임포트로 신선도 갱신 — `import-kspo.ts` 재실행(upsert). 재임포트/요금 재적재 후에는 `recompute-data-status.ts`로 dataStatus 재계산할 것.
+## 핵심 사양
 
-## 최근 완료
+- **스택**: NestJS 11 · Prisma 6 · PostgreSQL 16 · Node 22 · pnpm · Jest
+- **dev 포트**: `pnpm dev` → http://localhost:3000 (`PORT` env), 로컬 DB 는 `DATABASE_URL`
+- **도메인 / 배포 타겟**: `https://oneul-swim.duckdns.org` (DuckDNS + Caddy 자동 HTTPS). Oracle Cloud A1(arm64, Always Free) 1대에 Docker Compose 3컨테이너(caddy·api·db)
+- **이미지**: `ghcr.io/yeonji-gonji/oneul-swim-backend:sha-<short>` (GHCR public, 불변 태그, `latest` 없음)
+- **CI**: `.github/workflows/ci.yml` = typecheck → test → build (PR·main, 문서 전용 변경 제외) · **CD**: `deploy.yml` = main push 시 arm64 빌드 → GHCR → `scripts/deploy.sh`
+- **데이터 적재 스크립트**: `scripts/*.ts` (KSPO 임포트·공공개방데이터 보강·요금 일괄 적용·시간표 벌크 적재·dataStatus 재계산). 입력물은 `data/*.json`
 
-- **2026-07-11 테스트 레코드 삭제(604→603곳)**: KSPO 원본 데이터에 섞여 있던 더미 시설 `테스트공단20171111`(id `kspo-9AFC8D2A713549B8FE1751FC9A899886`, operator·전화 빈값·지역/주소 불일치·listing)이 임포트 필터를 통과해 들어와 있던 것을 확인. api 컨테이너 Prisma `pool.deleteMany({where:{id}})`로 실서버 1건 삭제(멱등). `/pools` `source:db` 603곳·테스트 0건 검증. (재임포트 시 원본에 남아 재유입 가능하나 재임포트 예정 없어 필터 미추가.)
-- **2026-07-11 자유수영 시간표 웹수집(38곳 적용대기·233세션)**: 공식 홈페이지 확보 72곳 전체를 운영주체별 서브에이전트 병렬로 회차표 수집(출처 URL 필수·불확실 스킵·시설운영시간과 회차 구분·요금 없으면 비움). 결과 = **적용 대기 54곳(283세션)** `data/schedule-pilot.json` + `scripts/apply-schedules.ts`(fees 불변, dayCodes/HH:mm/tier 계약 검증, dry-run 54곳 스킵0 통과). 1차 수집 39곳 + 보류분 재검토(B)로 15곳 salvage(12~13시 브레이크 분리·강습분리 불가한 평일 제외 등 정제). **보류 14곳** `data/schedule-review.json`(출처 비공식(뉴스·블로그·3자DB) / 데이터 충돌 / 복잡 그리드 / DB중복 → 전화확인·수동검토 필요). 원천부재 skip ~9곳(홈페이지 있어도 시간표 미게시). 정제 원칙: 월정기 등록전용 회차는 제외하고 "지금 가면 되는" 일일 자유수영만, 격주 휴관은 weeksOfMonth로. **핵심 한계**: 이 수율은 "공식 홈페이지 있는 72곳" 한정 — 홈페이지 없는 나머지(~530곳)는 원천부재라 웹수집 불가, 제보 크라우드소싱이 본체. **2026-07-11 실서버 반영 완료**(`apply-schedules.ts apply` → 54곳 283세션, full 32→82). ⚠️ Prisma 직접 write라 `GET /pools` 캐시 미갱신 → **`docker restart app-api-1`로 캐시 비워야 반영됨**(재시작 직후 curl은 부팅 전이라 0, 10~30초 후 정상).
-- **2026-07-11 공공개방데이터 보강 임포터 완성(계획 생성 완료)**: data.go.kr 15013117 표준데이터를 좌표(haversine)로만 매칭하는 `scripts/import-open-facility.ts` 작성(이름매칭은 오매칭 심해 폐기). 2단계 워크플로우: dry-run 이 `data/open-facility-plan.json`(소형·커밋) 생성 → 서버 `apply` 가 그 계획만 읽어 반영(원본 7.7MB 는 gitignore). 규칙: 빈 websiteUrl/전화만 채우고 카카오맵 링크·플레이스홀더는 공식 홈페이지로 교체, 요금·시간표·dataStatus 불변. 결과 계획 = website 77 + phone 43(112곳 매칭). 타입체크 그린.
-- **2026-07-11 요금 데이터 일괄 적재 완료**: 공공 수영장 요금은 지자체 도시공사 단위로 동일 적용된다는 점에 착안. 카카오 검색으로 도시공사별 요금을 조사해 `data/group-fees.json`에 정리 후, `scripts/collect-by-group.ts apply`로 시군구 기준 DB 수영장 전체에 일괄 적용. 개별 시설 홈페이지를 뒤지는 대신 도시공사 단위로 조사해 커버리지를 높임. 요금 미확인 시설은 `pilot_results.json`(개별 조사결과)을 `scripts/apply-pilot-results.ts`로 적용해 보완. 결과: `dataStatus=full` 승격 처리 완료.
-- **2026-07-11 전국 확장 실데이터 임포트**: KSPO 전국체육시설 API(data.go.kr, `SRVC_API_SFMS_FACI/TODZ_API_SFMS_FACI`)에서 `ftype_nm=수영장`·`faci_gb_nm=공공`·`faci_stat_nm=정상운영`·좌표유효 필터 → **공공 수영장 602곳** upsert(`dataStatus=listing`). `/pools` 606곳(기존 4 + 602). 좌표가 API에 내장돼 지오코딩 불필요. 임포터 `scripts/import-kspo.ts`(재실행=신선도 갱신). (엑셀+지오코딩 경로는 폐기)
-- **2026-07-11 서버 정식 배포**: 최초 마이그레이션 채택(0_init resolve → 1_data_pipeline deploy) + 시드로 Pool/요금 DB 이관. `ADMIN_TOKEN` 배선(compose 누락 버그 수정), 기존 VAPID 유지. sslip.io→DuckDNS 도메인 전환(인증서 재발급). 백업/헬스/DuckDNS 크론 등록.
-  - 잡은 버그: compose에 `ADMIN_TOKEN` 미전달(어드민 503) / CD 배포경로 `~/oneul-swim-backend`→실제 `~/app` / CD amd64 빌드가 arm64 서버 부적합(QEMU arm64로 수정) / 런타임 `pnpm`(corepack) deps-check 실패→`npx` 전환 / seed `laneInfo` 누락 크래시→`?? ''`.
-- **2026-07-11 전국 확장 Phase 1-2 (코드 + 마이그레이션 적용)**:
-  - 요금을 전역 `FeeTier` 테이블 → **시설별 `Pool.fees`(JSON)** 이관. `2_nationwide` 마이그레이션이 기존 요금·지역 스스로 백필 후 FeeTier DROP(트랜잭션, 롤백 안전).
-  - `Pool`에 `sido`/`sigungu` + `dataStatus`('listing'|'full') 추가. `freeSwim`/`lessons`/`fees` nullable화(리스팅 전용 시설 대비).
-  - `/pools`가 `pool.fees` + top-level 호환 요금표 **동시 제공**(무중단 이행). `/admin/pools/:id` PATCH에 fees/sido/sigungu/dataStatus 추가.
-- 2026-07-09 P2 운영 자동화 / P3 데이터 파이프라인(Pool·FeeTier·신선도) / P4 강습 알림 / 2026-07-05 Web Push·서버 배포 - 상세는 vault.
+## 배포 · 환경 구조 (고정 규칙 및 함정)
 
-## 링크
+- **배포 방식**: main push(문서 제외) → 이미지 빌드 → 서버 `~/app` 에 compose·Caddyfile·`scripts/deploy.sh` 동기화 → `deploy.sh <태그>`.
+  스크립트가 pull → `.env` 태그 기록 → `prisma migrate deploy` → up → `/health` 폴링(60초) → 실패 시 직전 태그로 자동 롤백. 수동 배포·롤백도 같은 스크립트([OPERATIONS.md §1](OPERATIONS.md)).
+  main 머지가 곧 운영 배포이므로 main 에 직접 push 하지 않고 브랜치 → PR → CI 통과 → 머지.
+- **런타임 환경변수(서버 `~/app/.env`, 키 목록 = [`.env.example`](../.env.example))**: `API_IMAGE_TAG`(배포 스크립트가 관리) · `POSTGRES_PASSWORD` · `API_DOMAIN` · `CORS_ORIGINS` ·
+  `ADMIN_TOKEN` · `ADMIN_KAKAO_ID`/`KAKAO_REST_KEY`/`KAKAO_CLIENT_SECRET`(어드민 카카오 로그인) · `VAPID_*`(Web Push). `GEMINI_API_KEY` 는 2026-10-26 compose 에서 뺐다(서버 실측과 동일, AI 수집 경로 미가동).
+  `ADMIN_TOKEN` 이 비면 `/admin/*` 는 503, VAPID 가 비면 푸시 발송은 `{sent:0, failed:0}` 로 조용히 건너뛴다.
+- **네트워크**: caddy 만 80/443 publish. api 는 publish 하지 않는다(caddy 가 `api:3000`). db 는 `127.0.0.1:5432` 루프백만(GUI 툴은 SSH 터널).
+- **로그**: 세 서비스 모두 json-file `max-size 10m × max-file 3`. 컨테이너 교체 시 이전 로그는 사라진다.
+- **운영·검증 함정**
+  - 배포 서버는 arm64 다. 이미지는 QEMU 로 `linux/arm64` 크로스 빌드한다. amd64 이미지는 뜨지 않는다.
+  - 컨테이너 안에서는 `pnpm` 대신 `npx`(prisma)·`npx tsx`(seed)를 쓴다. 런타임 pnpm 은 deps 재검사로 실패한다.
+  - `/health` 는 `SELECT 1` 로 DB 까지 본다(readiness). 200 이면 DB 연결까지 정상.
+  - `GET /pools` 는 메모리 캐시다. 스크립트로 Prisma 에 직접 쓰면 캐시가 안 바뀐다. `docker compose restart api` 로 비운다(재시작 직후 10~30초는 부팅 중).
+  - Prisma 마이그레이션은 되돌릴 수 없다. 스키마 변경 배포를 롤백할 때는 구 코드와 새 스키마의 호환을 먼저 본다.
+  - 마이그레이션 `0_init` 은 기존 DB 에 "적용됨"으로 표시만 한 것이다(`migrate resolve --applied`). 새 서버에 처음 띄울 때는 그대로 deploy 하면 된다.
+  - 데이터 재임포트·요금 재적재 후에는 `scripts/recompute-data-status.ts` 로 `dataStatus` 를 재계산한다.
+- **백업·감시**: 일일 `pg_dump` 7일 롤링(`scripts/backup.sh`, 크론 03:30) · healthchecks.io 체크(health 핑·백업·아침 푸시) · DuckDNS 갱신 크론. 절차는 [OPERATIONS.md §3~5](OPERATIONS.md).
 
-- 프론트: `../oneul-swim-frontend`
-- GitHub: Yeonji-Gonji/oneul-swim-backend
-- 서버·키 경로: vault `projects/oneul-swim.md`의 "인프라·계정" 참조 (공개 리포에 미기재)
+## 아키텍처 · 기능 모듈 지도
+
+| 영역 | 경로 / 모듈 | 역할 및 고정 규칙 |
+| --- | --- | --- |
+| 부트스트랩 | `src/main.ts`, `src/app.module.ts` | CORS = `CORS_ORIGINS`(콤마 구분), 전역 ValidationPipe(whitelist·transform), shutdown hooks |
+| 수영장 조회 | `src/pools/` (`GET /pools`) | DB 우선 + `data/pools.json` 폴백(`pools-file.ts`), 응답 조립 `pools.assembler.ts`, 메모리 캐시 |
+| 제보 | `src/reports/` (`POST /reports`) | 사용자 제보 접수. 처리 상태는 어드민이 PATCH |
+| 푸시 | `src/push/` (`/subscriptions`, `/subscriptions/lessons`, `/push/preview`) | VAPID Web Push, 아침 요약 `@Cron('0 8 * * *')`(`morning-summary.ts`), 강습 접수 소식 |
+| 어드민 | `src/admin/` (`/admin/*`, `AdminGuard` Bearer) | 제보 처리·시설/요금 PATCH·신선도 알림·공지 발송·시간표 초안 승인/반려 |
+| 어드민 인증 | `src/admin/admin-auth.controller.ts` (`POST /admin/auth/kakao`) | 카카오 인가코드 검증 → `ADMIN_KAKAO_ID` 본인만 `ADMIN_TOKEN` 발급 |
+| 신선도 | `src/freshness/` | 크롤 스냅샷 diff → `FreshnessAlert` |
+| 헬스 | `src/health/` (`GET /health`) | DB `SELECT 1` 포함 readiness |
+| 데이터 모델 | `prisma/schema.prisma` | Report · PushSubscription · LessonSubscription · Pool(fees·freeSwim JSON, sido/sigungu, dataStatus) · CrawlSnapshot · FreshnessAlert · AdminPushTarget · ScheduleDraft |
+| 마이그레이션 | `prisma/migrations/` | `0_init` → `1_data_pipeline` → `2_nationwide` → `3_schedule_drafts` |
+| 운영 스크립트 | `scripts/backup.sh`, `scripts/duckdns.sh`, `scripts/deploy.sh` | 크론·배포. 서버 `~/app/scripts/` 에 동기화 |
+
+## 참고 / 외부 링크
+
+- 프론트: [oneul-swim-frontend](https://github.com/Yeonji-Gonji/oneul-swim-frontend)
+- 이슈 추적: GitHub Issues
+- 의사결정 기록: [`docs/adr/`](adr/)

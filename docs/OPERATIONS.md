@@ -1,7 +1,8 @@
 # 운영 런북 (오늘수영 백엔드)
 
-서버: Oracle Cloud A1(오사카), `ubuntu@161.33.15.188`, Docker Compose(Caddy + API + DB).
-배포 디렉토리: `~/oneul-swim-backend` (docker-compose.yml, Caddyfile, .env 위치).
+서버: Oracle Cloud A1(오사카) 1대, Docker Compose(Caddy + API + DB). 접속 정보(`<서버IP>`·`<계정>`)는 GitHub Secrets
+`SSH_HOST`·`SSH_USER` 가 기준이다(공개 리포라 여기에 적지 않는다).
+배포 디렉토리: `~/app` (docker-compose.yml, Caddyfile, .env, scripts/deploy.sh 위치).
 
 ---
 
@@ -10,8 +11,8 @@
 아래는 코드로 자동화되지 않는, 사람이 한 번은 해줘야 하는 일이다.
 
 - [ ] **GitHub Secrets 등록** (Settings → Secrets and variables → Actions):
-  - `SSH_HOST` = `161.33.15.188`
-  - `SSH_USER` = `ubuntu`
+  - `SSH_HOST` = 서버 IP
+  - `SSH_USER` = SSH 계정
   - `SSH_KEY` = 서버 접속 개인키 전체(`-----BEGIN ... END-----` 포함)
   - (GHCR 로그인은 `GITHUB_TOKEN` 자동 사용: 등록 불필요)
 - [ ] **GHCR 패키지 공개/권한**: 최초 푸시 후 패키지가 private 이면, 서버 pull 을 위해
@@ -27,31 +28,81 @@
 
 ---
 
-## 1. CD 동작 방식
+## 0-b. 로컬에 SSH 키가 없을 때 (Actions 로 서버 읽기)
 
-`main` 브랜치 푸시(또는 Actions 수동 실행) 시 `.github/workflows/deploy.yml` 가:
+`.github/workflows/server-ops.yml`(workflow_dispatch, 읽기 전용)이 Secrets 의 `SSH_KEY` 로 서버에 붙는다. 배포 전 파일 비교와 상태 확인에 쓴다. 결과는 Actions 런 로그.
 
-1. **build-push** 잡: Docker 이미지를 빌드해 GHCR 에 푸시.
-   - `ghcr.io/yeonji-gonji/oneul-swim-backend:latest`
-   - `ghcr.io/yeonji-gonji/oneul-swim-backend:<git sha>`
-2. **deploy** 잡(build-push 성공 후): SSH 로 서버 접속해
-   ```bash
-   cd ~/oneul-swim-backend
-   docker compose pull api                                   # 새 이미지 받기
-   docker compose run --rm api pnpm prisma migrate deploy     # 마이그레이션(실패 시 배포 중단)
-   docker compose up -d --no-build api caddy                  # 새 이미지로 교체 기동
-   docker image prune -f
-   ```
-   `set -e` 이므로 마이그레이션이 실패하면 컨테이너 교체 없이 멈춘다(구 버전 유지).
+```bash
+gh workflow run server-ops.yml -R Yeonji-Gonji/oneul-swim-backend --ref main -f task=diff-deploy-files   # 서버 compose·Caddyfile 과 리포 diff
+gh workflow run server-ops.yml -R Yeonji-Gonji/oneul-swim-backend --ref main -f task=show-state          # 현재 태그·컨테이너·이미지·디스크
+```
 
-서버는 이미지를 **빌드하지 않고 pull** 만 한다. `docker-compose.yml` 의 api 서비스에
-`image:` 와 `build:` 가 둘 다 있지만, 서버는 `pull` + `up --no-build` 라 image 만 쓴다.
+새 기기의 SSH 접속은 서버 `~/.ssh/authorized_keys` 에 그 기기의 공개키를 넣어야 열린다. 키가 있는 기기에서 `ssh-copy-id -i ~/.ssh/<새키>.pub ubuntu@<서버IP>`,
+없으면 Oracle Cloud 콘솔의 Cloud Shell 또는 인스턴스 "Console connection" 으로 들어가 추가한다. 비밀키는 git·메신저로 옮기지 않는다.
+
+## 1. 배포 (CD 와 수동이 같은 스크립트)
+
+`main` 브랜치 푸시(문서 전용 변경 제외) 또는 Actions 수동 실행 시 `.github/workflows/deploy.yml` 가:
+
+1. **build-push** 잡: arm64 이미지를 빌드해 GHCR 에 **불변 태그 `sha-<short>`** 로 푸시한다. `latest` 는 쓰지 않는다.
+2. **deploy** 잡: `docker-compose.yml`·`Caddyfile`·`scripts/deploy.sh` 를 서버 `~/app` 에 동기화한 뒤 SSH 로
+   `~/app/scripts/deploy.sh sha-<short>` 를 실행한다.
+
+`scripts/deploy.sh` 가 하는 일(순서대로):
+
+```text
+docker pull <태그>                      # 없는 태그면 여기서 중단(.env 그대로)
+.env: API_IMAGE_TAG_PREV=<직전>, API_IMAGE_TAG=<새 태그>
+docker compose run --rm api npx prisma migrate deploy   # 실패 시 태그 되돌리고 중단(구 버전 유지)
+docker compose up -d --no-build api caddy
+/health 폴링(2초 × 30회, DB SELECT 1 포함)
+  통과 → 새 태그 고정, 이미지는 현재·직전만 남기고 정리
+  실패 → API_IMAGE_TAG 를 직전 태그로 되돌려 다시 up, 실패 이미지 삭제, exit 1
+```
+
+서버 `.env` 의 `API_IMAGE_TAG` 가 "지금 떠 있는 버전"의 단일 사실이다. 확인: `grep API_IMAGE_TAG ~/app/.env`.
+
+### 수동 배포
+
+```bash
+cd ~/app
+./scripts/deploy.sh sha-<short>        # GHCR 에 있는 태그. 목록: https://github.com/Yeonji-Gonji/oneul-swim-backend/pkgs/container/oneul-swim-backend
+```
+
+### 롤백
+
+```bash
+cd ~/app
+./scripts/deploy.sh --rollback         # API_IMAGE_TAG_PREV 로 되돌린다(이미지는 서버에 보존돼 있어 레지스트리 접근 불필요)
+```
+
+- 마이그레이션은 되돌리지 않는다(Prisma 는 down 이 없다). 스키마를 바꾼 배포를 롤백할 때는 구 코드가 새 스키마와 호환되는지 먼저 본다.
+- 롤백 뒤에는 원인을 고친 새 커밋을 main 에 올려 정상 배포로 복귀한다. `.env` 태그를 손으로 고치지 않는다.
+
+### 배포 검증
+
+```bash
+curl -s https://<API_DOMAIN>/health          # {"status":"ok"} (DB 연결 포함)
+curl -s https://<API_DOMAIN>/pools | head -c 200
+docker compose ps                            # api·caddy·db 모두 Up
+```
+
+### 처음 이 방식으로 전환할 때 (1회)
+
+- 2026-10-26 실측: 서버 `~/app` 은 리포의 git 체크아웃(커밋 `b6808cd`, 2026-07-11)이고 `docker-compose.yml` 에만 로컬 수정이 있었다
+  (`GEMINI_API_KEY` 제거 + 카카오 키 2개 추가). 그 차이는 이 리포에 반영했으므로 첫 동기화가 덮어써도 동작이 바뀌지 않는다.
+  이후 서버 파일을 손으로 고치지 않는다(다음 배포가 덮어쓴다). 고칠 것은 리포에 고쳐 배포한다.
+
+- 서버 `~/app/docker-compose.yml` 이 리포 파일과 같은지 `diff` 로 본다. 다르면 서버 쪽 수정 내용을 리포에 먼저 반영한다
+  (첫 배포가 서버 파일을 리포 내용으로 덮어쓴다).
+- 서버 `.env` 에 `API_IMAGE_TAG` 가 없어도 된다. 첫 실행이 기록한다(이때는 롤백 대상이 없으므로 헬스체크 실패 시 중단만 한다).
+- 서버에는 `latest` 태그 이미지가 남아 있을 수 있다. 첫 배포의 정리 단계가 지운다.
 
 ### 필요한 GitHub Secrets
 | 이름 | 값 | 비고 |
 |------|-----|------|
 | `SSH_HOST` | 서버 IP/호스트 | |
-| `SSH_USER` | SSH 사용자(ubuntu) | |
+| `SSH_USER` | SSH 사용자 | |
 | `SSH_KEY` | 개인키 전체 | |
 | `GITHUB_TOKEN` | (자동) | GHCR 로그인용, 등록 불필요 |
 
@@ -66,17 +117,17 @@
 서버 배포 디렉토리에서 최초 1회:
 
 ```bash
-cd ~/oneul-swim-backend
+cd ~/app
 docker compose pull api
 
 # (1) 0_init = Report + PushSubscription. 이미 테이블이 있으므로 "적용됨"으로 표시만.
-docker compose run --rm api pnpm prisma migrate resolve --applied 0_init
+docker compose run --rm api npx prisma migrate resolve --applied 0_init
 
 # (2) 이후 migrate deploy 가 1_data_pipeline(신규 테이블 전부)만 실제 적용한다.
-docker compose run --rm api pnpm prisma migrate deploy
+docker compose run --rm api npx prisma migrate deploy
 
 # (3) 수영장 데이터 시드(Pool/FeeTier). data/pools.json → DB.
-docker compose run --rm api pnpm seed
+docker compose run --rm api npx tsx prisma/seed.ts
 
 # (4) 정상 기동
 docker compose up -d api caddy
@@ -102,7 +153,7 @@ HEALTHCHECK_BACKUP_URL=https://hc-ping.com/<uuid> ./scripts/backup.sh
 크론 등록(`crontab -e`), 매일 03:30:
 
 ```cron
-30 3 * * * HEALTHCHECK_BACKUP_URL=https://hc-ping.com/<uuid> /home/ubuntu/oneul-swim-backend/scripts/backup.sh >> /home/ubuntu/backup.log 2>&1
+30 3 * * * HEALTHCHECK_BACKUP_URL=https://hc-ping.com/<uuid> $HOME/app/scripts/backup.sh >> $HOME/backup.log 2>&1
 ```
 
 복원: `gunzip -c <파일>.sql.gz | docker compose exec -T db psql -U oneul oneul_swim`
@@ -141,7 +192,7 @@ healthchecks.io 는 "정해진 주기에 핑이 안 오면 알림"을 무료로 
    `docker compose up -d caddy` 로 반영.
 3. IP 가 바뀌는 환경이면 `scripts/duckdns.sh` 를 크론으로(5분마다) 돌려 IP 를 갱신:
    ```cron
-   */5 * * * * DUCKDNS_DOMAIN=oneul-swim DUCKDNS_TOKEN=<token> /home/ubuntu/oneul-swim-backend/scripts/duckdns.sh >> /home/ubuntu/duckdns.log 2>&1
+   */5 * * * * DUCKDNS_DOMAIN=oneul-swim DUCKDNS_TOKEN=<token> $HOME/app/scripts/duckdns.sh >> $HOME/duckdns.log 2>&1
    ```
    (Oracle A1 은 고정 공인 IP라 필수는 아니지만, 재부팅/재할당 대비로 걸어두면 안전.)
 4. 프론트(Vercel)의 API base URL 과 `CORS_ORIGINS` 도 새 도메인에 맞춰 갱신.

@@ -1,0 +1,53 @@
+# 서버 읽기 전용 조회(workflow_dispatch). 로컬에 SSH 키가 없어도 Secrets 의 SSH_KEY 로 서버 상태를 본다. 서버를 바꾸는 작업은 넣지 않는다.
+#   diff-deploy-files : 서버 ~/app 의 docker-compose.yml·Caddyfile 과 이 ref 의 파일을 diff
+#   show-state        : .env 의 API_IMAGE_TAG*, compose ps, 이미지 목록, 디스크 (시크릿 값은 출력하지 않는다)
+# 실행: gh workflow run server-ops.yml -R Yeonji-Gonji/oneul-swim-backend --ref <브랜치> -f task=diff-deploy-files
+name: Server ops (read-only)
+
+on:
+  workflow_dispatch:
+    inputs:
+      task:
+        description: 조회 작업
+        type: choice
+        required: true
+        options: [diff-deploy-files, show-state]
+
+# 배포와 같은 그룹: 배포 중에는 끼어들지 않는다
+concurrency:
+  group: deploy-prod
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 서버 조회
+        uses: appleboy/ssh-action@v1
+        env:
+          TASK: ${{ inputs.task }}
+          RAW: https://raw.githubusercontent.com/${{ github.repository }}/${{ github.sha }}
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          envs: TASK,RAW
+          script: |
+            set -u
+            cd ~/app || { echo "~/app 없음"; exit 1; }
+            case "$TASK" in
+              diff-deploy-files)
+                for f in docker-compose.yml Caddyfile; do
+                  echo "===== $f: 리포(${RAW##*/}) → 서버 ====="
+                  if curl -fsSL "$RAW/$f" | diff - "$f"; then echo "(동일)"; fi
+                done
+                echo "===== scripts/deploy.sh 서버 존재 여부 ====="; ls -l scripts/deploy.sh 2>/dev/null || echo "(없음: 첫 배포가 동기화)"
+                ;;
+              show-state)
+                echo "===== .env 태그 ====="; grep -E '^API_IMAGE_TAG' .env || echo "(API_IMAGE_TAG 없음: 아직 latest 방식)"
+                echo "===== compose ps ====="; docker compose ps
+                echo "===== images ====="; docker images ghcr.io/yeonji-gonji/oneul-swim-backend --format '{{.Tag}}  {{.Size}}  {{.CreatedAt}}'
+                echo "===== disk ====="; df -h / | tail -1; docker system df
+                ;;
+              *) echo "알 수 없는 task: $TASK"; exit 1 ;;
+            esac
