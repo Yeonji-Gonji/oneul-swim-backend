@@ -1,10 +1,18 @@
-# 오늘수영 백엔드 프로덕션 구성 (VPS 1대)
-# 사용: .env에 POSTGRES_PASSWORD, API_DOMAIN, CORS_ORIGINS 정의 후
-#   docker compose up -d
+# 오늘수영 백엔드 프로덕션 구성 (VPS 1대: caddy + api + db)
+# 서버 ~/app 에 이 파일·Caddyfile·.env·scripts/deploy.sh 가 있고, 배포는 항상 scripts/deploy.sh 가 한다(CI 도 같은 스크립트).
+# 로컬에서 띄울 때: .env 에 API_IMAGE_TAG=local 을 두고 `docker compose build api && docker compose up -d`.
+x-logging: &logging
+  logging:
+    driver: json-file
+    options:
+      max-size: '10m'
+      max-file: '3'
+
 services:
   caddy:
     image: caddy:2-alpine
     restart: unless-stopped
+    <<: *logging
     ports:
       - '80:80'
       - '443:443'
@@ -13,17 +21,17 @@ services:
       - caddy_data:/data
       - caddy_config:/config
     environment:
-      API_DOMAIN: ${API_DOMAIN}
+      API_DOMAIN: ${API_DOMAIN:?API_DOMAIN 미설정}
     depends_on:
       - api
 
   api:
-    # 서버는 GHCR 이미지를 pull 해서 뜬다(CD). 로컬은 build 로 직접 빌드.
-    image: ghcr.io/yeonji-gonji/oneul-swim-backend:latest
+    # 태그는 불변 sha-<short>. .env 의 API_IMAGE_TAG 가 "지금 떠 있는 버전"이자 롤백 기준점이다(latest 없음).
+    image: ghcr.io/yeonji-gonji/oneul-swim-backend:${API_IMAGE_TAG:?API_IMAGE_TAG 미설정 - scripts/deploy.sh 가 .env 에 기록한다(로컬은 local)}
     build: .
     restart: unless-stopped
-    ports:
-      - '5555:5555'
+    <<: *logging
+    # 호스트에 publish 하지 않는다. caddy 가 compose 네트워크 안에서 api:3000 으로 붙는다.
     environment:
       DATABASE_URL: postgresql://oneul:${POSTGRES_PASSWORD}@db:5432/oneul_swim
       CORS_ORIGINS: ${CORS_ORIGINS}
@@ -43,13 +51,13 @@ services:
   db:
     image: postgres:16-alpine
     restart: unless-stopped
-    # 서버 안(localhost)에서만 접근 가능 — GUI 툴은 SSH 터널로 접속.
-    # 외부 인터넷에는 열리지 않는다 (0.0.0.0 아님)
+    <<: *logging
+    # 서버 안(localhost)에서만 접근 가능. GUI 툴은 SSH 터널로 접속. 외부 인터넷에는 열리지 않는다.
     ports:
       - '127.0.0.1:5432:5432'
     environment:
       POSTGRES_USER: oneul
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD 미설정}
       POSTGRES_DB: oneul_swim
     volumes:
       - pgdata:/var/lib/postgresql/data
