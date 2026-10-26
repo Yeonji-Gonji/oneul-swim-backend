@@ -6,10 +6,8 @@ on:
     paths-ignore:
       - 'docs/**'
       - '**.md'
+  # PR 에는 문서 전용 변경에도 CI 를 돌린다. main 보호 룰셋이 이 체크를 필수로 요구하므로 체크가 안 뜨면 머지가 막힌다.
   pull_request:
-    paths-ignore:
-      - 'docs/**'
-      - '**.md'
 
 concurrency:
   group: ci-${{ github.ref }}
