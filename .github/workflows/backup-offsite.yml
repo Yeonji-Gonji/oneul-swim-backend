@@ -1,0 +1,74 @@
+# DB 백업 외부 보관: 서버의 최신 일일 덤프(scripts/backup.sh, 매일 03:30 UTC)를 받아
+# age 공개키로 암호화한 뒤 Actions artifact 로 30일 보관한다. 오라클 계정 잠김·서버 손실에도 남는 사본이다.
+#   - 암호화 공개키: 리포 변수 BACKUP_AGE_RECIPIENT. 복호화 비밀키는 리포·서버에 없다(사용자 비밀번호 관리자).
+#   - 서버 덤프가 26시간보다 오래됐거나 gzip 이 깨졌으면 실패한다(실패 알림 = 서버 백업 크론 이상 신호).
+#   - 복원 절차: docs/OPERATIONS.md §3
+name: Offsite backup (encrypted)
+
+on:
+  schedule:
+    - cron: '0 4 * * *' # 04:00 UTC, 서버 덤프 30분 뒤
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/backup-offsite.yml'
+
+concurrency:
+  group: backup-offsite
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      # 서버 ed25519 호스트 키 지문. 바뀌면(서버 재구축) 확인 후 갱신한다.
+      HOST_KEY_FP: 'SHA256:vkeKw4hGNWzg5XhQX2iBOkQq2ilw637mZn5KQNZjmaQ'
+    steps:
+      - name: age 설치
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq age
+
+      - name: SSH 준비 (호스트 키 지문 고정)
+        env:
+          SSH_KEY: ${{ secrets.SSH_KEY }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+        run: |
+          set -euo pipefail
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/id && chmod 600 ~/.ssh/id
+          ssh-keyscan -t ed25519 "$SSH_HOST" 2>/dev/null > /tmp/kh
+          fp=$(ssh-keygen -lf /tmp/kh | awk '{print $2}')
+          [ "$fp" = "$HOST_KEY_FP" ] || { echo "::error::서버 호스트 키 지문 불일치($fp)"; exit 1; }
+          mv /tmp/kh ~/.ssh/known_hosts
+
+      - name: 최신 덤프 확인 · 전송 · 암호화
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          RECIPIENT: ${{ vars.BACKUP_AGE_RECIPIENT }}
+        run: |
+          set -euo pipefail
+          [ -n "$RECIPIENT" ] || { echo "::error::리포 변수 BACKUP_AGE_RECIPIENT 가 없습니다"; exit 1; }
+          remote() { ssh -i ~/.ssh/id -o BatchMode=yes "$SSH_USER@$SSH_HOST" "$@"; }
+          read -r name mtime size sha < <(remote 'f=$(ls -t ~/oneul-swim-backups/oneul_swim_*.sql.gz | head -1); gzip -t "$f" && echo "$(basename "$f") $(stat -c %Y "$f") $(stat -c %s "$f") $(sha256sum < "$f" | cut -d" " -f1)"')
+          age_h=$(( ($(date +%s) - mtime) / 3600 ))
+          echo "최신 덤프: $name (${size}B, ${age_h}시간 전)"
+          [ "$age_h" -le 26 ] || { echo "::error::서버 덤프가 ${age_h}시간 전 것입니다. 서버 백업 크론을 확인하세요."; exit 1; }
+          remote "cat ~/oneul-swim-backups/$name" > dump.sql.gz
+          echo "$sha  dump.sql.gz" | sha256sum -c --quiet -
+          mkdir -p out && age -r "$RECIPIENT" -o "out/$name.age" dump.sql.gz && rm -f dump.sql.gz
+          echo "ARTIFACT=${name%.sql.gz}" >> "$GITHUB_ENV"
+          ls -l out
+
+      - name: artifact 업로드 (30일 보관)
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.ARTIFACT }}
+          path: out/*.age
+          retention-days: 30
+          if-no-files-found: error
+          compression-level: 0

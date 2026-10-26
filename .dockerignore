@@ -1,0 +1,16 @@
+# 빌드 컨텍스트에서 뺀다: 의존성·산출물은 이미지 안에서 다시 만들고, 시크릿·문서·테스트는 이미지에 넣지 않는다.
+node_modules
+dist
+.git
+.github
+.env
+.env.*
+!.env.example
+docs
+test
+coverage
+*.log
+.DS_Store
+# data.go.kr 원본 덤프(7.7MB, gitignore 대상)
+전국공공시설개방정보표준데이터.json
+docs/전국공공시설개방정보표준데이터.json

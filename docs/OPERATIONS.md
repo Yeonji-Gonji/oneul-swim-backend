@@ -139,24 +139,41 @@ docker compose up -d api caddy
 
 ---
 
-## 3. DB 백업 (일일 pg_dump, 7일 롤링)
+## 3. DB 백업 (서버 일일 덤프 + 외부 암호화 사본)
+
+### 서버 일일 덤프 (7일 롤링)
 
 스크립트: `scripts/backup.sh`: `pg_dump | gzip` → `~/oneul-swim-backups/oneul_swim_YYYY-MM-DD.sql.gz`,
-7일 지난 파일 자동 삭제, 성공 시 healthchecks.io 핑.
-
-```bash
-chmod +x scripts/backup.sh
-# 수동 테스트
-HEALTHCHECK_BACKUP_URL=https://hc-ping.com/<uuid> ./scripts/backup.sh
-```
-
-크론 등록(`crontab -e`), 매일 03:30:
+7일 지난 파일 자동 삭제, 성공 시 healthchecks.io 핑. 서버 크론(서버 시간대 UTC), 매일 03:30:
 
 ```cron
 30 3 * * * HEALTHCHECK_BACKUP_URL=https://hc-ping.com/<uuid> $HOME/app/scripts/backup.sh >> $HOME/backup.log 2>&1
 ```
 
-복원: `gunzip -c <파일>.sql.gz | docker compose exec -T db psql -U oneul oneul_swim`
+### 외부 암호화 사본 (30일, 2026-10-26~)
+
+`.github/workflows/backup-offsite.yml` 이 매일 04:00 UTC 에 서버의 최신 덤프를 받아 age 공개키로 암호화해
+Actions artifact(`oneul_swim_YYYY-MM-DD`)로 30일 보관한다. 오라클 계정 잠김이나 서버 손실에도 남는 사본이다.
+
+- 암호화 공개키 = 리포 변수 `BACKUP_AGE_RECIPIENT`. **복호화 비밀키는 리포·서버 어디에도 없다.** 생성한 기기의
+  `~/.config/age/oneul-swim-backup.txt` 와 비밀번호 관리자에만 있다. 비밀키를 잃으면 외부 사본은 못 연다.
+- 덤프가 26시간보다 오래됐거나 gzip 이 깨졌으면 워크플로가 실패한다. GitHub 실패 메일 = 서버 백업 크론 이상 신호.
+- 서버 호스트 키 지문을 워크플로에 고정했다. 서버를 다시 만들면 지문이 바뀌어 실패하므로 `HOST_KEY_FP` 를 갱신한다.
+
+### 복원
+
+```bash
+# 외부 사본에서: 최근 artifact 내려받기 → 복호화
+gh run download -R Yeonji-Gonji/oneul-swim-backend -n oneul_swim_YYYY-MM-DD -D /tmp/restore
+age -d -i ~/.config/age/oneul-swim-backup.txt -o /tmp/restore/dump.sql.gz /tmp/restore/oneul_swim_YYYY-MM-DD.sql.gz.age
+gunzip -t /tmp/restore/dump.sql.gz
+
+# DB 에 붓기(서버 ~/app 에서, 덮어쓰기 전에 현재 상태를 한 번 더 덤프해 둔다)
+gunzip -c dump.sql.gz | docker compose exec -T db psql -U oneul oneul_swim
+```
+
+빈 DB 에 복원한 뒤 `docker compose run --rm api npx prisma migrate deploy` 로 이후 마이그레이션을 맞춘다
+(2026-10-26 로컬에서 운영 덤프 복원 → 새 이미지 migrate deploy → 기동까지 검증).
 
 ---
 
