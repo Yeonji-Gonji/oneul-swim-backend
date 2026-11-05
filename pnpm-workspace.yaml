@@ -4,3 +4,9 @@ allowBuilds:
   '@prisma/engines': true
   esbuild: true
   prisma: true
+
+# 상위 패키지가 정확한 버전으로 고정해 범위 안 업데이트로는 올라가지 않는 보안 패치(2026-11-05 pnpm audit).
+# 상위 패키지가 패치 버전을 쓰게 되면 지운다.
+overrides:
+  multer: '>=2.5.0 <3' # @nestjs/platform-express 11.2.8 이 2.4.0 고정
+  uuid: '>=11.1.1 <12' # @nestjs/schedule 4.1.2 가 11.0.3 고정
