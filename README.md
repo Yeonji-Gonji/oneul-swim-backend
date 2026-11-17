@@ -33,8 +33,6 @@ Web Push 구독(인증 없음):
 - `POST /subscriptions/lessons` `{endpoint,p256dh,auth}` — 강습 접수 소식 구독 (분당 5회)
 - `DELETE /subscriptions/lessons` `{endpoint}` — 강습 접수 소식 구독 해제
 
-데이터 적재: `pnpm seed`(또는 `prisma db seed`) 로 `data/pools.json` → Pool/FeeTier 테이블.
-
 신선도 감시: 매주 월 09:00(KST) 크론이 각 `sourceUrl` 을 해시 비교해 변경을 감지한다.
 자동 반영은 하지 않고(원본 표가 불안정) 알림 레코드 + (등록 시)관리자 푸시만 남긴다.
 
@@ -48,28 +46,43 @@ NestJS 11 · Prisma 6 · PostgreSQL 16 · Docker Compose(Caddy + API + DB) · Gi
 pnpm install
 pnpm prisma:generate
 cp .env.example .env   # DATABASE_URL 수정
-pnpm dev
+pnpm dev               # http://localhost:3000 (PORT env)
 ```
 
-테스트/검증: `pnpm test` · `pnpm typecheck` · `pnpm build`
+테스트/검증: `pnpm test` · `pnpm typecheck` · `pnpm build`. PR·main 에서 `.github/workflows/ci.yml` 이 같은 순서(typecheck → test → build)로 돌린다(문서 전용 변경 제외).
 
-## 배포 (VPS 1대)
+컨테이너로 띄울 때는 `.env` 에 `API_IMAGE_TAG=local` 을 두고 `docker compose build api && docker compose up -d`(`docker-compose.yml` 머리 주석).
 
-```bash
-# 서버에서
-cp .env.example .env   # POSTGRES_PASSWORD, API_DOMAIN, CORS_ORIGINS 설정
-docker compose up -d --build
-docker compose exec api npx prisma migrate deploy
-```
+## 모듈 구조
 
-HTTPS 인증서는 Caddy가 자동 발급/갱신한다.
+| 영역 | 경로 / 모듈 | 역할 및 고정 규칙 |
+| --- | --- | --- |
+| 부트스트랩 | `src/main.ts`, `src/app.module.ts` | CORS = `CORS_ORIGINS`(콤마 구분), 전역 ValidationPipe(whitelist·transform), shutdown hooks |
+| 수영장 조회 | `src/pools/` (`GET /pools`) | DB 우선 + `data/pools.json` 폴백(`pools-file.ts`), 응답 조립 `pools.assembler.ts`, 메모리 캐시(TTL 5분, 어드민 갱신 시 무효화) |
+| 제보 | `src/reports/` (`POST /reports`) | 사용자 제보 접수. 처리 상태는 어드민이 PATCH |
+| 푸시 | `src/push/` (`/subscriptions`, `/subscriptions/lessons`, `/push/preview`) | VAPID Web Push, 아침 요약 `@Cron('0 8 * * *')`(`morning-summary.ts`), 강습 접수 소식 |
+| 어드민 | `src/admin/` (`/admin/*`, `AdminGuard` Bearer) | 제보 처리·시설/요금 PATCH·신선도 알림·공지 발송. 인증 테스트 = `test/admin-auth.spec.ts` |
+| 어드민 인증 | `src/admin/admin-auth.controller.ts` (`POST /admin/auth/kakao`) | 카카오 인가코드 검증 → `ADMIN_KAKAO_ID` 본인만 `ADMIN_TOKEN` 발급 |
+| 신선도 | `src/freshness/` | 크롤 스냅샷 diff → `FreshnessAlert` |
+| 헬스 | `src/health/` (`GET /health`) | DB `SELECT 1` 포함 readiness. 200 이면 DB 연결까지 정상 |
+| 데이터 모델 | `prisma/schema.prisma` | Report · PushSubscription · LessonSubscription · Pool(fees·freeSwim JSON, sido/sigungu, dataStatus) · CrawlSnapshot · FreshnessAlert · AdminPushTarget |
+| 마이그레이션 | `prisma/migrations/` | 번호순 적용(`0_init` 부터). 되돌릴 수 없으므로 롤백 시 호환성은 [OPERATIONS.md §1](docs/OPERATIONS.md) |
+| 운영 스크립트 | `scripts/deploy.sh`, `scripts/backup.sh`, `scripts/duckdns.sh` | 배포·서버 크론. 절차는 [OPERATIONS.md](docs/OPERATIONS.md) |
 
-`main` 푸시 시 GitHub Actions(`.github/workflows/deploy.yml`)가 GHCR 이미지 빌드·푸시 후
-서버에 SSH 로 `pull → migrate deploy → up` 을 자동 수행한다. 마이그레이션 채택 절차,
-필요한 Secrets, 백업 크론, healthchecks.io·DuckDNS 설정은 [docs/OPERATIONS.md](docs/OPERATIONS.md) 참고.
+## 데이터 적재
 
-## 로드맵
+- 시드: `pnpm seed`(또는 `prisma db seed`) 로 `data/pools.json` → Pool/FeeTier 테이블.
+- 적재 스크립트는 `scripts/*.ts`, 입력물은 `data/*.json`. 각 스크립트의 실행법·입력은 파일 머리 주석.
+  - `import-kspo.ts`: 국민체육진흥공단 전국체육시설 API 벌크 임포트
+  - `import-open-facility.ts`: 전국공공시설개방정보 표준데이터로 홈페이지·전화·좌표 보강
+  - `collect-by-group.ts`: 지역 그룹 단위 요금 일괄 적용(`data/group-fees.json`)
+  - `apply-schedules.ts`: 검수한 자유수영 시간표 벌크 적재(`data/schedule-pilot.json`)
+  - `recompute-data-status.ts`: `dataStatus` 재계산(`full` = 자유수영 세션이 있는 시설). 데이터 재임포트·요금 재적재 뒤에 돌린다
+- 운영 컨테이너 안에서는 `pnpm` 대신 `npx tsx scripts/<이름>.ts` 로 실행한다(`Dockerfile` 주석).
+- 스크립트는 Prisma 로 DB 에 직접 쓰므로 `GET /pools` 메모리 캐시가 비워지지 않는다. TTL(5분)이 지나면 반영되고, 바로 반영하려면 `docker compose restart api`(재시작 직후 10~30초는 부팅 중).
 
-- v1.5: 강습 접수 소식 알림(구독 + 어드민 발송) + Web Push(VAPID) + 스케줄러 ✅
-- v2: 수영장 데이터 DB 이관 + 어드민 CRUD (배포 없이 요금/시간표 갱신) ✅
-- 운영: Prisma 마이그레이션 + GHCR + SSH 자동 배포 + 일일 pg_dump 백업 + healthchecks.io 모니터링 ✅
+## 배포
+
+`main` 머지(문서 전용 변경 제외)가 곧 운영 배포다. `.github/workflows/deploy.yml` 이 arm64 이미지를 GHCR 에 불변 태그로 올리고
+서버에서 `scripts/deploy.sh` 를 실행한다(마이그레이션 → 기동 → 헬스체크 → 실패 시 직전 태그로 자동 롤백). 그래서 main 에 직접 push 하지 않고
+브랜치 → PR → CI 통과 → 머지로 올린다. 수동 배포·롤백·마이그레이션 채택·Secrets·백업·healthchecks.io·DuckDNS 절차는 [docs/OPERATIONS.md](docs/OPERATIONS.md).

@@ -4,27 +4,30 @@
 `SSH_HOST`·`SSH_USER` 가 기준이다(공개 리포라 여기에 적지 않는다).
 배포 디렉토리: `~/app` (docker-compose.yml, Caddyfile, .env, scripts/deploy.sh 위치).
 
+1인 운영이라 배포·롤백·백업·도메인·모니터링 절차는 이 문서 하나에 둔다(2026-10-26 결정). 런타임 환경변수 사전은 `.env.example`(키별 주석)이다.
+운영 설정이 지금 어떤 상태인지(미완·확인 필요)는 이 문서가 아니라 GitHub Issues 에 둔다.
+
 ---
 
-## 0. 사용자가 직접 해야 하는 액션 (체크리스트)
+## 0. 새 서버를 처음 세울 때 사람이 할 일
 
-아래는 코드로 자동화되지 않는, 사람이 한 번은 해줘야 하는 일이다.
+코드로 자동화되지 않는, 서버를 새로 세울 때 사람이 한 번은 해야 하는 일이다.
 
-- [ ] **GitHub Secrets 등록** (Settings → Secrets and variables → Actions):
+- **GitHub Secrets 등록** (Settings → Secrets and variables → Actions):
   - `SSH_HOST` = 서버 IP
   - `SSH_USER` = SSH 계정
   - `SSH_KEY` = 서버 접속 개인키 전체(`-----BEGIN ... END-----` 포함)
   - (GHCR 로그인은 `GITHUB_TOKEN` 자동 사용: 등록 불필요)
-- [ ] **GHCR 패키지 공개/권한**: 최초 푸시 후 패키지가 private 이면, 서버 pull 을 위해
-      GHCR 로그인을 서버에도 1회 해두거나 패키지를 public 으로 전환.
-      (권장: 서버에서 `echo $GHCR_PAT | docker login ghcr.io -u yeonji-gonji --password-stdin`,
-       또는 패키지 Settings → Change visibility → Public)
-- [ ] **서버 최초 마이그레이션 채택** (아래 2번 절차): 기존 DB에 마이그레이션 이력 심기.
-- [ ] **DuckDNS 계정·서브도메인 발급**, `API_DOMAIN` 교체 (아래 5번).
-- [ ] **healthchecks.io 무료 계정**에서 체크 3개 생성 후 URL 을 크론/스크립트에 주입 (아래 4번).
-- [ ] **백업 크론 등록** (아래 3번).
-- [ ] **VAPID 키 발급** 후 `.env` 의 `VAPID_PUBLIC_KEY/PRIVATE_KEY` 설정
-      (`npx web-push generate-vapid-keys`). 프론트에는 public 키만 넣는다.
+- **GHCR 패키지 공개/권한**: 최초 푸시 후 패키지가 private 이면, 서버 pull 을 위해
+  GHCR 로그인을 서버에도 1회 해두거나 패키지를 public 으로 전환.
+  (권장: 서버에서 `echo $GHCR_PAT | docker login ghcr.io -u yeonji-gonji --password-stdin`,
+  또는 패키지 Settings → Change visibility → Public)
+- **마이그레이션**: 기존 DB 를 옮겨 오면 아래 2번의 채택 절차, 빈 DB 면 `migrate deploy` 만.
+- **DuckDNS 계정·서브도메인 발급**, `API_DOMAIN` 교체 (아래 5번).
+- **healthchecks.io 무료 계정**에서 체크 3개 생성 후 URL 을 크론/스크립트에 주입 (아래 4번).
+- **백업 크론 등록** (아래 3번).
+- **VAPID 키 발급** 후 `.env` 의 `VAPID_PUBLIC_KEY/PRIVATE_KEY` 설정
+  (`npx web-push generate-vapid-keys`). 프론트에는 public 키만 넣는다.
 
 ---
 
@@ -61,6 +64,12 @@ docker compose up -d --no-build api caddy
 ```
 
 서버 `.env` 의 `API_IMAGE_TAG` 가 "지금 떠 있는 버전"의 단일 사실이다. 확인: `grep API_IMAGE_TAG ~/app/.env`.
+
+- 배포가 서버에 동기화하는 파일은 `docker-compose.yml`·`Caddyfile`·`scripts/deploy.sh` 셋뿐이다. `scripts/backup.sh`·`scripts/duckdns.sh` 는 서버 크론이
+  `~/app/scripts/` 의 사본을 실행하므로, 리포에서 고쳐도 배포로는 서버에 가지 않는다.
+- 이미지는 `linux/arm64` 로 빌드한다(서버가 Oracle A1). amd64 러너에서 QEMU 로 크로스 빌드하며, amd64 이미지는 서버에서 뜨지 않는다.
+- 로그는 json-file `max-size 10m × max-file 3`(`docker-compose.yml`). 컨테이너가 교체되면 이전 컨테이너 로그는 사라지므로,
+  헬스체크에 실패한 배포의 로그는 `deploy.sh` 가 롤백 전에 출력한 마지막 50줄(Actions 런 로그)에서 본다.
 
 ### 수동 배포
 
@@ -134,6 +143,8 @@ docker compose up -d api caddy
 ```
 
 이후부터는 CD 가 매 배포마다 `migrate deploy` 를 자동 수행하므로 수동 개입 불필요.
+
+새 서버의 빈 DB 에 처음 띄울 때는 `resolve` 없이 그대로 `migrate deploy` 하면 된다(`0_init` 을 "적용됨"으로 표시한 것은 기존 운영 DB 한정).
 
 > 마이그레이션 파일: `prisma/migrations/0_init/`(구 스키마), `prisma/migrations/1_data_pipeline/`(신규 전부).
 
