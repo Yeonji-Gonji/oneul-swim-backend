@@ -31,6 +31,11 @@ fi
 [ "$CUR" = "$NEW" ] && echo "주의: 현재 태그와 같은 태그($NEW)를 다시 배포한다"
 
 echo "배포: ${CUR:-없음} -> $NEW"
+
+# caddy 가 붙는 외부 네트워크(caddy_shared)와 사이트 조각 폴더(conf.d)를 compose 명령 전에 보장한다.
+# 같은 서버의 다른 스택(aether-takt) 배포가 먼저 만들었을 수도 있다. conf.d 를 docker 가 대신 만들면 root 소유가 돼 다른 스택이 조각을 못 넣는다.
+docker network inspect caddy_shared >/dev/null 2>&1 || docker network create caddy_shared >/dev/null
+mkdir -p conf.d
 docker pull "$IMAGE:$NEW" >/dev/null                       # 없는 태그면 .env 를 건드리기 전에 여기서 멈춘다
 [ -n "$CUR" ] && [ "$CUR" != "$NEW" ] && set_kv API_IMAGE_TAG_PREV "$CUR"
 set_kv API_IMAGE_TAG "$NEW"
