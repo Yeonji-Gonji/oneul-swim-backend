@@ -2,3 +2,7 @@
 {$API_DOMAIN} {
 	reverse_proxy api:3000
 }
+
+# 같은 서버의 다른 스택 사이트 조각(서버 ~/app/conf.d/*.caddy). 각 스택의 배포가 넣고 caddy reload 한다.
+# 조각이 하나도 없어도 caddy 는 뜬다. 조각의 업스트림은 caddy_shared 네트워크에 붙은 컨테이너다(docs/OPERATIONS.md §7).
+import /etc/caddy/conf.d/*.caddy

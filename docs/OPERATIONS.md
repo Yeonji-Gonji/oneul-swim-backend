@@ -54,6 +54,7 @@ gh workflow run server-ops.yml -R Yeonji-Gonji/oneul-swim-backend --ref main -f 
 `scripts/deploy.sh` 가 하는 일(순서대로):
 
 ```text
+caddy_shared 네트워크·conf.d 폴더가 없으면 만든다   # 같은 서버의 다른 스택과 같이 쓰는 caddy(§7)
 docker pull <태그>                      # 없는 태그면 여기서 중단(.env 그대로)
 .env: API_IMAGE_TAG_PREV=<직전>, API_IMAGE_TAG=<새 태그>
 docker compose run --rm api npx prisma migrate deploy   # 실패 시 태그 되돌리고 중단(구 버전 유지)
@@ -239,3 +240,27 @@ healthchecks.io 는 "정해진 주기에 핑이 안 오면 알림"을 무료로 
   ```
   구독자 전체에게 best-effort 발송, 만료된 구독은 자동 정리, `{sent, failed}` 반환.
 - 발송이 되려면 `.env` 의 VAPID 키가 설정돼 있어야 한다(미설정 시 `{sent:0, failed:0}`).
+
+---
+
+## 7. 같은 서버의 다른 스택 사이트 (caddy `conf.d`)
+
+같은 서버의 다른 compose 스택(지금은 aether-takt API, 서버 `~/aether-takt`)도 이 스택의 caddy 를 입구로 쓴다. 이 스택에서 그 때문에 바뀐 것은 caddy 하나다.
+
+- caddy 는 `Caddyfile` 끝의 `import /etc/caddy/conf.d/*.caddy` 로 서버 `~/app/conf.d/*.caddy` 조각을 읽는다. 조각이 하나도 없어도 뜬다.
+- caddy 는 compose 기본 네트워크와 외부 네트워크 `caddy_shared` 에 함께 붙는다. 다른 스택은 앱 컨테이너만 `caddy_shared` 에 붙이고, 조각의 업스트림은 그 컨테이너의 서비스 이름이다(예: `aether-api:3100`). 이 스택의 `api`·`db` 는 `caddy_shared` 에 붙이지 않는다.
+- `import` 와 마운트만 있고 caddy 가 `caddy_shared` 에 붙지 않으면 조각은 읽혀도 업스트림 이름을 풀지 못해 502 가 난다(2026-11-18 로컬 재현).
+- `caddy_shared` 와 `conf.d` 폴더는 `scripts/deploy.sh` 가 없으면 만든다(다른 스택 배포가 먼저 만들었을 수도 있다). `conf.d` 를 docker 가 대신 만들면 root 소유가 돼 다른 스택이 조각을 넣지 못한다.
+- 조각 파일은 그 스택의 배포가 관리한다. aether-takt 배포는 같은 caddy 이미지로 조각을 검사한 뒤 넣고 `caddy reload` 하며, reload 가 실패하면 이전 조각으로 되돌린다. 손으로 고치지 않는다.
+- `caddy_shared` 에 붙는 서비스 이름이 이 스택의 `api`·`db`·`caddy` 와 겹치면 caddy 의 이름 풀이가 갈린다. 다른 스택은 접두사 붙은 이름을 쓴다(aether-takt 는 `aether-api`·`aether-db`).
+
+깨진 조각 때문에 caddy 가 뜨지 않을 때(이 스택 배포 직후 HTTPS 가 모두 끊기면 먼저 의심한다):
+
+```bash
+cd ~/app
+docker compose logs --tail=30 caddy            # 어느 조각에서 막혔는지 본다
+mkdir -p ~/conf.d-aside && mv conf.d/<조각>.caddy ~/conf.d-aside/
+docker compose up -d caddy
+```
+
+조각은 그 스택에서 고쳐 다시 배포하면 다시 들어간다. aether-takt 쪽 절차는 `Yeonji-Gonji/aether-takt` 리포의 `apps/api/deploy/README.md` 다.
