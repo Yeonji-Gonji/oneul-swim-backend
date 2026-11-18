@@ -22,6 +22,9 @@
   GHCR 로그인을 서버에도 1회 해두거나 패키지를 public 으로 전환.
   (권장: 서버에서 `echo $GHCR_PAT | docker login ghcr.io -u yeonji-gonji --password-stdin`,
   또는 패키지 Settings → Change visibility → Public)
+- **서버 `.env` 작성**: 리포의 `.env.example` 을 견본으로 `~/app/.env` 를 만들고 `chmod 600 ~/app/.env` 로 소유자만 읽게 한다.
+  비밀값(DB 비밀번호·`ADMIN_TOKEN`·VAPID 개인키)이 들어 있는 파일이다. `scripts/deploy.sh` 가 태그를 `sed -i` 로 고쳐 써도
+  권한은 유지된다(확인: `stat -c %a ~/app/.env`).
 - **마이그레이션**: 기존 DB 를 옮겨 오면 아래 2번의 채택 절차, 빈 DB 면 `migrate deploy` 만.
 - **DuckDNS 계정·서브도메인 발급**, `API_DOMAIN` 교체 (아래 5번).
 - **healthchecks.io 무료 계정**에서 체크 3개 생성 후 URL 을 크론/스크립트에 주입 (아래 4번).
