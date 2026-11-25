@@ -1,0 +1,27 @@
+# 기본 이미지 업데이트 PR. docker-compose.yml 의 caddy·postgres 와 Dockerfile 의 node 는 버전+다이제스트로 고정해 두고, 여기서 월 1회 올린다.
+# 메이저는 올리지 않는다. postgres 메이저는 덤프/복원이, node·caddy 메이저는 호환성 확인이 필요해 사람이 따로 한다.
+# main 머지 = 운영 배포다. postgres PR 은 머지 전에 릴리스 노트의 "Migration to Version" 과 REINDEX 항목을 본다(docs/OPERATIONS.md).
+version: 2
+updates:
+  - package-ecosystem: docker-compose
+    directory: /
+    schedule:
+      interval: monthly
+    ignore:
+      - dependency-name: '*'
+        update-types: ['version-update:semver-major']
+    groups:
+      compose-images:
+        patterns: ['*']
+    commit-message:
+      prefix: chore
+
+  - package-ecosystem: docker
+    directory: /
+    schedule:
+      interval: monthly
+    ignore:
+      - dependency-name: '*'
+        update-types: ['version-update:semver-major']
+    commit-message:
+      prefix: chore

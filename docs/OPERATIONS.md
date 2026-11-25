@@ -78,6 +78,11 @@ docker compose up -d --no-build api caddy
   - 교체된 컨테이너까지: `journalctl CONTAINER_NAME=app-api-1 --since "2 days ago"`, 태그별: `journalctl IMAGE_NAME=ghcr.io/yeonji-gonji/oneul-swim-backend:sha-xxxxxxx`
   - caddy 접근 로그(JSON, 사이트별 `request.host`): `journalctl CONTAINER_NAME=app-caddy-1 -o cat --since -1h | grep '"logger":"http.log.access'`
   - journald 가 없는 Docker(예: Docker Desktop)에서 로컬로 띄우면 컨테이너가 뜨지 않는다. 그때는 `x-logging` 의 `driver` 를 로컬에서만 `json-file` 로 바꾼다.
+- 기본 이미지(compose 의 caddy·postgres, Dockerfile 의 node)는 `버전-alpine@sha256:…` 로 고정한다. 같은 태그도 베이스 OS 패치로 다시 빌드되면
+  내용이 바뀌어, 태그만으로는 서버에 무엇이 떠 있는지 알 수 없기 때문이다. 올리는 건 Dependabot 이 월 1회 여는 PR 이다(`.github/dependabot.yml`, 메이저 제외).
+  - postgres PR 은 머지 전에 릴리스 노트(postgresql.org/docs/16/release-16-N.html)의 "Migration to Version" 과 `REINDEX` 항목을 보고,
+    해당 인덱스가 있는지 확인한다. 머지하면 배포가 db 컨테이너를 새 버전으로 다시 만든다(데이터는 `pgdata` 볼륨, 몇 초 끊김).
+  - postgres 메이저(17 이상)는 데이터 디렉토리 형식이 달라 덤프/복원이 필요하다. Dependabot 이 올리지 않으며 따로 계획한다.
 
 ### 수동 배포
 
