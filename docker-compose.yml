@@ -1,12 +1,14 @@
 # 오늘수영 백엔드 프로덕션 구성 (VPS 1대: caddy + api + db)
 # 서버 ~/app 에 이 파일·Caddyfile·.env·scripts/deploy.sh 가 있고, 배포는 항상 scripts/deploy.sh 가 한다(CI 도 같은 스크립트).
 # 로컬에서 띄울 때: .env 에 API_IMAGE_TAG=local 을 두고 `docker compose build api && docker compose up -d`.
+# 로그는 호스트 journald 로 보낸다. json-file 은 배포로 컨테이너가 교체될 때 이전 로그를 함께 지우지만 journald 는 남긴다.
+# 줄마다 CONTAINER_NAME·IMAGE_NAME(배포 태그)이 붙는다. 보존 상한은 서버 journald 설정(기본: 디스크 10%, 최대 4G)을 따른다.
+# 조회: journalctl CONTAINER_NAME=app-api-1 --since -1h (docker compose logs 도 그대로 된다). 상세: docs/OPERATIONS.md
 x-logging: &logging
   logging:
-    driver: json-file
+    driver: journald
     options:
-      max-size: '10m'
-      max-file: '3'
+      tag: '{{.Name}}'
 
 services:
   caddy:
@@ -42,6 +44,8 @@ services:
       DATABASE_URL: postgresql://oneul:${POSTGRES_PASSWORD}@db:5432/oneul_swim
       CORS_ORIGINS: ${CORS_ORIGINS}
       PORT: '3000'
+      # 로그와 Actions 출력에 색 코드가 섞이지 않게 한다(Nest 로거가 따른다)
+      NO_COLOR: '1'
       ADMIN_TOKEN: ${ADMIN_TOKEN}
       VAPID_PUBLIC_KEY: ${VAPID_PUBLIC_KEY}
       VAPID_PRIVATE_KEY: ${VAPID_PRIVATE_KEY}

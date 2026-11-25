@@ -72,8 +72,12 @@ docker compose up -d --no-build api caddy
 - 배포가 서버에 동기화하는 파일은 `docker-compose.yml`·`Caddyfile`·`scripts/deploy.sh` 셋뿐이다. `scripts/backup.sh`·`scripts/duckdns.sh` 는 서버 크론이
   `~/app/scripts/` 의 사본을 실행하므로, 리포에서 고쳐도 배포로는 서버에 가지 않는다.
 - 이미지는 `linux/arm64` 로 빌드한다(서버가 Oracle A1). amd64 러너에서 QEMU 로 크로스 빌드하며, amd64 이미지는 서버에서 뜨지 않는다.
-- 로그는 json-file `max-size 10m × max-file 3`(`docker-compose.yml`). 컨테이너가 교체되면 이전 컨테이너 로그는 사라지므로,
-  헬스체크에 실패한 배포의 로그는 `deploy.sh` 가 롤백 전에 출력한 마지막 50줄(Actions 런 로그)에서 본다.
+- 로그는 서버 journald 로 간다(`docker-compose.yml` 의 `x-logging`). 컨테이너가 배포로 교체돼도 이전 로그가 남고, 줄마다
+  `CONTAINER_NAME`·`IMAGE_NAME`(배포 태그)이 붙는다. 보존 상한은 journald 기본값(디스크 10%, 최대 4G)이다.
+  - 지금 컨테이너: `docker compose logs --tail=100 api`
+  - 교체된 컨테이너까지: `journalctl CONTAINER_NAME=app-api-1 --since "2 days ago"`, 태그별: `journalctl IMAGE_NAME=ghcr.io/yeonji-gonji/oneul-swim-backend:sha-xxxxxxx`
+  - caddy 접근 로그(JSON, 사이트별 `request.host`): `journalctl CONTAINER_NAME=app-caddy-1 -o cat --since -1h | grep '"logger":"http.log.access'`
+  - journald 가 없는 Docker(예: Docker Desktop)에서 로컬로 띄우면 컨테이너가 뜨지 않는다. 그때는 `x-logging` 의 `driver` 를 로컬에서만 `json-file` 로 바꾼다.
 
 ### 수동 배포
 
@@ -228,6 +232,22 @@ healthchecks.io 는 "정해진 주기에 핑이 안 오면 알림"을 무료로 
    ```
    (Oracle A1 은 고정 공인 IP라 필수는 아니지만, 재부팅/재할당 대비로 걸어두면 안전.)
 4. 프론트(Vercel)의 API base URL 과 `CORS_ORIGINS` 도 새 도메인에 맞춰 갱신.
+5. 크론이 `>>` 로 쌓는 홈 폴더 로그는 logrotate 가 주 1회 돌려 4주치만 남긴다. 서버에만 있는 파일이라 새 서버에서는 손으로 만든다:
+   ```bash
+   sudo tee /etc/logrotate.d/home-cron-logs >/dev/null <<'EOF'
+   /home/ubuntu/duckdns.log /home/ubuntu/backup.log /home/ubuntu/aether-takt-backup.log {
+       su ubuntu ubuntu
+       weekly
+       rotate 4
+       compress
+       delaycompress
+       missingok
+       notifempty
+       copytruncate
+   }
+   EOF
+   sudo logrotate -d /etc/logrotate.d/home-cron-logs   # 문법 검사(실제로 돌리지 않음)
+   ```
 
 ---
 

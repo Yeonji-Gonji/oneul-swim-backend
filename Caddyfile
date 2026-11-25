@@ -1,5 +1,7 @@
 # API_DOMAIN 예: api.oneulswim.duckdns.org — HTTPS 인증서는 Caddy가 자동 발급
 {$API_DOMAIN} {
+	# 접근 로그(JSON, stderr → caddy 컨테이너 로그 → journald). Authorization·Cookie 헤더 값은 caddy 가 기본으로 가린다.
+	log
 	reverse_proxy api:3000
 }
 
