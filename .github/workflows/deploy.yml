@@ -1,94 +1,136 @@
-# CD: main 푸시 시 GHCR 이미지 빌드·푸시 후 서버에 SSH 배포.
-# 배포 로직은 scripts/deploy.sh 한 곳에 있다(사람이 수동 배포·롤백할 때도 같은 스크립트, docs/OPERATIONS.md).
+# 배포(CD): main 에서 운영 이미지나 서버 배포 파일에 들어가는 경로가 바뀌면 linux/arm64 이미지를 GHCR 에 올리고 서버 ~/app 에 배포한다.
 #
-# 필요한 GitHub Secrets (Settings → Secrets and variables → Actions):
-#   SSH_HOST   배포 서버 IP/호스트
-#   SSH_USER   SSH 사용자
-#   SSH_KEY    서버 접속용 개인키 전체(-----BEGIN ... END----- 포함)
-#   * GHCR 로그인은 자동 제공되는 GITHUB_TOKEN 을 쓰므로 별도 등록 불필요(패키지는 public).
-#
-# 서버 사전 준비: 배포 디렉토리(~/app)에 .env 존재. docker-compose.yml·Caddyfile·scripts/deploy.sh 는 매 배포 때 리포 내용으로 동기화한다.
+# - 배포 로직은 scripts/deploy.sh 한 곳에 있다. 사람이 손으로 배포·롤백할 때도 같은 스크립트를 쓴다(docs/OPERATIONS.md §1).
+# - 잡은 main 에서만 돈다. 수동 실행(workflow_dispatch)은 다른 브랜치도 고를 수 있어, 조건이 없으면 머지하지 않은 코드가 운영에 나간다.
+# - 잡 하나로 빌드·push·배포·운영 URL 스모크까지 한다(Actions 비용은 잡 수로 매겨진다).
+#   arm64 네이티브 러너(ubuntu-24.04-arm, 공개 리포 무료)라 QEMU 크로스 빌드를 쓰지 않는다.
+# - 이미지 태그는 불변 sha-<short> 하나다(latest 없음). GHCR push 는 GITHUB_TOKEN 으로 하고, 패키지가 public 이라 서버는 로그인 없이 pull 한다.
+# - 서버에는 외부 액션 없이 ssh 로 붙고, 서버 호스트 키 지문이 리포 변수와 같을 때만 붙는다.
+# - Secrets: SSH_HOST · SSH_USER · SSH_KEY. 변수: SSH_HOST_KEY_FP(서버 ed25519 호스트 키 지문, docs/OPERATIONS.md §0).
+# - paths 는 Dockerfile 이 이미지에 넣는 경로와 서버에 동기화하는 파일이다. Dockerfile 의 COPY 나 동기화 대상을 늘리면 여기에도 더한다.
+#   테스트·문서·린트 설정·.env.example 만 바꾼 커밋은 배포하지 않는다.
+# - ci.yml(필수 체크 verify)과는 독립이다. 이 워크플로는 PR 에서 돌지 않는다.
 name: Deploy
 
 on:
   push:
     branches: [main]
-    paths-ignore:
-      - 'docs/**'
-      - '**.md'
-      - '.gitignore'
+    paths:
+      - 'src/**'
+      - 'prisma/**'
+      - 'data/**'
+      - 'scripts/**'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - 'pnpm-workspace.yaml'
+      - 'tsconfig.json'
+      - 'tsconfig.build.json'
+      - 'Dockerfile'
+      - '.dockerignore'
+      - 'docker-compose.yml'
+      - 'Caddyfile'
+      - '.github/workflows/deploy.yml'
+      - '!**/*.md'
   workflow_dispatch:
 
-# 배포는 겹치지 않게 직렬로. 진행 중인 배포를 취소하면 서버가 중간 상태로 남으므로 cancel 하지 않는다.
+permissions:
+  contents: read
+  packages: write
+
+# 배포는 겹치지 않게 직렬로 돈다. 진행 중인 배포를 끊으면 서버가 중간 상태로 남으므로 취소하지 않는다.
+# server-ops.yml 도 같은 그룹이라 배포 중에는 끼어들지 않는다
 concurrency:
   group: deploy-prod
   cancel-in-progress: false
 
 env:
-  # GHCR 레지스트리 경로는 소문자여야 한다
+  # GHCR 경로는 소문자여야 한다
   IMAGE: ghcr.io/yeonji-gonji/oneul-swim-backend
+  API_URL: https://oneul-swim.duckdns.org
 
 jobs:
-  build-push:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-    outputs:
-      tag: ${{ steps.tag.outputs.tag }}
+  deploy:
+    name: deploy
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
-      - name: 불변 태그 결정 (sha-<short>)
+      - name: 불변 태그 결정(sha-<short>)
         id: tag
         run: echo "tag=sha-${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
 
-      # 배포 서버가 ARM(Oracle A1, aarch64)이라 arm64 로 빌드해야 한다. amd64 러너에서 QEMU 로 크로스 빌드한다.
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+      - uses: docker/setup-buildx-action@v4
 
-      - name: Set up Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: GHCR 로그인
-        uses: docker/login-action@v3
+      - uses: docker/login-action@v4
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: 빌드 & 푸시
-        uses: docker/build-push-action@v6
+      - name: 이미지 빌드·push(linux/arm64)
+        uses: docker/build-push-action@v7
         with:
           context: .
           platforms: linux/arm64
           push: true
           tags: ${{ env.IMAGE }}:${{ steps.tag.outputs.tag }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          labels: |
+            org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
+            org.opencontainers.image.revision=${{ github.sha }}
+          cache-from: type=gha,scope=deploy
+          cache-to: type=gha,scope=deploy,mode=max
 
-  deploy:
-    needs: build-push
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
+      - name: SSH 준비(서버 호스트 키 지문 고정)
+        env:
+          SSH_KEY: ${{ secrets.SSH_KEY }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          HOST_KEY_FP: ${{ vars.SSH_HOST_KEY_FP }}
+        run: |
+          set -euo pipefail
+          [ -n "$HOST_KEY_FP" ] || { echo "::error::리포 변수 SSH_HOST_KEY_FP 가 없습니다"; exit 1; }
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/id && chmod 600 ~/.ssh/id
+          ssh-keyscan -t ed25519 "$SSH_HOST" 2>/dev/null > "$RUNNER_TEMP/kh"
+          fp=$(ssh-keygen -lf "$RUNNER_TEMP/kh" | awk '{print $2}')
+          [ "$fp" = "$HOST_KEY_FP" ] || { echo "::error::서버 호스트 키 지문이 다릅니다($fp)"; exit 1; }
+          mv "$RUNNER_TEMP/kh" ~/.ssh/known_hosts
 
-      - name: 배포 파일 동기화 (docker-compose.yml · Caddyfile · scripts/deploy.sh → ~/app)
-        uses: appleboy/scp-action@v1
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          source: 'docker-compose.yml,Caddyfile,scripts/deploy.sh'
-          target: /home/${{ secrets.SSH_USER }}/app
+      # scripts/ 에는 데이터 적재용 *.ts 도 있어(이미지에 들어감) 서버에는 운영 셸 스크립트 셋만 보낸다.
+      # backup.sh·duckdns.sh 는 서버 크론이 ~/app/scripts/ 의 사본을 실행한다
+      - name: 배포 파일 동기화(docker-compose.yml · Caddyfile · scripts/*.sh → ~/app)
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+        run: |
+          set -euo pipefail
+          tar -cf - docker-compose.yml Caddyfile scripts/deploy.sh scripts/backup.sh scripts/duckdns.sh |
+            ssh -i ~/.ssh/id -o BatchMode=yes "$SSH_USER@$SSH_HOST" \
+              'mkdir -p ~/app && tar -C ~/app -xf - && chmod +x ~/app/scripts/*.sh'
 
-      - name: 서버 배포 (pull → 마이그레이션 → up → 헬스체크 → 실패 시 롤백)
-        uses: appleboy/ssh-action@v1
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          script: |
-            set -e
-            chmod +x ~/app/scripts/deploy.sh
-            ~/app/scripts/deploy.sh "${{ needs.build-push.outputs.tag }}"
+      - name: 서버 배포(Caddyfile 검사 → pull → 마이그레이션 → up → 헬스체크 → 실패 시 롤백)
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          TAG: ${{ steps.tag.outputs.tag }}
+        run: |
+          set -euo pipefail
+          # ~ 는 서버 셸에서 펼쳐져야 한다
+          # shellcheck disable=SC2088
+          ssh -i ~/.ssh/id -o BatchMode=yes -o ServerAliveInterval=30 "$SSH_USER@$SSH_HOST" \
+            "~/app/scripts/deploy.sh '$TAG'"
+
+      # 사용자가 받는 경로 그대로(DuckDNS → caddy → api → db) 확인한다.
+      # /pools 의 _meta.source 가 file 이면 API 는 떴지만 DB 조회가 실패해 정적 파일로 답하는 상태다
+      - name: 운영 URL 스모크(/health 와 /pools 의 데이터 원천)
+        run: |
+          set -euo pipefail
+          body=$(curl -fsS -m 10 --retry 6 --retry-delay 5 --retry-all-errors "$API_URL/health")
+          echo "$body"
+          [ "$(jq -r .status <<< "$body")" = ok ] || { echo "::error::운영 /health 의 status 가 ok 가 아닙니다"; exit 1; }
+          source=$(curl -fsS -m 20 --retry 3 --retry-delay 5 --retry-all-errors "$API_URL/pools" | jq -r '._meta.source')
+          [ "$source" = db ] || { echo "::error::운영 /pools 의 _meta.source 가 db 가 아닙니다($source)"; exit 1; }
+          echo "/pools 데이터 원천: $source"
