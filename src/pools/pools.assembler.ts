@@ -2,7 +2,7 @@
  * GET /pools 응답 조립 — 순수 함수(테스트 대상).
  * DB Pool 행을 프론트 계약 shape 로 재조립한다.
  */
-import { FeeTiers, PoolRecord, PoolsPayload } from './pools.types';
+import type { FeeTiers, PoolRecord, PoolsPayload } from './pools.types';
 
 /** 계약에 포함되는 Pool 필드(운영용 createdAt/dbUpdatedAt 등은 제외) */
 const POOL_KEYS: (keyof PoolRecord)[] = [
@@ -48,7 +48,10 @@ function emptyFeeTiers(): FeeTiers {
 export function deriveCompatFeeTiers(pools: PoolRecord[]): FeeTiers {
   for (const p of pools) {
     const f = p.fees;
-    if (f && (Object.keys(f.full ?? {}).length || Object.keys(f.half ?? {}).length)) {
+    if (
+      f &&
+      (Object.keys(f.full ?? {}).length || Object.keys(f.half ?? {}).length)
+    ) {
       return { full: f.full ?? {}, half: f.half ?? {} };
     }
   }

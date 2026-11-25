@@ -21,9 +21,9 @@ type: project-overview
 | 영역 | 스택 | 안내 |
 | --- | --- | --- |
 | 앱 | NestJS 11 · Prisma 6 · PostgreSQL 16 · Node 22 · pnpm · Jest | [README.md](../README.md) |
-| 이미지 | `ghcr.io/yeonji-gonji/oneul-swim-backend:sha-<short>`(불변 태그, `latest` 없음), 비루트 `node` + dumb-init | `Dockerfile` |
-| 운영 서버 | Oracle Cloud A1(`linux/arm64`, Always Free) 1대, Docker Compose 3컨테이너(caddy·api·db), `https://oneul-swim.duckdns.org`(DuckDNS + Caddy 자동 HTTPS) | [OPERATIONS.md](OPERATIONS.md), `docker-compose.yml` |
-| CI·CD | `ci.yml`(PR·main, typecheck → test → build), `deploy.yml`(main push → arm64 빌드 → GHCR → `scripts/deploy.sh`). 둘 다 문서 전용 변경 제외 | [OPERATIONS.md §1](OPERATIONS.md) |
+| 이미지 | `ghcr.io/yeonji-gonji/oneul-swim-backend:sha-<short>`(불변 태그, `latest` 없음), 운영 의존성만 담은 비루트 `node` + dumb-init | `Dockerfile` |
+| 운영 서버 | Oracle Cloud A1(`linux/arm64`, Always Free) 1대, Docker Compose 3컨테이너(caddy·api·db, api·db 메모리 상한 각 512m), `https://oneul-swim.duckdns.org`(DuckDNS + Caddy 자동 HTTPS). 같은 서버의 aether-takt API 가 이 caddy 를 입구로 같이 씀 | [OPERATIONS.md](OPERATIONS.md), `docker-compose.yml` |
+| CI·CD | `ci.yml`(PR·main, 포맷 검사 + `pnpm check` = lint → typecheck → test → build, 문서 전용 변경은 포맷 검사만), `deploy.yml`(main push 가운데 이미지·배포 파일 경로 → arm64 빌드 → GHCR → `scripts/deploy.sh` → 운영 URL 스모크) | [README.md](../README.md) "명령", [OPERATIONS.md §1](OPERATIONS.md) |
 | 백업·감시 | 서버 일일 `pg_dump` + 외부 암호화 사본(`backup-offsite.yml`), healthchecks.io, DuckDNS 갱신 크론 | [OPERATIONS.md §3~5](OPERATIONS.md) |
 
 - **dev 포트**: `pnpm dev` → `http://localhost:3000`(`PORT` env)

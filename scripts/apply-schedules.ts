@@ -58,7 +58,9 @@ type CleanSession = {
 /** 계약 규칙대로 세션 정제. 위반 시 null 반환(폐기) */
 function cleanSession(s: RawSession): CleanSession | null {
   const dayCodes = Array.isArray(s.dayCodes)
-    ? s.dayCodes.filter((d): d is number => Number.isInteger(d) && d >= 0 && d <= 6)
+    ? s.dayCodes.filter(
+        (d): d is number => Number.isInteger(d) && d >= 0 && d <= 6,
+      )
     : [];
   if (dayCodes.length === 0) return null;
   if (!s.start || !TIME_RE.test(s.start)) return null;
@@ -72,17 +74,21 @@ function cleanSession(s: RawSession): CleanSession | null {
     tier: s.tier === 'half' ? 'half' : 'full',
   };
   if (Array.isArray(s.weeksOfMonth)) {
-    const w = s.weeksOfMonth.filter((n): n is number => Number.isInteger(n) && n >= 1 && n <= 6);
+    const w = s.weeksOfMonth.filter(
+      (n): n is number => Number.isInteger(n) && n >= 1 && n <= 6,
+    );
     if (w.length > 0) out.weeksOfMonth = w; // 매주면 키 생략(빈 배열 금지)
   }
-  if (typeof s.capacity === 'number' && s.capacity > 0) out.capacity = s.capacity;
+  if (typeof s.capacity === 'number' && s.capacity > 0)
+    out.capacity = s.capacity;
   return out;
 }
 
 function labelFromCodes(codes: number[]): string {
   const kr = ['일', '월', '화', '수', '목', '금', '토'];
   const weekday = [1, 2, 3, 4, 5];
-  if (weekday.every((d) => codes.includes(d)) && codes.length === 5) return '평일';
+  if (weekday.every((d) => codes.includes(d)) && codes.length === 5)
+    return '평일';
   return codes
     .slice()
     .sort((a, b) => a - b)
@@ -115,7 +121,9 @@ async function main() {
         skipped++;
         continue;
       }
-      const clean = (item.sessions || []).map(cleanSession).filter((x): x is CleanSession => x != null);
+      const clean = (item.sessions || [])
+        .map(cleanSession)
+        .filter((x): x is CleanSession => x != null);
       if (clean.length === 0) {
         console.log(`[SKIP] ${item.name} — 유효 세션 0개`);
         skipped++;
@@ -123,7 +131,9 @@ async function main() {
       }
 
       totalSessions += clean.length;
-      console.log(`[OK]  ${item.name} (${item.id}) — 세션 ${clean.length}개 · ${item.sourceUrl}`);
+      console.log(
+        `[OK]  ${item.name} (${item.id}) — 세션 ${clean.length}개 · ${item.sourceUrl}`,
+      );
 
       if (prisma) {
         const pool = await prisma.pool.findUnique({ where: { id: item.id } });
@@ -151,8 +161,13 @@ async function main() {
     }
 
     console.log(`\n=== ${apply ? 'APPLIED' : 'DRY-RUN'} ===`);
-    console.log(`반영 대상 ${applied}곳 · 세션 총 ${totalSessions}개 · 스킵 ${skipped}곳`);
-    if (!apply) console.log(`실제 반영: npx tsx scripts/apply-schedules.ts apply (fees 는 안 건드림)`);
+    console.log(
+      `반영 대상 ${applied}곳 · 세션 총 ${totalSessions}개 · 스킵 ${skipped}곳`,
+    );
+    if (!apply)
+      console.log(
+        `실제 반영: npx tsx scripts/apply-schedules.ts apply (fees 는 안 건드림)`,
+      );
   } finally {
     await prisma?.$disconnect();
   }

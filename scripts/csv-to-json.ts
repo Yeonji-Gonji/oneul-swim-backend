@@ -17,7 +17,7 @@ function parseCsv(text: string): string[][] {
   let field = '';
   let row: string[] = [];
   let inQuotes = false;
-  const src = text.replace(/^﻿/, ''); // BOM 제거
+  const src = text.replace(/^\uFEFF/, ''); // BOM 제거
   for (let i = 0; i < src.length; i++) {
     const c = src[i];
     if (inQuotes) {
@@ -55,7 +55,9 @@ function main() {
   const input = process.argv[2];
   const output = process.argv[3];
   if (!input) {
-    console.error('사용법: npx tsx scripts/csv-to-json.ts <input.csv> [output.json]');
+    console.error(
+      '사용법: npx tsx scripts/csv-to-json.ts <input.csv> [output.json]',
+    );
     process.exit(1);
   }
   const rows = parseCsv(readFileSync(input, 'utf-8'));
@@ -78,7 +80,7 @@ function main() {
     websiteUrl: col(headers, '홈페이지', 'url', 'URL'),
   };
 
-  const pick = (r: string[], i: number) => (i >= 0 ? r[i]?.trim() ?? '' : '');
+  const pick = (r: string[], i: number) => (i >= 0 ? (r[i]?.trim() ?? '') : '');
   const num = (v: string) => {
     const n = Number(v);
     return Number.isFinite(n) && v !== '' ? n : null;

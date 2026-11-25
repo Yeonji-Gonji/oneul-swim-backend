@@ -1,11 +1,13 @@
+import type { ExecutionContext } from '@nestjs/common';
 import {
-  ExecutionContext,
   ForbiddenException,
   ServiceUnavailableException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { AdminGuard } from '../src/admin/admin.guard';
 import { AdminService } from '../src/admin/admin.service';
+import type { PoolsService } from '../src/pools/pools.service';
+import type { PrismaService } from '../src/prisma/prisma.service';
 
 /** AdminGuard 가 읽는 요청 헤더만 흉내 낸 ExecutionContext */
 const ctx = (authorization?: string) =>
@@ -75,12 +77,19 @@ describe('AdminGuard', () => {
 });
 
 describe('AdminService.loginWithKakao', () => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const service = new AdminService({} as any, { invalidateCache: jest.fn() } as any);
+  // loginWithKakao 는 prisma·pools 를 쓰지 않아 빈 대역으로 충분하다
+  const service = new AdminService(
+    {} as PrismaService,
+    { invalidateCache: jest.fn() } as unknown as PoolsService,
+  );
   const dto = { code: 'auth-code', redirectUri: 'https://example.com/admin' };
 
   const json = (status: number, body: unknown) =>
-    ({ ok: status >= 200 && status < 300, status, json: async () => body }) as Response;
+    ({
+      ok: status >= 200 && status < 300,
+      status,
+      json: async () => body,
+    }) as Response;
 
   /** 카카오 토큰 교환 → 사용자 조회 두 번의 fetch 를 순서대로 흉내 낸다 */
   const mockKakao = (token: Response, me?: Response) => {
@@ -99,27 +108,36 @@ describe('AdminService.loginWithKakao', () => {
     process.env.KAKAO_REST_KEY = 'rest-key';
     process.env.ADMIN_KAKAO_ID = '12345';
     const fetchMock = jest.spyOn(global, 'fetch');
-    await expect(service.loginWithKakao(dto)).rejects.toThrow(UnauthorizedException);
+    await expect(service.loginWithKakao(dto)).rejects.toThrow(
+      UnauthorizedException,
+    );
     expect(fetchMock).not.toHaveBeenCalled();
   });
 
   it('토큰 교환이 실패하면 401', async () => {
     configure();
     mockKakao(json(400, { error: 'invalid_grant' }));
-    await expect(service.loginWithKakao(dto)).rejects.toThrow(UnauthorizedException);
+    await expect(service.loginWithKakao(dto)).rejects.toThrow(
+      UnauthorizedException,
+    );
   });
 
   it('본인이 아닌 카카오 계정이면 403 이고 토큰을 주지 않는다', async () => {
     configure();
     mockKakao(json(200, { access_token: 'at' }), json(200, { id: 99999 }));
-    await expect(service.loginWithKakao(dto)).rejects.toThrow(ForbiddenException);
+    await expect(service.loginWithKakao(dto)).rejects.toThrow(
+      ForbiddenException,
+    );
   });
 
   it('본인 계정이면 ADMIN_TOKEN 을 발급한다', async () => {
     configure();
     const fetchMock = mockKakao(
       json(200, { access_token: 'at' }),
-      json(200, { id: 12345, kakao_account: { profile: { nickname: '준희' } } }),
+      json(200, {
+        id: 12345,
+        kakao_account: { profile: { nickname: '준희' } },
+      }),
     );
     await expect(service.loginWithKakao(dto)).resolves.toEqual({
       token: 'admin-token',
@@ -129,7 +147,9 @@ describe('AdminService.loginWithKakao', () => {
     const body = String(fetchMock.mock.calls[0][1]?.body);
     expect(body).toContain('code=auth-code');
     expect(body).toContain('client_id=rest-key');
-    expect(body).toContain(`redirect_uri=${encodeURIComponent(dto.redirectUri)}`);
+    expect(body).toContain(
+      `redirect_uri=${encodeURIComponent(dto.redirectUri)}`,
+    );
     expect(body).not.toContain('client_secret');
   });
 
@@ -141,6 +161,8 @@ describe('AdminService.loginWithKakao', () => {
       json(200, { id: 12345 }),
     );
     await service.loginWithKakao(dto);
-    expect(String(fetchMock.mock.calls[0][1]?.body)).toContain('client_secret=cs');
+    expect(String(fetchMock.mock.calls[0][1]?.body)).toContain(
+      'client_secret=cs',
+    );
   });
 });

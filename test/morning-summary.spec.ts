@@ -1,7 +1,5 @@
-import {
-  buildMorningSummary,
-  SummaryPool,
-} from '../src/push/morning-summary';
+import type { SummaryPool } from '../src/push/morning-summary';
+import { buildMorningSummary } from '../src/push/morning-summary';
 
 /** UTC 게터로 읽는 KST 보정 Date 생성 (2026-07-06 = 월요일) */
 const kst = (iso: string) => new Date(`${iso}T00:00:00Z`);

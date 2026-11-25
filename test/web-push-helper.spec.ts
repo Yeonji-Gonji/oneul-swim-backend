@@ -1,8 +1,5 @@
-import {
-  isGoneError,
-  summarizeSends,
-  SendOutcome,
-} from '../src/push/web-push.helper';
+import type { SendOutcome } from '../src/push/web-push.helper';
+import { isGoneError, summarizeSends } from '../src/push/web-push.helper';
 
 describe('isGoneError', () => {
   it('410(Gone)·404 는 만료로 판정한다', () => {

@@ -3,7 +3,7 @@ import {
   deriveCompatFeeTiers,
   projectPool,
 } from '../src/pools/pools.assembler';
-import { PoolRecord } from '../src/pools/pools.types';
+import type { PoolRecord } from '../src/pools/pools.types';
 
 const dbPoolRow = {
   id: 'hanam-misa',
@@ -73,9 +73,7 @@ describe('deriveCompatFeeTiers', () => {
   });
 
   it('요금 있는 pool 이 없으면 빈 요금표를 만든다', () => {
-    const listing = [
-      { ...projectPool(dbPoolRow), fees: null } as PoolRecord,
-    ];
+    const listing = [{ ...projectPool(dbPoolRow), fees: null } as PoolRecord];
     expect(deriveCompatFeeTiers(listing)).toEqual({ full: {}, half: {} });
   });
 });

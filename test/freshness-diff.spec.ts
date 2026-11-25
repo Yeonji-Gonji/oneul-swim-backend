@@ -1,7 +1,4 @@
-import {
-  diffSnapshot,
-  hashContent,
-} from '../src/freshness/freshness.diff';
+import { diffSnapshot, hashContent } from '../src/freshness/freshness.diff';
 
 describe('hashContent', () => {
   it('같은 입력은 같은 해시, 다른 입력은 다른 해시', () => {
