@@ -40,10 +40,7 @@ interface PoolsFile {
 }
 
 async function main() {
-  const raw = readFileSync(
-    join(process.cwd(), 'data', 'pools.json'),
-    'utf-8',
-  );
+  const raw = readFileSync(join(process.cwd(), 'data', 'pools.json'), 'utf-8');
   const data = JSON.parse(raw) as PoolsFile;
 
   // Pool upsert (id 기준). 요금은 시설별 fees JSON, 자유수영 완비라 dataStatus='full'.
@@ -75,7 +72,9 @@ async function main() {
       update: record,
     });
   }
-  console.log(`Pool ${data.pools.length}건 upsert 완료 (fees 포함, dataStatus=full)`);
+  console.log(
+    `Pool ${data.pools.length}건 upsert 완료 (fees 포함, dataStatus=full)`,
+  );
 }
 
 main()

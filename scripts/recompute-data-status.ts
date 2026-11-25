@@ -33,7 +33,14 @@ async function main() {
   );
 
   const pools = await prisma.pool.findMany({
-    select: { id: true, name: true, sido: true, sigungu: true, freeSwim: true, dataStatus: true },
+    select: {
+      id: true,
+      name: true,
+      sido: true,
+      sigungu: true,
+      freeSwim: true,
+      dataStatus: true,
+    },
   });
 
   const toFull: { id: string; name: string }[] = []; // listing → full 로 올릴 것
@@ -47,13 +54,19 @@ async function main() {
   }
 
   const fullNow = pools.filter((p) => hasSessions(p.freeSwim)).length;
-  console.log(`\n총 ${pools.length}곳 | 실데이터상 full=${fullNow}, listing=${pools.length - fullNow}`);
-  console.log(`변경 필요: full→listing ${toListing.length}곳, listing→full ${toFull.length}곳`);
+  console.log(
+    `\n총 ${pools.length}곳 | 실데이터상 full=${fullNow}, listing=${pools.length - fullNow}`,
+  );
+  console.log(
+    `변경 필요: full→listing ${toListing.length}곳, listing→full ${toFull.length}곳`,
+  );
 
   if (toListing.length) {
     console.log(`\n[full→listing] 시간표 없어 되돌릴 시설 (처음 10곳):`);
-    for (const p of toListing.slice(0, 10)) console.log(`  - ${p.name} (${p.id})`);
-    if (toListing.length > 10) console.log(`  ... 외 ${toListing.length - 10}곳`);
+    for (const p of toListing.slice(0, 10))
+      console.log(`  - ${p.name} (${p.id})`);
+    if (toListing.length > 10)
+      console.log(`  ... 외 ${toListing.length - 10}곳`);
   }
   if (toFull.length) {
     console.log(`\n[listing→full] 시간표 있어 승격할 시설:`);
@@ -61,13 +74,18 @@ async function main() {
   }
 
   if (!apply) {
-    console.log(`\n[DRY-RUN] 아무것도 반영하지 않았습니다. 실제 적용: 'npx tsx scripts/recompute-data-status.ts apply'`);
+    console.log(
+      `\n[DRY-RUN] 아무것도 반영하지 않았습니다. 실제 적용: 'npx tsx scripts/recompute-data-status.ts apply'`,
+    );
     return;
   }
 
   let updated = 0;
   for (const { id } of toListing) {
-    await prisma.pool.update({ where: { id }, data: { dataStatus: 'listing' } });
+    await prisma.pool.update({
+      where: { id },
+      data: { dataStatus: 'listing' },
+    });
     updated++;
   }
   for (const { id } of toFull) {

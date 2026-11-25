@@ -1,0 +1,10 @@
+# 운영 런북·의사결정 기록은 사람이 맞춘 표·줄바꿈을 그대로 둔다
+docs/
+
+# 생성물
+pnpm-lock.yaml
+dist/
+coverage/
+
+# 적재 입력물(data/*.json)은 스크립트가 JSON.stringify 로 통째로 다시 쓰거나 수집 원본 그대로 둔다(손으로 고치지 않음)
+data/

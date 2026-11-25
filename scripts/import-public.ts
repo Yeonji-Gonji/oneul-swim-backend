@@ -53,7 +53,9 @@ async function geocode(
   const key = process.env.KAKAO_REST_KEY;
   if (!key || !address) return null;
   const url = `https://dapi.kakao.com/v2/local/search/address.json?query=${encodeURIComponent(address)}`;
-  const res = await fetch(url, { headers: { Authorization: `KakaoAK ${key}` } });
+  const res = await fetch(url, {
+    headers: { Authorization: `KakaoAK ${key}` },
+  });
   if (!res.ok) return null;
   const body = (await res.json()) as {
     documents?: { x: string; y: string }[];

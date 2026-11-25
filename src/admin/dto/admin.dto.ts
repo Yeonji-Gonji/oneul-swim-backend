@@ -2,12 +2,10 @@ import { Type } from 'class-transformer';
 import {
   IsBoolean,
   IsIn,
-  IsInt,
   IsObject,
   IsOptional,
   IsString,
   MaxLength,
-  Min,
   MinLength,
   ValidateNested,
 } from 'class-validator';

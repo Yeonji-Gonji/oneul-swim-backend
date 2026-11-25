@@ -41,7 +41,12 @@ function pick(row: Record<string, unknown>, ...needles: string[]): string {
 }
 
 /** 두 좌표 사이 거리(m) */
-function haversine(aLat: number, aLng: number, bLat: number, bLng: number): number {
+function haversine(
+  aLat: number,
+  aLng: number,
+  bLat: number,
+  bLng: number,
+): number {
   const R = 6371000;
   const rad = (x: number) => (x * Math.PI) / 180;
   const dLat = rad(bLat - aLat);
@@ -57,7 +62,8 @@ function normalizeHomepage(raw: string): string {
   const v = raw.trim();
   if (!v) return '';
   const url = /^https?:\/\//i.test(v) ? v : `http://${v}`;
-  if (/place\.map\.kakao\.com|map\.kakao\.com|place\.kakao\.com/i.test(url)) return '';
+  if (/place\.map\.kakao\.com|map\.kakao\.com|place\.kakao\.com/i.test(url))
+    return '';
   return url;
 }
 
@@ -65,7 +71,8 @@ function normalizeHomepage(raw: string): string {
 function websiteReplaceable(current: string | null | undefined): boolean {
   const v = (current || '').trim();
   if (v === '') return true;
-  if (/place\.map\.kakao\.com|map\.kakao\.com|place\.kakao\.com/i.test(v)) return true;
+  if (/place\.map\.kakao\.com|map\.kakao\.com|place\.kakao\.com/i.test(v))
+    return true;
   if (v.startsWith('국민체육')) return true;
   return false;
 }
@@ -137,7 +144,11 @@ type Plan = {
  * 보강 규칙에 맞는 변경만 계획으로 만든다. 한 pool 에 여러 표준레코드가 겹치면
  * 가장 가까운 것만 남긴다(거리순 정렬 후 pool 당 1회).
  */
-function buildPlans(std: StdPool[], ours: OurPool[], thresholdM: number): {
+function buildPlans(
+  std: StdPool[],
+  ours: OurPool[],
+  thresholdM: number,
+): {
   plans: Plan[];
   matched: number;
   unmatched: StdPool[];
@@ -170,8 +181,10 @@ function buildPlans(std: StdPool[], ours: OurPool[], thresholdM: number): {
       stdName: s.name,
       _dist: bestDist,
     };
-    if (s.homepage && websiteReplaceable(best.websiteUrl)) plan.setWebsite = s.homepage;
-    if (s.phone && (!best.phone || best.phone.trim() === '')) plan.setPhone = s.phone;
+    if (s.homepage && websiteReplaceable(best.websiteUrl))
+      plan.setWebsite = s.homepage;
+    if (s.phone && (!best.phone || best.phone.trim() === ''))
+      plan.setPhone = s.phone;
 
     if (plan.setWebsite || plan.setPhone) candidates.push(plan);
   }
@@ -202,15 +215,21 @@ async function planFromRaw(jsonPath: string, thresholdM: number) {
   const phoneCount = plans.filter((p) => p.setPhone).length;
 
   console.log(`\n=== 매칭 (좌표 <${thresholdM}m) ===`);
-  console.log(`표준 ${std.length}건 중 매칭 ${matched}건 · 미매칭 ${unmatched.length}건`);
-  console.log(`보강 대상 pool ${plans.length}곳 → websiteUrl ${webCount} · phone ${phoneCount}`);
+  console.log(
+    `표준 ${std.length}건 중 매칭 ${matched}건 · 미매칭 ${unmatched.length}건`,
+  );
+  console.log(
+    `보강 대상 pool ${plans.length}곳 → websiteUrl ${webCount} · phone ${phoneCount}`,
+  );
   console.log(`\n보강 예시:`);
   for (const p of plans.slice(0, 12)) {
     const bits = [
       p.setWebsite ? `web=${p.setWebsite}` : '',
       p.setPhone ? `tel=${p.setPhone}` : '',
     ].filter(Boolean);
-    console.log(`  ${p.stdName} → ${p.poolName} (${p.distance}m) : ${bits.join(', ')}`);
+    console.log(
+      `  ${p.stdName} → ${p.poolName} (${p.distance}m) : ${bits.join(', ')}`,
+    );
   }
 
   fs.writeFileSync(
@@ -218,20 +237,30 @@ async function planFromRaw(jsonPath: string, thresholdM: number) {
     JSON.stringify({ thresholdM, matched, plans }, null, 2),
     'utf8',
   );
-  console.log(`\n[dry-run] DB 미반영. 계획 ${plans.length}곳을 ${PLAN_PATH} 에 저장(커밋 대상).`);
-  console.log(`서버 컨테이너에서 반영: npx tsx scripts/import-open-facility.ts apply`);
+  console.log(
+    `\n[dry-run] DB 미반영. 계획 ${plans.length}곳을 ${PLAN_PATH} 에 저장(커밋 대상).`,
+  );
+  console.log(
+    `서버 컨테이너에서 반영: npx tsx scripts/import-open-facility.ts apply`,
+  );
 }
 
 /** 2단계: 계획파일 → DB 반영(원본 JSON 불필요) */
 async function applyFromPlan() {
   if (!fs.existsSync(PLAN_PATH)) {
-    console.error(`[ERROR] 계획파일이 없습니다: ${PLAN_PATH}. 먼저 dry-run 으로 생성하세요.`);
+    console.error(
+      `[ERROR] 계획파일이 없습니다: ${PLAN_PATH}. 먼저 dry-run 으로 생성하세요.`,
+    );
     process.exit(1);
   }
-  const { plans } = JSON.parse(fs.readFileSync(PLAN_PATH, 'utf8')) as { plans: Plan[] };
+  const { plans } = JSON.parse(fs.readFileSync(PLAN_PATH, 'utf8')) as {
+    plans: Plan[];
+  };
   const webCount = plans.filter((p) => p.setWebsite).length;
   const phoneCount = plans.filter((p) => p.setPhone).length;
-  console.log(`[계획] ${plans.length}곳 (website ${webCount}, phone ${phoneCount})`);
+  console.log(
+    `[계획] ${plans.length}곳 (website ${webCount}, phone ${phoneCount})`,
+  );
 
   const prisma = new PrismaClient();
   try {
@@ -247,13 +276,17 @@ async function applyFromPlan() {
         continue;
       }
       const data: { websiteUrl?: string; phone?: string } = {};
-      if (p.setWebsite && websiteReplaceable(cur.websiteUrl)) data.websiteUrl = p.setWebsite;
-      if (p.setPhone && (!cur.phone || cur.phone.trim() === '')) data.phone = p.setPhone;
+      if (p.setWebsite && websiteReplaceable(cur.websiteUrl))
+        data.websiteUrl = p.setWebsite;
+      if (p.setPhone && (!cur.phone || cur.phone.trim() === ''))
+        data.phone = p.setPhone;
       if (Object.keys(data).length === 0) continue;
       await prisma.pool.update({ where: { id: p.poolId }, data });
       updated++;
     }
-    console.log(`\n[APPLIED] ${updated}곳 보강 완료. 요금·시간표·dataStatus 는 건드리지 않음.`);
+    console.log(
+      `\n[APPLIED] ${updated}곳 보강 완료. 요금·시간표·dataStatus 는 건드리지 않음.`,
+    );
   } finally {
     await prisma.$disconnect();
   }

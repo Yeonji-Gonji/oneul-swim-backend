@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, type Prisma } from '@prisma/client';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -11,11 +11,21 @@ async function showList() {
       name: true,
       sido: true,
       sigungu: true,
-      dataStatus: true
-    }
+      dataStatus: true,
+    },
   });
 
-  const groups: Record<string, { sido: string, sigungu: string, total: number, full: number, listing: number, sample: string[] }> = {};
+  const groups: Record<
+    string,
+    {
+      sido: string;
+      sigungu: string;
+      total: number;
+      full: number;
+      listing: number;
+      sample: string[];
+    }
+  > = {};
 
   for (const p of pools) {
     const sido = p.sido || '미분류';
@@ -29,7 +39,7 @@ async function showList() {
         total: 0,
         full: 0,
         listing: 0,
-        sample: []
+        sample: [],
       };
     }
 
@@ -47,20 +57,26 @@ async function showList() {
 
   console.log(`\n=== 지자체(도시공사)별 수영장 분포 통계 ===`);
   const sorted = Object.entries(groups).sort((a, b) => b[1].total - a[1].total);
-  
+
   for (const [key, info] of sorted) {
-    console.log(`[${key}] - 총 ${info.total}개 (완비: ${info.full}, 준비중: ${info.listing})`);
+    console.log(
+      `[${key}] - 총 ${info.total}개 (완비: ${info.full}, 준비중: ${info.listing})`,
+    );
     console.log(`   - 예시: ${info.sample.join(', ')}`);
-    console.log(`   - 검색 키워드 예시: "${info.sido} ${info.sigungu} 도시공사 수영장 요금"`);
+    console.log(
+      `   - 검색 키워드 예시: "${info.sido} ${info.sigungu} 도시공사 수영장 요금"`,
+    );
   }
 }
 
 async function applyGroupFees() {
   const jsonPath = path.join(__dirname, '../data/group-fees.json');
   console.log(`[INFO] Reading group fees mapping from: ${jsonPath}`);
-  
+
   if (!fs.existsSync(jsonPath)) {
-    console.error(`[ERROR] JSON file not found at: ${jsonPath}. Please create it first.`);
+    console.error(
+      `[ERROR] JSON file not found at: ${jsonPath}. Please create it first.`,
+    );
     return;
   }
 
@@ -73,26 +89,30 @@ async function applyGroupFees() {
   for (const g of groups) {
     const { sido, sigungu, fees, notice } = g;
     if (!sido || !fees) {
-      console.warn(`[WARN] Invalid group config: ${JSON.stringify(g)}. Skipping.`);
+      console.warn(
+        `[WARN] Invalid group config: ${JSON.stringify(g)}. Skipping.`,
+      );
       continue;
     }
 
     // Find all matching pools in the group (if sigungu is null/undefined, match whole sido)
-    const whereClause: any = { sido };
+    const whereClause: Prisma.PoolWhereInput = { sido };
     if (sigungu !== null && sigungu !== undefined) {
       whereClause.sigungu = sigungu;
     }
 
     const targetPools = await prisma.pool.findMany({
-      where: whereClause
+      where: whereClause,
     });
 
-    console.log(`[INFO] Group [${sido} ${sigungu}]: Found ${targetPools.length} pools in database.`);
-    
+    console.log(
+      `[INFO] Group [${sido} ${sigungu}]: Found ${targetPools.length} pools in database.`,
+    );
+
     let groupUpdated = 0;
     for (const pool of targetPools) {
-      const updateData: any = {
-        fees
+      const updateData: Prisma.PoolUpdateInput = {
+        fees,
       };
 
       if (notice) {
@@ -107,12 +127,14 @@ async function applyGroupFees() {
 
       await prisma.pool.update({
         where: { id: pool.id },
-        data: updateData
+        data: updateData,
       });
       groupUpdated++;
     }
-    
-    console.log(`[APPLIED] Group [${sido} ${sigungu}]: Successfully updated ${groupUpdated} pools with common fees.`);
+
+    console.log(
+      `[APPLIED] Group [${sido} ${sigungu}]: Successfully updated ${groupUpdated} pools with common fees.`,
+    );
     totalUpdated += groupUpdated;
   }
 
@@ -128,7 +150,9 @@ async function main() {
   } else if (mode === 'apply') {
     await applyGroupFees();
   } else {
-    console.error(`[ERROR] Unknown mode: ${mode}. Available modes: 'list', 'apply'`);
+    console.error(
+      `[ERROR] Unknown mode: ${mode}. Available modes: 'list', 'apply'`,
+    );
     process.exit(1);
   }
 }

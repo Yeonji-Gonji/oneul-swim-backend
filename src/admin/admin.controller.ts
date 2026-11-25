@@ -54,8 +54,7 @@ export class AdminController {
   /** 신선도 알림 목록(resolved 필터: 'true'|'false') */
   @Get('freshness')
   listFreshness(@Query('resolved') resolved?: string) {
-    const parsed =
-      resolved === undefined ? undefined : resolved !== 'false';
+    const parsed = resolved === undefined ? undefined : resolved !== 'false';
     return this.admin.listFreshness(parsed);
   }
 

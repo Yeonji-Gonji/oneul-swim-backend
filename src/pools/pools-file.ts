@@ -4,7 +4,7 @@
  */
 import { readFileSync } from 'fs';
 import { join } from 'path';
-import { PoolsPayload } from './pools.types';
+import type { PoolsPayload } from './pools.types';
 
 /** data/pools.json 전체를 파싱해 반환 */
 export function readPoolsFile(): PoolsPayload {

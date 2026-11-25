@@ -30,7 +30,10 @@ interface KspoItem {
   updt_dt?: string;
 }
 
-async function fetchPage(key: string, pageNo: number): Promise<{
+async function fetchPage(
+  key: string,
+  pageNo: number,
+): Promise<{
   items: KspoItem[];
   totalCount: number;
 }> {
